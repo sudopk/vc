@@ -6,37 +6,29 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
                                     android:elevation="2dp"
+                                    android:foreground="?attr/selectableItemBackground"
                                     app:cardCornerRadius="4dp"
-                                    android:foreground="?android:attr/selectableItemBackground"
                                     app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/date"
+            android:id="@+id/country"
             style="@style/Base.TextAppearance.AppCompat.Title"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:background="@drawable/round_background"
-            tools:text="31"/>
-
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Country"/>
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/events"
+            android:id="@+id/locations"
             style="@style/Base.TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Event details"/>
+            tools:text="Locations"/>
 
     </LinearLayout>
 
