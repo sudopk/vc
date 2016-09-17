@@ -1,13 +1,15 @@
 package in.sudopk.vaishnavacalendar;
 
-import java.util.ArrayList;
+import android.support.annotation.NonNull;
+
+import java.util.List;
 
 public class DayCalendar implements Comparable<DayCalendar> {
     private static final String DELIMITER = "\n";
     private final int mDate;
     private final String mEvents;
 
-    public DayCalendar(final int date, final ArrayList<String> events) {
+    public DayCalendar(final int date, final List<String> events) {
         mDate = date;
         final StringBuilder stringBuilder = new StringBuilder();
         for (String event : events) {
@@ -29,7 +31,7 @@ public class DayCalendar implements Comparable<DayCalendar> {
     }
 
     @Override
-    public int compareTo(final DayCalendar dayCalendar) {
+    public int compareTo(@NonNull final DayCalendar dayCalendar) {
         return getDate() - dayCalendar.getDate();
     }
 

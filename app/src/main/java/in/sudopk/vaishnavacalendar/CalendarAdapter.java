@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +27,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
 
     private final List<DayCalendar> mCalendar;
+    private final Gson mGson;
 
     public CalendarAdapter() {
         mCalendar = new ArrayList<>();
+        mGson = new GsonBuilder()
+                .setFieldNamingStrategy(new RemoveFieldNameStrategy())
+                .create();
     }
 
     @Override
@@ -46,58 +54,73 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     public void setData(final String data) {
         if (StrUtil.isNotEmpty(data)) {
-            JSONObject jsonObject = null;
             try {
-                jsonObject = new JSONObject(data);
-                jsonObject = jsonObject.getJSONObject("calendar");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if (jsonObject != null) {
-                List<DayCalendar> days = new ArrayList<>();
-                Iterator<String> it = jsonObject.keys();
-                while (it.hasNext()) {
-                    final String key = it.next();
-                    Integer date = null;
-                    try {
-                        date = Integer.parseInt(key);
-                    } catch (NumberFormatException ex) {
-                        ex.printStackTrace();
-                    }
-
-                    if (date != null) {
-                        JSONArray jsonArray = null;
-
-                        try {
-                            jsonArray = jsonObject.getJSONArray(key);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if (jsonArray != null) {
-                            ArrayList<String> events = new ArrayList<>();
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                try {
-                                    events.add(jsonArray.getString(i));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            if (!events.isEmpty()) {
-                                days.add(new DayCalendar(date, events));
-                            }
-                        }
-                    }
+                final CalendarResponce calendarResponce = mGson.fromJson(data, CalendarResponce.class);
+                mCalendar.clear();
+                for (Integer day : calendarResponce.getCalendar().keySet()) {
+                    mCalendar.add(new DayCalendar(day, calendarResponce.getCalendar().get(day)));
                 }
-
-                if (!days.isEmpty()) {
-                    mCalendar.clear();
-                    mCalendar.addAll(days);
-                    Collections.sort(mCalendar);
-                    notifyDataSetChanged();
-                }
+                Collections.sort(mCalendar);
+                notifyDataSetChanged();
+            } catch (JsonSyntaxException ex) {
+                ex.printStackTrace();
             }
         }
     }
+
+    private void setDataOld(final String data) {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(data);
+            jsonObject = jsonObject.getJSONObject("calendar");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (jsonObject != null) {
+            List<DayCalendar> days = new ArrayList<>();
+            Iterator<String> it = jsonObject.keys();
+            while (it.hasNext()) {
+                final String key = it.next();
+                Integer date = null;
+                try {
+                    date = Integer.parseInt(key);
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                }
+
+                if (date != null) {
+                    JSONArray jsonArray = null;
+
+                    try {
+                        jsonArray = jsonObject.getJSONArray(key);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (jsonArray != null) {
+                        ArrayList<String> events = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                events.add(jsonArray.getString(i));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (!events.isEmpty()) {
+                            days.add(new DayCalendar(date, events));
+                        }
+                    }
+                }
+            }
+
+            if (!days.isEmpty()) {
+                mCalendar.clear();
+                mCalendar.addAll(days);
+                Collections.sort(mCalendar);
+                notifyDataSetChanged();
+            }
+        }
+    }
+
 
     static class VH extends RecyclerView.ViewHolder {
         private final TextView mEvents;
