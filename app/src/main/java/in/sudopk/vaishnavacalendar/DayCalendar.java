@@ -5,28 +5,19 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 public class DayCalendar implements Comparable<DayCalendar> {
-    private static final String DELIMITER = "\n";
     private final int mDate;
-    private final String mEvents;
+    private final List<String> mEvents;
 
     public DayCalendar(final int date, final List<String> events) {
         mDate = date;
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (String event : events) {
-            stringBuilder.append(event);
-            stringBuilder.append(DELIMITER);
-        }
-        if (stringBuilder.length() > 0) {
-            stringBuilder.setLength(stringBuilder.length() - DELIMITER.length());
-        }
-        mEvents = stringBuilder.toString();
+        mEvents = events;
     }
 
     public int getDate() {
         return mDate;
     }
 
-    public String getEvents() {
+    public List<String> getEvents() {
         return mEvents;
     }
 

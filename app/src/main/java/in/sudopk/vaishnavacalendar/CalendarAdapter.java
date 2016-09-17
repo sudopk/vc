@@ -82,7 +82,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
         public void setDayCalendar(final DayCalendar dayCalendar) {
             mDate.setText(String.format(Locale.getDefault(), "%d", dayCalendar.getDate()));
-            mEvents.setText(dayCalendar.getEvents());
+            StringBuilder sb = new StringBuilder();
+
+            final List<String> events = dayCalendar.getEvents();
+            for (String event: events) {
+                sb.append(event);
+                sb.append("\n");
+            }
+            if(sb.length() > 0) {
+                sb.setLength(sb.length()-1);
+            }
+            mEvents.setText(sb.toString());
         }
     }
 }
