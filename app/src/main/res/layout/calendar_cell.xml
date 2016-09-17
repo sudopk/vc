@@ -23,8 +23,8 @@
             android:layout_height="64dp"
             android:background="@drawable/round_background"
             android:gravity="center"
-            app:layout_constraintCenterY_toCenterY="parent"
             android:textColor="@android:color/white"
+            app:layout_constraintCenterY_toCenterY="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="31"/>
 
@@ -34,16 +34,15 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toEndOf="@+id/date"/>
 
-        <android.support.v7.widget.AppCompatTextView
+        <in.sudopk.coreandroid.SimpleList
             android:id="@+id/events"
-            app:layout_constraintCenterY_toCenterY="parent"
-            app:layout_constraintStart_toEndOf="@+id/space"
-            app:layout_constraintEnd_toEndOf="parent"
             style="@style/Base.TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Event1 is very long, way too long to fit on one line\nEvent2\nEvent3\nEvent4\nEvent5\nEvent6"/>
-
+            android:orientation="vertical"
+            app:layout_constraintCenterY_toCenterY="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/space"/>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

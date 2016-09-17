@@ -4,24 +4,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import in.sudopk.coreandroid.Layout;
+import in.sudopk.coreandroid.SimpleList;
 import in.sudopk.utils.StrUtil;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
@@ -45,7 +42,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     @Override
     public void onBindViewHolder(final VH holder, final int position) {
-        holder.setDayCalendar(mCalendar.get(position));
+        holder.onBind(mCalendar.get(position));
     }
 
     @Override
@@ -71,7 +68,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     }
 
     static class VH extends RecyclerView.ViewHolder {
-        private final TextView mEvents;
+        private final SimpleList mEvents;
         private final TextView mDate;
 
         VH(final View itemView) {
@@ -80,19 +77,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
             mEvents = Layout.findViewById(itemView, R.id.events);
         }
 
-        public void setDayCalendar(final DayCalendar dayCalendar) {
+        public void onBind(final DayCalendar dayCalendar) {
             mDate.setText(String.format(Locale.getDefault(), "%d", dayCalendar.getDate()));
-            StringBuilder sb = new StringBuilder();
-
-            final List<String> events = dayCalendar.getEvents();
-            for (String event: events) {
-                sb.append(event);
-                sb.append("\n");
-            }
-            if(sb.length() > 0) {
-                sb.setLength(sb.length()-1);
-            }
-            mEvents.setText(sb.toString());
+            mEvents.setAdapter(new ArrayAdapter<>(itemView.getContext(),
+                    R.layout.text_view, dayCalendar.getEvents()));
         }
     }
 }
