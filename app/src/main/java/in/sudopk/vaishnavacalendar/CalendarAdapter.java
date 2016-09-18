@@ -1,5 +1,6 @@
 package in.sudopk.vaishnavacalendar;
 
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -36,8 +38,25 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     @Override
     public VH onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final int cell, eventLayout;
+        if(viewType ==0 ) {
+            cell = R.layout.calendar_cell;
+            eventLayout = R.layout.text_view;
+        } else {
+            cell = R.layout.calendar_cell_today;
+            eventLayout = R.layout.text_view_inverse;
+        }
         return new VH(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.calendar_cell, parent, false));
+                .inflate(cell, parent, false), eventLayout);
+    }
+
+    @Override
+    public int getItemViewType(final int position) {
+        if(Calendar.getInstance().get(Calendar.DATE) - 1 == position) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -69,18 +88,20 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     static class VH extends RecyclerView.ViewHolder {
         private final SimpleList mEvents;
+        private final int mEventLayout;
         private final TextView mDate;
 
-        VH(final View itemView) {
+        VH(final View itemView, @LayoutRes final int eventLayout) {
             super(itemView);
             mDate = Layout.findViewById(itemView, R.id.date);
             mEvents = Layout.findViewById(itemView, R.id.events);
+            mEventLayout = eventLayout;
         }
 
         public void onBind(final DayCalendar dayCalendar) {
             mDate.setText(String.format(Locale.getDefault(), "%d", dayCalendar.getDate()));
             mEvents.setAdapter(new ArrayAdapter<>(itemView.getContext(),
-                    R.layout.text_view, dayCalendar.getEvents()));
+                    mEventLayout, dayCalendar.getEvents()));
         }
     }
 }
