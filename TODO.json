@@ -1,0 +1,17 @@
+{
+  "must have before release": [
+    "Checking app update requirement. If server is updated with new APIs, app must update. Server code is required to handle it.",
+
+    "Hit github url to get new server url in case it changes. Github url can enforce the force update too.",
+
+    "Location selection",
+
+    "Month and year selection",
+
+    "Jump to today button"
+  ],
+
+  "nice to have": [
+
+  ]
+}
