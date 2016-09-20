@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import java.util.Map;
 import in.sudopk.coreandroid.Layout;
 import in.sudopk.coreandroid.SimpleList;
 import in.sudopk.utils.StrUtil;
+import in.sudopk.vaishnavacalendar.retrofit.VCalendar;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
@@ -29,11 +29,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     private final List<DayCalendar> mCalendar;
     private final Gson mGson;
 
-    public CalendarAdapter() {
+    public CalendarAdapter(final Gson gson) {
         mCalendar = new ArrayList<>();
-        mGson = new GsonBuilder()
-                .setFieldNamingStrategy(new RemoveFieldNameStrategy())
-                .create();
+        mGson = gson;
     }
 
     @Override
@@ -72,18 +70,23 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     public void setData(final String data) {
         if (StrUtil.isNotEmpty(data)) {
             try {
-                final CalendarResponce calendarResponce = mGson.fromJson(data, CalendarResponce.class);
-                mCalendar.clear();
-                final Map<Integer, List<String>> calendar = calendarResponce.getCalendar();
-                for (Integer day : calendar.keySet()) {
-                    mCalendar.add(new DayCalendar(day, calendar.get(day)));
-                }
-                Collections.sort(mCalendar);
-                notifyDataSetChanged();
+                final VCalendar.Response calendarResponce =
+                        mGson.fromJson(data, VCalendar.Response.class);
+                setData(calendarResponce);
             } catch (JsonSyntaxException ex) {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public void setData(final VCalendar.Response calendarResponce) {
+        mCalendar.clear();
+        final Map<Integer, List<String>> calendar = calendarResponce.getCalendar();
+        for (Integer day : calendar.keySet()) {
+            mCalendar.add(new DayCalendar(day, calendar.get(day)));
+        }
+        Collections.sort(mCalendar);
+        notifyDataSetChanged();
     }
 
     static class VH extends RecyclerView.ViewHolder {

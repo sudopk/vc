@@ -1,8 +1,6 @@
 package in.sudopk.vaishnavacalendar;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,42 +13,58 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
-import in.sudopk.DefaultHttpClient;
-import in.sudopk.HttpClient;
 import in.sudopk.coreandroid.Layout;
+import in.sudopk.vaishnavacalendar.retrofit.VCalendar;
+import in.sudopk.vaishnavacalendar.retrofit.VcService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CalendarFragment extends Fragment {
     private static final String CALENDAR_URL = "http://sudopkvc.appspot.com/calendar/";
+    private static final String VC_URL = "http://sudopkvc.appspot.com";
     private CalendarAdapter mAdapter;
-    private HttpClient mHttpClient;
-    private Handler mHandler;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private State mState;
+    private VcService mVcService;
+    private Gson mGson;
     ;
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHttpClient = new DefaultHttpClient();
-        mHandler = new Handler(Looper.getMainLooper());
         mState = State.from(savedInstanceState);
         setHasOptionsMenu(true);
+        mGson = new GsonBuilder()
+                .setFieldNamingStrategy(new RemoveFieldNameStrategy())
+                .create();
+        mVcService = new Retrofit.Builder()
+                .baseUrl(VC_URL)
+                .addConverterFactory(GsonConverterFactory.create(mGson))
+                .build()
+                .create(VcService.class);
     }
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater,
+                             @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.calendar, container, false);
         mProgressBar = Layout.findViewById(view, R.id.progressBar);
         mRecyclerView = Layout.findViewById(view, R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new CalendarAdapter();
+        mAdapter = new CalendarAdapter(mGson);
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -88,18 +102,28 @@ public class CalendarFragment extends Fragment {
     private void refresh() {
         if (isResumed()) {
             mProgressBar.setVisibility(View.VISIBLE);
-            new Thread(() -> {
-                final Map<String, String> postData = new HashMap<>();
-                postData.put("locationId", "395");
-                final Calendar calendar = Calendar.getInstance();
-                postData.put("month", Integer.toString(calendar.get(Calendar.MONTH) + 1));
-                postData.put("year", Integer.toString(calendar.get(Calendar.YEAR)));
-                String response = mHttpClient.makePostRequest(CALENDAR_URL, postData);
-                mHandler.post(() -> {
-                    mState = new State(response);
-                    onCalendarResponse(response);
-                });
-            }).start();
+            final Calendar calendar = Calendar.getInstance();
+            Call<VCalendar.Response> call = mVcService.calendar(
+                    new VCalendar.Request(395, calendar.get(Calendar.MONTH) + 1,
+                            calendar.get(Calendar.YEAR)));
+            call.enqueue(new Callback<VCalendar.Response>() {
+                @Override
+                public void onResponse(final Call<VCalendar.Response> call,
+                                       final Response<VCalendar.Response> response) {
+                    if(isResumed()) {
+                        mState = new State(mGson.toJson(response.body()));
+                        onCalendarResponse(mState.calendarData);
+                    }
+                }
+
+                @Override
+                public void onFailure(final Call<VCalendar.Response> call, final Throwable t) {
+                    if(isResumed()) {
+                        mProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), call.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 
@@ -107,7 +131,8 @@ public class CalendarFragment extends Fragment {
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
             mAdapter.setData(response);
-            mRecyclerView.getLayoutManager().scrollToPosition(Calendar.getInstance().get(Calendar.DATE) - 1);
+            mRecyclerView.getLayoutManager()
+                    .scrollToPosition(Calendar.getInstance().get(Calendar.DATE) - 1);
         }
     }
 

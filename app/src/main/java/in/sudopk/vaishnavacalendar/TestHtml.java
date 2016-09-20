@@ -7,7 +7,7 @@ public class TestHtml {
                     "\n" +
                     "<HTML>\n" +
                     "<HEAD>\n" +
-                    "<TITLE>Vaisnava Calendar</TITLE>\n" +
+                    "<TITLE>Vaisnava VCalendar</TITLE>\n" +
                     "<meta name='author' content='.'>\n" +
                     "<meta name='keywords' content='.'>\n" +
                     "<meta http-equiv='Content-Type' content='text/html;charset=iso-8859-1'>\n" +
@@ -1219,7 +1219,7 @@ public class TestHtml {
                     "</table>\n" +
                     "\n" +
                     "<br>\n" +
-                    "<CENTER><b><a href='http://www.iskcon.com.mx/daksina/index.php?lang=en' target=_blank>Help us to preach</a> | <a href=\"javascript:;\" onClick=\"window.open('/add_en.php','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Add Vaisnava Calendar to your webpage</a>\n" +
+                    "<CENTER><b><a href='http://www.iskcon.com.mx/daksina/index.php?lang=en' target=_blank>Help us to preach</a> | <a href=\"javascript:;\" onClick=\"window.open('/add_en.php','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Add Vaisnava VCalendar to your webpage</a>\n" +
                     "<br><br><SCRIPT SRC='http://www.iskcon.com.mx/cgi-bin/carousel.cgi?tell=js'></SCRIPT></CENTER>\n" +
                     "\n" +
                     "\n" +
