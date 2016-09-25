@@ -2,6 +2,7 @@ package in.sudopk.vaishnavacalendar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CalendarFragment extends Fragment {
-    private static final String CALENDAR_URL = "http://sudopkvc.appspot.com/calendar/";
-    private static final String VC_URL = "http://sudopkvc.appspot.com";
+    private static final String VC_URL = "http://sudopk.github.io/vc/";
     private CalendarAdapter mAdapter;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -102,28 +102,35 @@ public class CalendarFragment extends Fragment {
     private void refresh() {
         if (isResumed()) {
             mProgressBar.setVisibility(View.VISIBLE);
-            final Calendar calendar = Calendar.getInstance();
-            Call<VCalendar.Response> call = mVcService.calendar(
-                    new VCalendar.Request(395, calendar.get(Calendar.MONTH) + 1,
-                            calendar.get(Calendar.YEAR)));
+            Call<VCalendar.Response> call = mVcService.calendar();
             call.enqueue(new Callback<VCalendar.Response>() {
                 @Override
                 public void onResponse(final Call<VCalendar.Response> call,
                                        final Response<VCalendar.Response> response) {
                     if(isResumed()) {
-                        mState = new State(mGson.toJson(response.body()));
-                        onCalendarResponse(mState.calendarData);
+                        if(response.body() != null) {
+                            mState = new State(mGson.toJson(response.body()));
+                            onCalendarResponse(mState.calendarData);
+                        } else {
+                            failed();
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(final Call<VCalendar.Response> call, final Throwable t) {
-                    if(isResumed()) {
-                        mProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), call.toString(), Toast.LENGTH_SHORT).show();
-                    }
+                    failed();
                 }
             });
+        }
+    }
+
+    private void failed() {
+        if(isResumed()) {
+            mProgressBar.setVisibility(View.GONE);
+            if(getView() != null) {
+                Snackbar.make(getView(), "Failed to fetch calendar.", Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 
