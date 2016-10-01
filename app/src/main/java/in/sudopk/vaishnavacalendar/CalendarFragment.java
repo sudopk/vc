@@ -1,5 +1,6 @@
 package in.sudopk.vaishnavacalendar;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -22,12 +23,12 @@ import java.util.Calendar;
 
 import in.sudopk.coreandroid.Layout;
 import in.sudopk.vaishnavacalendar.retrofit.VCalendar;
+import in.sudopk.vaishnavacalendar.retrofit.VcConverterFactory;
 import in.sudopk.vaishnavacalendar.retrofit.VcService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CalendarFragment extends Fragment {
     private CalendarAdapter mAdapter;
@@ -48,7 +49,7 @@ public class CalendarFragment extends Fragment {
                 .create();
         mVcService = new Retrofit.Builder()
                 .baseUrl(VcService.URL)
-                .addConverterFactory(GsonConverterFactory.create(mGson))
+                .addConverterFactory(new VcConverterFactory())
                 .build()
                 .create(VcService.class);
     }
@@ -100,13 +101,15 @@ public class CalendarFragment extends Fragment {
     private void refresh() {
         if (isResumed()) {
             mProgressBar.setVisibility(View.VISIBLE);
-            Call<VCalendar.Response> call = mVcService.calendar();
+            final Calendar calendar = Calendar.getInstance();
+            @SuppressLint("DefaultLocale")
+            Call<VCalendar.Response> call = mVcService.calendar(String.format("%02d", calendar.get(Calendar.MONTH) + 1), calendar.get(Calendar.YEAR), "en", "395");
             call.enqueue(new Callback<VCalendar.Response>() {
                 @Override
                 public void onResponse(final Call<VCalendar.Response> call,
                                        final Response<VCalendar.Response> response) {
-                    if(isResumed()) {
-                        if(response.body() != null) {
+                    if (isResumed()) {
+                        if (response.body() != null) {
                             mState = new State(mGson.toJson(response.body()));
                             onCalendarResponse(mState.calendarData);
                         } else {
@@ -117,6 +120,7 @@ public class CalendarFragment extends Fragment {
 
                 @Override
                 public void onFailure(final Call<VCalendar.Response> call, final Throwable t) {
+                    t.printStackTrace();
                     failed();
                 }
             });
@@ -124,9 +128,9 @@ public class CalendarFragment extends Fragment {
     }
 
     private void failed() {
-        if(isResumed()) {
+        if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
-            if(getView() != null) {
+            if (getView() != null) {
                 Snackbar.make(getView(), "Failed to fetch calendar.", Snackbar.LENGTH_SHORT).show();
             }
         }

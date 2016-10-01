@@ -18,6 +18,10 @@ public class VCalendar {
     public static class Response {
         private Map<Integer, List<String>> mCalendar;
 
+        public Response(final Map<Integer, List<String>> calendar) {
+            mCalendar = calendar;
+        }
+
         public Map<Integer, List<String>> getCalendar() {
             return mCalendar;
         }

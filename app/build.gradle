@@ -14,9 +14,10 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
 
-        jackOptions {
+        // Bug: https://code.google.com/p/android/issues/detail?id=219979&q=priority%3DCritical%20label%3AComponent-Tools&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars
+        /*jackOptions {
             enabled true
-        }
+        }*/
 
     }
     buildTypes {
@@ -25,10 +26,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
+    // Bug: https://code.google.com/p/android/issues/detail?id=219979&q=priority%3DCritical%20label%3AComponent-Tools&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars
+    /*compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
+    }*/
 }
 
 dependencies {
@@ -40,4 +42,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     compile project(':CoreAndroid')
+
+    compile 'org.jsoup:jsoup:1.9.2'
 }
