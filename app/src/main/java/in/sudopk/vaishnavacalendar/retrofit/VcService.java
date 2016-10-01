@@ -6,6 +6,8 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface VcService {
+    String URL = "http://sudopk.github.io/vc/";
+
     @POST("calendar")
     Call<VCalendar.Response> calendar(@Body VCalendar.Request user);
     @GET("calendar.json")

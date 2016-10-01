@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,7 +30,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CalendarFragment extends Fragment {
-    private static final String VC_URL = "http://sudopk.github.io/vc/";
     private CalendarAdapter mAdapter;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -49,7 +47,7 @@ public class CalendarFragment extends Fragment {
                 .setFieldNamingStrategy(new RemoveFieldNameStrategy())
                 .create();
         mVcService = new Retrofit.Builder()
-                .baseUrl(VC_URL)
+                .baseUrl(VcService.URL)
                 .addConverterFactory(GsonConverterFactory.create(mGson))
                 .build()
                 .create(VcService.class);
