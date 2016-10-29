@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.container);
 
         if (savedInstanceState == null) {
-            Fm.replace(getSupportFragmentManager(), R.id.container, new CalendarFragment());
+            Fm.replace(getSupportFragmentManager(), R.id.container, new CalendarPagerFragment());
         }
     }
 }

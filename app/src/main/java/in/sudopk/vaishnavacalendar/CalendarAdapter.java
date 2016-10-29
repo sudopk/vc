@@ -28,8 +28,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     private final List<DayCalendar> mCalendar;
     private final Gson mGson;
+    private int mDateToHighlight;
 
-    public CalendarAdapter(final Gson gson) {
+    /**
+     * @param dateToHighlight Month dates i.e. 1 to 31. Pass 0 if don't want to highlight any date
+     */
+    public CalendarAdapter(final Gson gson, int dateToHighlight) {
+        mDateToHighlight = dateToHighlight;
         mCalendar = new ArrayList<>();
         mGson = gson;
     }
@@ -50,7 +55,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     @Override
     public int getItemViewType(final int position) {
-        if(Calendar.getInstance().get(Calendar.DATE) - 1 == position) {
+        if(mDateToHighlight- 1 == position) {
             return 1;
         } else {
             return 0;

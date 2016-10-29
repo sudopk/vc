@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,13 +32,32 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CalendarFragment extends Fragment {
+    private static final String MONTH = "month";
+    private static final String YEAR = "year";
+
     private CalendarAdapter mAdapter;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private State mState;
     private VcService mVcService;
     private Gson mGson;
-    ;
+    private int mMonth;
+    private int mYear;
+    private boolean mCurrentMonth;
+    private int mTodayDate;
+
+    /**
+     * @param month 1 to 12
+     * @param year  full year e.g. 2016
+     */
+    public static Fragment newInstance(final int month, final int year) {
+        final Fragment fragment = new CalendarFragment();
+        final Bundle bundle = new Bundle();
+        bundle.putInt(MONTH, month);
+        bundle.putInt(YEAR, year);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -52,6 +72,12 @@ public class CalendarFragment extends Fragment {
                 .addConverterFactory(new VcConverterFactory())
                 .build()
                 .create(VcService.class);
+        mMonth = getArguments().getInt(MONTH);
+        mYear = getArguments().getInt(YEAR);
+        final Calendar calendar = Calendar.getInstance();
+        mTodayDate = calendar.get(Calendar.DATE);
+        mCurrentMonth = (mMonth == calendar.get(Calendar.MONTH) + 1) &&
+                (mYear == calendar.get(Calendar.YEAR));
     }
 
     @Nullable
@@ -63,7 +89,9 @@ public class CalendarFragment extends Fragment {
         mProgressBar = Layout.findViewById(view, R.id.progressBar);
         mRecyclerView = Layout.findViewById(view, R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new CalendarAdapter(mGson);
+        final int dateToHighlight =
+                mCurrentMonth ? mTodayDate : 0;
+        mAdapter = new CalendarAdapter(mGson, dateToHighlight);
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -101,9 +129,8 @@ public class CalendarFragment extends Fragment {
     private void refresh() {
         if (isResumed()) {
             mProgressBar.setVisibility(View.VISIBLE);
-            final Calendar calendar = Calendar.getInstance();
             @SuppressLint("DefaultLocale")
-            Call<VCalendar.Response> call = mVcService.calendar(String.format("%02d", calendar.get(Calendar.MONTH) + 1), calendar.get(Calendar.YEAR), "en", "395");
+            Call<VCalendar.Response> call = mVcService.calendar(String.format("%02d", mMonth), mYear, "en", "395");
             call.enqueue(new Callback<VCalendar.Response>() {
                 @Override
                 public void onResponse(final Call<VCalendar.Response> call,
@@ -140,8 +167,10 @@ public class CalendarFragment extends Fragment {
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
             mAdapter.setData(response);
-            mRecyclerView.getLayoutManager()
-                    .scrollToPosition(Calendar.getInstance().get(Calendar.DATE) - 1);
+            if(mCurrentMonth) {
+                mRecyclerView.getLayoutManager()
+                        .scrollToPosition(Calendar.getInstance().get(Calendar.DATE) - 1);
+            }
         }
     }
 
