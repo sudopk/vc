@@ -1,8 +1,7 @@
 package in.sudopk.vaishnavacalendar;
 
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import in.sudopk.coreandroid.Fm;
 

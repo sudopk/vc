@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,18 +16,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
 
 import in.sudopk.coreandroid.Layout;
-import in.sudopk.vaishnavacalendar.retrofit.VCalendar;
-import in.sudopk.vaishnavacalendar.retrofit.VcConverterFactory;
 import in.sudopk.vaishnavacalendar.retrofit.VcService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CalendarFragment extends Fragment {
     private static final String MONTH = "month";
@@ -45,6 +39,7 @@ public class CalendarFragment extends Fragment {
     private int mYear;
     private boolean mCurrentMonth;
     private int mTodayDate;
+    private CalendarStore mCalendarStore;
 
     /**
      * @param month 1 to 12
@@ -64,14 +59,10 @@ public class CalendarFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mState = State.from(savedInstanceState);
         setHasOptionsMenu(true);
-        mGson = new GsonBuilder()
-                .setFieldNamingStrategy(new RemoveFieldNameStrategy())
-                .create();
-        mVcService = new Retrofit.Builder()
-                .baseUrl(VcService.URL)
-                .addConverterFactory(new VcConverterFactory())
-                .build()
-                .create(VcService.class);
+        mGson = ((VcApp) getActivity().getApplication()).getGson();
+        mVcService = ((VcApp) getActivity().getApplication()).getVcService();
+        mCalendarStore = ((VcApp) getActivity().getApplication()).getCalendarStore();
+
         mMonth = getArguments().getInt(MONTH);
         mYear = getArguments().getInt(YEAR);
         final Calendar calendar = Calendar.getInstance();
@@ -104,8 +95,10 @@ public class CalendarFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
-            mState = State.from(null);
+            mCalendarStore.removeCalendar(mMonth, mYear);
             refresh();
+        } else if (item.getItemId() == R.id.location) {
+            getContainer().onChangeLocationRequest();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -113,11 +106,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (TextUtils.isEmpty(mState.calendarData)) {
-            refresh();
-        } else {
-            onCalendarResponse(mState.calendarData);
-        }
+        refresh();
     }
 
     @Override
@@ -129,28 +118,33 @@ public class CalendarFragment extends Fragment {
     private void refresh() {
         if (isResumed()) {
             mProgressBar.setVisibility(View.VISIBLE);
-            @SuppressLint("DefaultLocale")
-            Call<VCalendar.Response> call = mVcService.calendar(String.format("%02d", mMonth), mYear, "en", "395");
-            call.enqueue(new Callback<VCalendar.Response>() {
-                @Override
-                public void onResponse(final Call<VCalendar.Response> call,
-                                       final Response<VCalendar.Response> response) {
-                    if (isResumed()) {
-                        if (response.body() != null) {
-                            mState = new State(mGson.toJson(response.body()));
-                            onCalendarResponse(mState.calendarData);
-                        } else {
-                            failed();
+
+            if (mCalendarStore.hasCalendar(mMonth, mYear)) {
+                onCalendarResponse(mCalendarStore.getCalendar(mMonth, mYear));
+            } else {
+                @SuppressLint("DefaultLocale")  // The string formatted here is not for end user
+                        Call<VCalendar> call = mVcService.calendar(String.format("%02d", mMonth), mYear, "en", "395");
+                call.enqueue(new Callback<VCalendar>() {
+                    @Override
+                    public void onResponse(final Call<VCalendar> call,
+                                           final Response<VCalendar> response) {
+                        if (isResumed()) {
+                            if (response.body() != null) {
+                                mCalendarStore.saveCalendar(mMonth, mYear, response.body());
+                                onCalendarResponse(response.body());
+                            } else {
+                                failed();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(final Call<VCalendar.Response> call, final Throwable t) {
-                    t.printStackTrace();
-                    failed();
-                }
-            });
+                    @Override
+                    public void onFailure(final Call<VCalendar> call, final Throwable t) {
+                        t.printStackTrace();
+                        failed();
+                    }
+                });
+            }
         }
     }
 
@@ -158,20 +152,29 @@ public class CalendarFragment extends Fragment {
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
             if (getView() != null) {
+                // TODO use res string
                 Snackbar.make(getView(), "Failed to fetch calendar.", Snackbar.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void onCalendarResponse(final String response) {
+    private void onCalendarResponse(final VCalendar calendar) {
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
-            mAdapter.setData(response);
-            if(mCurrentMonth) {
+            mAdapter.setData(calendar);
+            if (mCurrentMonth) {
                 mRecyclerView.getLayoutManager()
                         .scrollToPosition(Calendar.getInstance().get(Calendar.DATE) - 1);
             }
         }
+    }
+
+    public Container getContainer() {
+        return (Container) getParentFragment();
+    }
+
+    public interface Container {
+        void onChangeLocationRequest();
     }
 
     private static class State {

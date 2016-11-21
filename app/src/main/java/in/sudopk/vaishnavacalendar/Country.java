@@ -1,15 +1,15 @@
 package in.sudopk.vaishnavacalendar;
 
-import java.util.ArrayList;
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 public class Country implements Comparable<Country> {
     private final String mName;
     private final List<Location> mLocations;
 
-    public Country(final String name, final ArrayList<Location> locations) {
+    public Country(final String name, final List<Location> locations) {
         mName = name;
-
         mLocations = locations;
     }
 
@@ -22,7 +22,7 @@ public class Country implements Comparable<Country> {
     }
 
     @Override
-    public int compareTo(final Country country) {
+    public int compareTo(@NonNull final Country country) {
         return mName.compareTo(country.getName());
     }
 

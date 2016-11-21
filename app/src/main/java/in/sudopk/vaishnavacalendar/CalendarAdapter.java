@@ -9,19 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import in.sudopk.coreandroid.Layout;
 import in.sudopk.coreandroid.SimpleList;
-import in.sudopk.utils.StrUtil;
-import in.sudopk.vaishnavacalendar.retrofit.VCalendar;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
@@ -42,7 +37,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     @Override
     public VH onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final int cell, eventLayout;
-        if(viewType ==0 ) {
+        if (viewType == 0) {
             cell = R.layout.calendar_cell;
             eventLayout = R.layout.text_view;
         } else {
@@ -55,7 +50,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     @Override
     public int getItemViewType(final int position) {
-        if(mDateToHighlight- 1 == position) {
+        if (mDateToHighlight - 1 == position) {
             return 1;
         } else {
             return 0;
@@ -72,24 +67,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
         return mCalendar.size();
     }
 
-    public void setData(final String data) {
-        if (StrUtil.isNotEmpty(data)) {
-            try {
-                final VCalendar.Response calendarResponce =
-                        mGson.fromJson(data, VCalendar.Response.class);
-                setData(calendarResponce);
-            } catch (JsonSyntaxException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public void setData(final VCalendar.Response calendarResponce) {
+    public void setData(final VCalendar calendar) {
         mCalendar.clear();
-        final Map<Integer, List<String>> calendar = calendarResponce.getCalendar();
-        for (Integer day : calendar.keySet()) {
-            mCalendar.add(new DayCalendar(day, calendar.get(day)));
-        }
+        mCalendar.addAll(calendar.getCalendar());
         Collections.sort(mCalendar);
         notifyDataSetChanged();
     }
