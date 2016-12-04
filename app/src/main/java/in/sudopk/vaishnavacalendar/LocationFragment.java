@@ -1,9 +1,12 @@
 package in.sudopk.vaishnavacalendar;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocationFragment extends DialogFragment {
+public class LocationFragment extends AppCompatDialogFragment {
     private LocationAdapter mAdapter;
     private ProgressBar mProgressBar;
     private VcService mVcService;
@@ -40,6 +43,14 @@ public class LocationFragment extends DialogFragment {
         mVcService = ((VcApp) getActivity().getApplication()).getVcService();
 
         mLocationStore = ((VcApp) getActivity().getApplication()).getLocationStore();
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
+        final Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setTitle(R.string.location_title);
+        return dialog;
     }
 
     @Nullable

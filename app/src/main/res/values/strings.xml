@@ -2,4 +2,5 @@
     <string name="app_name">Vaishnava Calendar</string>
     <string name="refresh">Refresh</string>
     <string name="location">Location</string>
+    <string name="location_title">Select location</string>
 </resources>

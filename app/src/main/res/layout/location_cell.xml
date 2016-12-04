@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:tools="http://schemas.android.com/tools"
-                                    style="@style/CardViewStyle"
-                                    tools:ignore="UnusedAttribute">
 
-    <LinearLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textView"
+        style="@style/Base.TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/country"
-            style="@style/Base.TextAppearance.AppCompat.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Country"/>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/locations"
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Locations"/>
-
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
+        android:padding="16dp"
+        tools:text="Locations"/>
+    <View
+        android:background="@color/headerColor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+</LinearLayout>
