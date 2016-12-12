@@ -12,14 +12,15 @@ import java.util.Calendar;
 @SuppressLint("DefaultLocale")  // not end user string
 public class CalendarStore {
     public static final int MONTHS_TO_STORE = 5;
-    private static final String CALENDAR_KEY_FORMAT = "locations_%d_%d";
+    private static final String CALENDAR_KEY_FORMAT = "calendar_%d_%d";
+    private static final String LOCATION_KEY = "location";
     private final SharedPreferences mPreferences;
     private final Gson mGson;
 
     public CalendarStore(final Context context, final Gson gson) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mGson = gson;
-        cleanup();
+        cleanupExtra();
     }
 
     /**
@@ -64,8 +65,8 @@ public class CalendarStore {
                 .apply();
     }
 
-    public void cleanup() {
-        for (int i = 1; i <= 2; i++) {
+    public void cleanupExtra() {
+        for (int i = 1; i <= 5; i++) {
             final int offset = (MONTHS_TO_STORE / 2) + i;
             Calendar calendar = CalendarUtil.getCalendar(offset);
             removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
@@ -74,4 +75,22 @@ public class CalendarStore {
         }
     }
 
+    public void cleanupAll() {
+        cleanupExtra();
+        for (int i = -MONTHS_TO_STORE; i <= MONTHS_TO_STORE; i++) {
+            Calendar calendar = CalendarUtil.getCalendar(i);
+            removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+        }
+    }
+
+    public Location getLocation() {
+        return mGson.fromJson(mPreferences.getString(LOCATION_KEY, null), Location.class);
+    }
+
+    public void setLocation(Location location) {
+        cleanupAll();
+        mPreferences.edit()
+                .putString(LOCATION_KEY, mGson.toJson(location))
+                .apply();
+    }
 }

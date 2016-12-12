@@ -12,6 +12,8 @@
   ],
 
   "nice to have": [
-    "Show weekday name"
+    "Show weekday name",
+    "Show month name",
+    "Scroll to selected location and may be highlight the current selection"
   ]
 }

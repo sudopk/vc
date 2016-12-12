@@ -3,4 +3,7 @@
     <string name="refresh">Refresh</string>
     <string name="location">Location</string>
     <string name="location_title">Select location</string>
+    <string name="locations_failure">Failed to fetch locations.</string>
+    <string name="calender_failure">Failed to fetch calendar.</string>
+    <string name="location_required">Location must be selected.</string>
 </resources>

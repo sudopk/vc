@@ -34,7 +34,7 @@ public class VcConverterFactory extends Converter.Factory {
                 }
             }
         }
-        return null;
+        return super.responseBodyConverter(type, annotations, retrofit);
     }
 
 

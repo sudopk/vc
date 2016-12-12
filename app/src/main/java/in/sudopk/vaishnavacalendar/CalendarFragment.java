@@ -115,35 +115,40 @@ public class CalendarFragment extends Fragment {
         mState.saveTo(outState);
     }
 
-    private void refresh() {
+    public void refresh() {
         if (isResumed()) {
             mProgressBar.setVisibility(View.VISIBLE);
 
             if (mCalendarStore.hasCalendar(mMonth, mYear)) {
                 onCalendarResponse(mCalendarStore.getCalendar(mMonth, mYear));
             } else {
-                @SuppressLint("DefaultLocale")  // The string formatted here is not for end user
-                        Call<VCalendar> call = mVcService.calendar(String.format("%02d", mMonth), mYear, "en", "395");
-                call.enqueue(new Callback<VCalendar>() {
-                    @Override
-                    public void onResponse(final Call<VCalendar> call,
-                                           final Response<VCalendar> response) {
-                        if (isResumed()) {
-                            if (response.body() != null) {
-                                mCalendarStore.saveCalendar(mMonth, mYear, response.body());
-                                onCalendarResponse(response.body());
-                            } else {
-                                failed();
+                final Location location = mCalendarStore.getLocation();
+                if(location == null) {
+                    getContainer().onChangeLocationRequest();
+                } else {
+                    @SuppressLint("DefaultLocale")  // The string formatted here is not for end user
+                            Call<VCalendar> call = mVcService.calendar(String.format("%02d", mMonth), mYear, "en", location.getId());
+                    call.enqueue(new Callback<VCalendar>() {
+                        @Override
+                        public void onResponse(final Call<VCalendar> call,
+                                               final Response<VCalendar> response) {
+                            if (isResumed()) {
+                                if (response.body() != null) {
+                                    mCalendarStore.saveCalendar(mMonth, mYear, response.body());
+                                    onCalendarResponse(response.body());
+                                } else {
+                                    failed();
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(final Call<VCalendar> call, final Throwable t) {
-                        t.printStackTrace();
-                        failed();
-                    }
-                });
+                        @Override
+                        public void onFailure(final Call<VCalendar> call, final Throwable t) {
+                            t.printStackTrace();
+                            failed();
+                        }
+                    });
+                }
             }
         }
     }
@@ -152,8 +157,7 @@ public class CalendarFragment extends Fragment {
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
             if (getView() != null) {
-                // TODO use res string
-                Snackbar.make(getView(), "Failed to fetch calendar.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getView(), R.string.calender_failure, Snackbar.LENGTH_SHORT).show();
             }
         }
     }

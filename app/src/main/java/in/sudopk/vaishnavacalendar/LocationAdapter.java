@@ -14,25 +14,26 @@ import in.sudopk.coreandroid.Layout;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
-
-    private final List<Country> mCounteries = new ArrayList<>();
-    private int[] mCountryIndex = new int[0];
-    private int[] mCountryIndexCumulative = new int[0];
     private final static int HEADER_VIEW_TYPE = 0;
     private final static int CELL_VIEW_TYPE = 1;
+    private final List<Country> mCounteries = new ArrayList<>();
+    private final LocationContainer mContainer;
+    private int[] mCountryIndex = new int[0];
+    private int[] mCountryIndexCumulative = new int[0];
 
 
-    public LocationAdapter() {
+    public LocationAdapter(final LocationContainer container) {
+        mContainer = container;
     }
 
     @Override
     public VH onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        if(viewType == HEADER_VIEW_TYPE) {
+        if (viewType == HEADER_VIEW_TYPE) {
             return new VH(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.location_header_cell, parent, false));
+                    .inflate(R.layout.location_header_cell, parent, false), mContainer);
         } else {
             return new VH(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.location_cell, parent, false));
+                    .inflate(R.layout.location_cell, parent, false), mContainer);
         }
     }
 
@@ -67,14 +68,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
 
     private void updateCountryIndices(List<Country> countries) {
         int total = countries.size();
-        for (Country country: countries) {
+        for (Country country : countries) {
             total += country.getLocations().size();
         }
         mCountryIndex = new int[total];
         mCountryIndexCumulative = new int[total];
         int index = 0;
         int cumulativeIndex = 0;
-        for (Country country: countries) {
+        for (Country country : countries) {
             final int nextCumulativeIndex = cumulativeIndex + country.getLocations().size() + 1;
             for (int i = cumulativeIndex; i < nextCumulativeIndex; i++) {
                 mCountryIndex[i] = index;
@@ -87,18 +88,27 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
 
     static class VH extends RecyclerView.ViewHolder {
         private final TextView mTextView;
+        private Location mLocation;
 
-        VH(final View itemView) {
+        VH(final View itemView, final LocationContainer container) {
             super(itemView);
             mTextView = Layout.findViewById(itemView, R.id.textView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    if (getItemViewType() != HEADER_VIEW_TYPE) {
+                        container.onLocationSelected(mLocation);
+                    }
+                }
+            });
         }
 
         public void setCountry(final Country country, int countryIndex) {
-            if(getItemViewType() == HEADER_VIEW_TYPE) {
+            if (getItemViewType() == HEADER_VIEW_TYPE) {
                 mTextView.setText(country.getName());
             } else {
-                final Location location = country.getLocations().get(getAdapterPosition() - countryIndex -1);
-                mTextView.setText(location.getName() + " (" + location.getId() + ")");
+                mLocation = country.getLocations().get(getAdapterPosition() - countryIndex - 1);
+                mTextView.setText(mLocation.getName());
             }
         }
     }

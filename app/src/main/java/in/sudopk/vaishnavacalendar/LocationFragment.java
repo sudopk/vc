@@ -1,6 +1,7 @@
 package in.sudopk.vaishnavacalendar;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,7 +26,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocationFragment extends AppCompatDialogFragment {
+public class LocationFragment extends AppCompatDialogFragment implements LocationContainer {
+    public static final String TAG = LocationFragment.class.getName();
     private LocationAdapter mAdapter;
     private ProgressBar mProgressBar;
     private VcService mVcService;
@@ -62,7 +64,7 @@ public class LocationFragment extends AppCompatDialogFragment {
         mProgressBar = Layout.findViewById(view, R.id.progressBar);
         final RecyclerView recyclerView = Layout.findViewById(view, R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new LocationAdapter();
+        mAdapter = new LocationAdapter(this);
         recyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -84,6 +86,28 @@ public class LocationFragment extends AppCompatDialogFragment {
     public void onResume() {
         super.onResume();
         refresh();
+    }
+
+    @Override
+    public void onCancel(final DialogInterface dialog) {
+        super.onCancel(dialog);
+        getContainer().onLocationSelectCanceled();
+    }
+
+    @Override
+    public void onLocationSelected(final Location location) {
+        dismiss();
+        getContainer().onLocationSelected(location);
+    }
+
+    @Override
+    public void onLocationSelectCanceled() {
+        dismiss();
+        getContainer().onLocationSelectCanceled();
+    }
+
+    private LocationContainer getContainer() {
+        return (LocationContainer)getParentFragment();
     }
 
     private void refresh() {
@@ -121,8 +145,7 @@ public class LocationFragment extends AppCompatDialogFragment {
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
             if (getView() != null) {
-                // TODO use res string
-                Snackbar.make(getView(), "Failed to fetch locations.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getView(), R.string.locations_failure, Snackbar.LENGTH_SHORT).show();
             }
         }
     }
@@ -133,4 +156,5 @@ public class LocationFragment extends AppCompatDialogFragment {
             mAdapter.setData(response);
         }
     }
+
 }
