@@ -33,9 +33,7 @@ public class CalendarFragment extends Fragment {
     private CalendarAdapter mAdapter;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
-    private State mState;
     private VcService mVcService;
-    private Gson mGson;
     private int mMonth;
     private int mYear;
     private CalendarStore mCalendarStore;
@@ -56,9 +54,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mState = State.from(savedInstanceState);
         setHasOptionsMenu(true);
-        mGson = ((VcApp) getActivity().getApplication()).getGson();
         mVcService = ((VcApp) getActivity().getApplication()).getVcService();
         mCalendarStore = ((VcApp) getActivity().getApplication()).getCalendarStore();
 
@@ -75,7 +71,7 @@ public class CalendarFragment extends Fragment {
         mProgressBar = Layout.findViewById(view, R.id.progressBar);
         mRecyclerView = Layout.findViewById(view, R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new CalendarAdapter();
+        mAdapter = new CalendarAdapter(mMonth, mYear);
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -100,12 +96,6 @@ public class CalendarFragment extends Fragment {
     public void onResume() {
         super.onResume();
         refresh();
-    }
-
-    @Override
-    public void onSaveInstanceState(final Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mState.saveTo(outState);
     }
 
     public void refresh() {
@@ -180,44 +170,5 @@ public class CalendarFragment extends Fragment {
 
     public interface Container {
         void onChangeLocationRequest();
-    }
-
-    private static class State {
-        private static final String CALENDAR_DATA = "calendarData";
-        private static final String CALENDAR_DATE = "calendarDate";
-
-        public final String calendarData;
-        private long mCalendarDate;
-
-        public State(final String calendarData) {
-            this.calendarData = calendarData;
-            mCalendarDate = Calendar.getInstance().getTimeInMillis();
-        }
-
-        public static State from(Bundle bundle) {
-            if (bundle != null) {
-                long date = bundle.getLong(CALENDAR_DATE, 0);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(date);
-                if (isToday(calendar)) {
-                    return new State(bundle.getString(CALENDAR_DATA, ""));
-                }
-            }
-            return new State("");
-        }
-
-        private static boolean isToday(final Calendar calendar) {
-            final Calendar today = Calendar.getInstance();
-            return today.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
-                    today.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
-                    today.get(Calendar.DATE) == calendar.get(Calendar.DATE);
-        }
-
-        public void saveTo(Bundle bundle) {
-            if (bundle != null) {
-                bundle.putString(CALENDAR_DATA, calendarData);
-                bundle.putLong(CALENDAR_DATE, mCalendarDate);
-            }
-        }
     }
 }
