@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
+import in.sudopk.coreandroid.Fm;
 import in.sudopk.coreandroid.Layout;
 import in.sudopk.vaishnavacalendar.retrofit.VcService;
 import retrofit2.Call;
@@ -107,7 +108,7 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
     }
 
     private LocationContainer getContainer() {
-        return (LocationContainer)getParentFragment();
+        return Fm.container(this);
     }
 
     private void refresh() {

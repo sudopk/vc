@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 
 import java.util.Calendar;
 
+import in.sudopk.coreandroid.Fm;
 import in.sudopk.coreandroid.Layout;
 import in.sudopk.vaishnavacalendar.retrofit.VcService;
 import retrofit2.Call;
@@ -174,7 +175,7 @@ public class CalendarFragment extends Fragment {
     }
 
     public Container getContainer() {
-        return (Container) getParentFragment();
+        return Fm.container(this);
     }
 
     public interface Container {

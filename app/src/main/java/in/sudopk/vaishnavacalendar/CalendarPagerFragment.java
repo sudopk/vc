@@ -18,9 +18,10 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 
+import in.sudopk.coreandroid.Fm;
 import in.sudopk.coreandroid.Layout;
 
-public class CalendarPagerFragment extends Fragment implements CalendarFragment.Container, LocationContainer {
+public class CalendarPagerFragment extends Fragment implements CalendarFragment.Container {
 
     private Toolbar mToolbar;
     private CalendarStore mCalendarStore;
@@ -58,40 +59,14 @@ public class CalendarPagerFragment extends Fragment implements CalendarFragment.
 
     @Override
     public void onChangeLocationRequest() {
-        try {
-            // throws IllegalStateException, for reason which is not clear to me
-            getChildFragmentManager().executePendingTransactions();
-        } catch (IllegalStateException ex) {
-            ex.printStackTrace();
-        }
-        DialogFragment fragment = (DialogFragment) getChildFragmentManager().findFragmentByTag(LocationFragment.TAG);
-        if (fragment == null) {
-            fragment = LocationFragment.newInstance();
-            fragment.show(getChildFragmentManager(), LocationFragment.TAG);
-        }
+        getContainer().onChangeLocationRequest();
     }
 
-    @Override
-    public void onLocationSelected(Location location) {
-        ((VcApp) getActivity().getApplication()).getCalendarStore().setLocation(location);
-        updateSubtitle(location);
-        // invalidating viewpager doesn't seem to work
-        // other way would be to have another host fragment,
-        // that puts a new CalendarPagerFragment on LocationSelected
-        final List<Fragment> fragments = getChildFragmentManager().getFragments();
-        for (Fragment fragment : fragments) {
-            if (fragment instanceof CalendarFragment) {
-                ((CalendarFragment) fragment).refresh();
-            }
-        }
+    private CalendarPagerFragment.Container getContainer() {
+        return Fm.container(this);
     }
 
-    @Override
-    public void onLocationSelectCanceled() {
-        if (mCalendarStore.getLocation() == null) {
-            Toast.makeText(getContext(), R.string.location_required, Toast.LENGTH_LONG).show();
-            onChangeLocationRequest();
-        }
+    public interface Container extends CalendarFragment.Container {
     }
 
     private class CalendarPagerAdapter extends FragmentStatePagerAdapter {
