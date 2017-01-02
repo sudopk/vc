@@ -22,16 +22,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
 
     private final List<DayCalendar> mCalendar;
-    private final Gson mGson;
     private int mDateToHighlight;
+
+
+    public CalendarAdapter() {
+        mCalendar = new ArrayList<>();
+    }
 
     /**
      * @param dateToHighlight Month dates i.e. 1 to 31. Pass 0 if don't want to highlight any date
      */
-    public CalendarAdapter(final Gson gson, int dateToHighlight) {
+    public void setDateToHighlight(int dateToHighlight) {
         mDateToHighlight = dateToHighlight;
-        mCalendar = new ArrayList<>();
-        mGson = gson;
+        notifyDataSetChanged();
     }
 
     @Override

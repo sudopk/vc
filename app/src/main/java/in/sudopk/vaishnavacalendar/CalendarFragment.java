@@ -38,8 +38,6 @@ public class CalendarFragment extends Fragment {
     private Gson mGson;
     private int mMonth;
     private int mYear;
-    private boolean mCurrentMonth;
-    private int mTodayDate;
     private CalendarStore mCalendarStore;
 
     /**
@@ -66,10 +64,6 @@ public class CalendarFragment extends Fragment {
 
         mMonth = getArguments().getInt(MONTH);
         mYear = getArguments().getInt(YEAR);
-        final Calendar calendar = Calendar.getInstance();
-        mTodayDate = calendar.get(Calendar.DATE);
-        mCurrentMonth = (mMonth == calendar.get(Calendar.MONTH) + 1) &&
-                (mYear == calendar.get(Calendar.YEAR));
     }
 
     @Nullable
@@ -81,9 +75,7 @@ public class CalendarFragment extends Fragment {
         mProgressBar = Layout.findViewById(view, R.id.progressBar);
         mRecyclerView = Layout.findViewById(view, R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        final int dateToHighlight =
-                mCurrentMonth ? mTodayDate : 0;
-        mAdapter = new CalendarAdapter(mGson, dateToHighlight);
+        mAdapter = new CalendarAdapter();
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -124,7 +116,7 @@ public class CalendarFragment extends Fragment {
                 onCalendarResponse(mCalendarStore.getCalendar(mMonth, mYear));
             } else {
                 final Location location = mCalendarStore.getLocation();
-                if(location == null) {
+                if (location == null) {
                     getContainer().onChangeLocationRequest();
                 } else {
                     @SuppressLint("DefaultLocale")  // The string formatted here is not for end user
@@ -163,13 +155,21 @@ public class CalendarFragment extends Fragment {
         }
     }
 
-    private void onCalendarResponse(final VCalendar calendar) {
+    private void onCalendarResponse(final VCalendar vCalendar) {
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
-            mAdapter.setData(calendar);
-            if (mCurrentMonth) {
+            mAdapter.setData(vCalendar);
+
+            final Calendar calendar = Calendar.getInstance();
+            final boolean currentMonth = (mMonth == calendar.get(Calendar.MONTH) + 1) &&
+                    (mYear == calendar.get(Calendar.YEAR));
+            if (currentMonth) {
                 mRecyclerView.getLayoutManager()
-                        .scrollToPosition(Calendar.getInstance().get(Calendar.DATE) - 1);
+                        .scrollToPosition(calendar.get(Calendar.DATE) - 1);
+
+                mAdapter.setDateToHighlight(calendar.get(Calendar.DATE));
+            } else {
+                mAdapter.setDateToHighlight(0);
             }
         }
     }

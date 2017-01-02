@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import java.util.Calendar;
 import java.util.List;
 
 import in.sudopk.coreandroid.Fm;
@@ -162,7 +161,7 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
             mAdapter.setData(response);
 
             int position = mAdapter.getPosition(mCalendarStore.getLocation());
-            if(position > 0) {
+            if (position > 0) {
                 // lets scroll to location one before the actual one, looks little better
                 position--;
             }

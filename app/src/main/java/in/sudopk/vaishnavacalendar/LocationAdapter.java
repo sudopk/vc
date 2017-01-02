@@ -88,11 +88,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
 
     public int getPosition(final Location location) {
         int position = 0;
-        if(location != null) {
+        if (location != null) {
             for (Country country : mCountries) {
                 position++;
                 for (Location l : country.getLocations()) {
-                    if(l.getId().equals(location.getId())) {
+                    if (l.getId().equals(location.getId())) {
                         return position;
                     }
                     position++;
