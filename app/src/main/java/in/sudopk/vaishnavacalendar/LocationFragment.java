@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import java.util.Calendar;
 import java.util.List;
 
 import in.sudopk.coreandroid.Fm;
@@ -33,6 +34,8 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
     private ProgressBar mProgressBar;
     private VcService mVcService;
     private LocationStore mLocationStore;
+    private CalendarStore mCalendarStore;
+    private RecyclerView mRecyclerView;
 
     public static DialogFragment newInstance() {
         return new LocationFragment();
@@ -46,6 +49,8 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
         mVcService = ((VcApp) getActivity().getApplication()).getVcService();
 
         mLocationStore = ((VcApp) getActivity().getApplication()).getLocationStore();
+        mCalendarStore = ((VcApp) getActivity().getApplication()).getCalendarStore();
+
     }
 
     @NonNull
@@ -63,10 +68,10 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
                              @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.location, container, false);
         mProgressBar = Layout.findViewById(view, R.id.progressBar);
-        final RecyclerView recyclerView = Layout.findViewById(view, R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView = Layout.findViewById(view, R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new LocationAdapter(this);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
@@ -155,6 +160,14 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
         if (isResumed()) {
             mProgressBar.setVisibility(View.GONE);
             mAdapter.setData(response);
+
+            int position = mAdapter.getPosition(mCalendarStore.getLocation());
+            if(position > 0) {
+                // lets scroll to location one before the actual one, looks little better
+                position--;
+            }
+            mRecyclerView.getLayoutManager()
+                    .scrollToPosition(position);
         }
     }
 

@@ -16,7 +16,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
     private final static int HEADER_VIEW_TYPE = 0;
     private final static int CELL_VIEW_TYPE = 1;
-    private final List<Country> mCounteries = new ArrayList<>();
+    private final List<Country> mCountries = new ArrayList<>();
     private final LocationContainer mContainer;
     private int[] mCountryIndex = new int[0];
     private int[] mCountryIndexCumulative = new int[0];
@@ -39,7 +39,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
 
     @Override
     public void onBindViewHolder(final VH holder, final int position) {
-        holder.setCountry(mCounteries.get(mCountryIndex[position]), mCountryIndexCumulative[position]);
+        holder.setCountry(mCountries.get(mCountryIndex[position]), mCountryIndexCumulative[position]);
     }
 
     @Override
@@ -57,11 +57,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
     }
 
     public void setData(final List<Country> data) {
-        mCounteries.clear();
-        mCounteries.addAll(data);
-        Collections.sort(mCounteries);
+        mCountries.clear();
+        mCountries.addAll(data);
+        Collections.sort(mCountries);
 
-        updateCountryIndices(mCounteries);
+        updateCountryIndices(mCountries);
 
         notifyDataSetChanged();
     }
@@ -84,6 +84,22 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
             index++;
             cumulativeIndex = nextCumulativeIndex;
         }
+    }
+
+    public int getPosition(final Location location) {
+        int position = 0;
+        if(location != null) {
+            for (Country country : mCountries) {
+                position++;
+                for (Location l : country.getLocations()) {
+                    if(l.getId().equals(location.getId())) {
+                        return position;
+                    }
+                    position++;
+                }
+            }
+        }
+        return 0;
     }
 
     static class VH extends RecyclerView.ViewHolder {
