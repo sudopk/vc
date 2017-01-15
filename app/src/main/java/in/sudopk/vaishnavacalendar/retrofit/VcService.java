@@ -9,15 +9,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface VcService {
-    //String URL = "http://sudopk.github.io/vc/";
-
-    /*@POST("calendar")
-    Call<VCalendar> calendar(@Body VCalendar.Request user);
-    @GET("calendar.json")
-    Call<VCalendar> calendar();
-    @GET("locations.json")
-    Call<VCalendar> locations();*/
-
     String URL =  "http://www.vaisnavacalendar.com/";
 
     @GET("vcal.php")

@@ -39,7 +39,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
 
     @Override
     public void onBindViewHolder(final VH holder, final int position) {
-        holder.setCountry(mCountries.get(mCountryIndex[position]), mCountryIndexCumulative[position]);
+        holder.setCountry(mCountries.get(mCountryIndex[position]),
+                mCountryIndexCumulative[position]);
     }
 
     @Override

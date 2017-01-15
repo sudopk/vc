@@ -14,8 +14,9 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         tools:text="Locations"/>
+
     <View
-        android:background="@color/headerColor"
         android:layout_width="match_parent"
-        android:layout_height="2dp"/>
+        android:layout_height="2dp"
+        android:background="@color/headerColor"/>
 </LinearLayout>

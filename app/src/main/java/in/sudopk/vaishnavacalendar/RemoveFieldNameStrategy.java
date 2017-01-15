@@ -9,7 +9,7 @@ public class RemoveFieldNameStrategy implements FieldNamingStrategy {
     public String translateName(final Field f) {
         char[] name = f.getName().toCharArray();
         int offset = 0;
-        if (name.length >= 2) {
+        if (name.length >= 2 && name[0] == 'm' && Character.isUpperCase(name[1])) {
             name[1] = Character.toLowerCase(name[1]);
             offset = 1;
         }

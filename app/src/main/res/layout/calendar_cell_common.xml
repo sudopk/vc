@@ -14,20 +14,20 @@
         style="@style/Base.TextAppearance.AppCompat.Title"
         android:layout_width="70dp"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:background="@color/colorAccent"
+        android:gravity="center"
         android:textColor="@android:color/white"
         app:layout_constraintCenterY_toCenterY="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="31"/>
+        tools:text="Jan 31\nSat"/>
 
     <in.sudopk.coreandroid.SimpleList
         android:id="@+id/events"
-        android:padding="16dp"
         style="@style/Base.TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintCenterY_toCenterY="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/date"/>

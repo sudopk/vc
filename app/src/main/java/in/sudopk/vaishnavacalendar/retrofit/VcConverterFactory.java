@@ -24,7 +24,8 @@ import retrofit2.Retrofit;
 
 public class VcConverterFactory extends Converter.Factory {
     @Override
-    public Converter<ResponseBody, ?> responseBodyConverter(final Type type, final Annotation[] annotations, final Retrofit retrofit) {
+    public Converter<ResponseBody, ?> responseBodyConverter(final Type type, final Annotation[]
+            annotations, final Retrofit retrofit) {
         if (annotations != null) {
             for (Annotation annotation : annotations) {
                 if (annotation.annotationType().equals(VcApi.Calendar.class)) {
@@ -46,7 +47,8 @@ public class VcConverterFactory extends Converter.Factory {
         @Override
         public VCalendar convert(final ResponseBody value) throws IOException {
             final Document document = Jsoup.parse(value.string());
-            final Elements days = document.select("body center>table:nth-child(3)>tbody>tr>td>table>tbody");
+            final Elements days = document.select("body center>table:nth-child(3)" +
+                    ">tbody>tr>td>table>tbody");
             final List<DayCalendar> calendar = new ArrayList<>();
             for (final Element day : days) {
                 final DayCalendar dayCalendar = parseDay(day);
@@ -67,7 +69,7 @@ public class VcConverterFactory extends Converter.Factory {
                 parseDayEvent(event, firstRow);
                 firstRow = false;
             }
-            if (mDate != 0) {
+            if (mDate != 0 && !mEventData.isEmpty()) {
                 return new DayCalendar(mDate, mEventData);
             }
             return null;
@@ -114,7 +116,8 @@ public class VcConverterFactory extends Converter.Factory {
         }
     }
 
-    private static class VcLocationResponseConverter implements Converter<ResponseBody, List<Country>> {
+    private static class VcLocationResponseConverter implements Converter<ResponseBody,
+            List<Country>> {
         private static final String PREFIX_OF_LOCATIONS_WITH_ID = "....";
         private List<Country> mLocationData;
 

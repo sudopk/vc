@@ -12,4 +12,8 @@ public class VCalendar {
     public List<DayCalendar> getCalendar() {
         return mCalendar;
     }
+
+    public boolean hasData() {
+        return mCalendar != null && !mCalendar.isEmpty();
+    }
 }

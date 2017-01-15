@@ -46,34 +46,50 @@ public class TestHtml {
                     " {\n" +
                     "   val=document.getElementById('code').value;\n" +
                     "   if (val==0) return false;\n" +
-                    "   window.location='search.php?month=07&year=2016&lang=en&CIID=398&code='+val;\n" +
+                    "   window.location='search" +
+                    ".php?month=07&year=2016&lang=en&CIID=398&code='+val;\n" +
                     "   return true;\n" +
                     "  \n" +
                     " }\n" +
                     "\n" +
                     "</script>\n" +
                     "\n" +
-                    "<SCRIPT language=JavaScript src='../menues/scrolling_array2.js' type=text/javascript></SCRIPT>\n" +
-                    "<SCRIPT language=JavaScript src='../menues/menu_array.js' type=text/javascript></SCRIPT>\n" +
-                    "<!--<SCRIPT language=JavaScript src='../menues/menu2_array.js' type=text/javascript></SCRIPT>-->\n" +
-                    "<SCRIPT language=JavaScript src='../menues/lineahalf_array.js' type=text/javascript></SCRIPT>\n" +
-                    "<SCRIPT language=JavaScript src='../menues/mmenu.js' type=text/javascript></SCRIPT>\n" +
-                    "<!--<SCRIPT LANGUAGE='JavaScript1.2' SRC='../menues/topmenu.js'></SCRIPT>-->\n" +
+                    "<SCRIPT language=JavaScript src='../menues/scrolling_array2.js' " +
+                    "type=text/javascript></SCRIPT>\n" +
+                    "<SCRIPT language=JavaScript src='../menues/menu_array.js' " +
+                    "type=text/javascript></SCRIPT>\n" +
+                    "<!--<SCRIPT language=JavaScript src='../menues/menu2_array.js' " +
+                    "type=text/javascript></SCRIPT>-->\n" +
+                    "<SCRIPT language=JavaScript src='../menues/lineahalf_array.js' " +
+                    "type=text/javascript></SCRIPT>\n" +
+                    "<SCRIPT language=JavaScript src='../menues/mmenu.js' " +
+                    "type=text/javascript></SCRIPT>\n" +
+                    "<!--<SCRIPT LANGUAGE='JavaScript1.2' SRC='../menues/topmenu" +
+                    ".js'></SCRIPT>-->\n" +
                     "\n" +
                     "</HEAD>\n" +
                     "\n" +
-                    "<BODY topmargin=0 leftmargin=0 BGPROPERTIES='FIXED' TEXT=7E6B46 BGCOLOR=FFE2A9 LINK=7E6B46 VLINK=7E6B46>\n" +
+                    "<BODY topmargin=0 leftmargin=0 BGPROPERTIES='FIXED' TEXT=7E6B46 " +
+                    "BGCOLOR=FFE2A9 LINK=7E6B46 VLINK=7E6B46>\n" +
                     "\n" +
                     "<center>\n" +
                     "\n" +
                     "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100% BGCOLOR=000000>\n" +
                     "<TR><TD WIDTH=100 rowspan=2 HEIGTH=62>\n" +
-                    "\t<OBJECT classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000 codebase=http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0 ID=logo WIDTH=100 HEIGHT=62><PARAM NAME=movie VALUE=http://www.iskcon.com.mx/java/logo.swf><PARAM NAME=quality VALUE=high><PARAM NAME=bgcolor VALUE=000000><EMBED src=http://www.iskcon.com.mx/java/logo.swf quality=high bgcolor=000000 WIDTH=100 HEIGHT=62 TYPE=application/x-shockwave-flash PLUGINSPAGE=http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash></EMBED></OBJECT>\n" +
+                    "\t<OBJECT classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000 " +
+                    "codebase=http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0," +
+                    "0 ID=logo WIDTH=100 HEIGHT=62><PARAM NAME=movie VALUE=http://www.iskcon.com" +
+                    ".mx/java/logo.swf><PARAM NAME=quality VALUE=high><PARAM NAME=bgcolor " +
+                    "VALUE=000000><EMBED src=http://www.iskcon.com.mx/java/logo.swf quality=high " +
+                    "bgcolor=000000 WIDTH=100 HEIGHT=62 TYPE=application/x-shockwave-flash " +
+                    "PLUGINSPAGE=http://www.macromedia.com/shockwave/download/index" +
+                    ".cgi?P1_Prod_Version=ShockwaveFlash></EMBED></OBJECT>\n" +
                     "</TD><TD VALIGN=TOP WIDTH=500 colspan=5>\n" +
                     "\t<FONT COLOR=000000>.\n" +
                     "</TD></TR><tr><td valign=bottom>\n" +
                     "\t<center><font color=ffffff>\n" +
-                    "\t<a href='print_cal.php?CIID=398&month=07&year=2016&lang=en'><img src=print.gif border=0 alt='Printable version'> \n" +
+                    "\t<a href='print_cal.php?CIID=398&month=07&year=2016&lang=en'><img src=print" +
+                    ".gif border=0 alt='Printable version'> \n" +
                     "\t<b>Printable version</b></a>\n" +
                     "</td><td valign=bottom>\n" +
                     "\t<a href='javascript:;' onClick=window.open('/help_en.php','_blank','width=500,height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false>\n" +
@@ -81,19 +97,23 @@ public class TestHtml {
                     "\t<b>Online Help</b></a>\n" +
                     "</td><td valign=bottom>\n" +
                     "\t<center>\n" +
-                    "\t<a href='/facebook/?lang=en'><img src=/facebook.gif border=0 alt='Facebook'> \n" +
+                    "\t<a href='/facebook/?lang=en'><img src=/facebook.gif border=0 " +
+                    "alt='Facebook'> \n" +
                     "\t<b>Facebook</b></a>\n" +
                     "</td><td valign=bottom>\n" +
                     "\t<center><font color=ffffff>\n" +
-                    "\t<a href='vcal.php?CIID=398&lang=en&month=06&year=2016'><img src=previous.gif border=0 alt='Prev Month'> \n" +
+                    "\t<a href='vcal.php?CIID=398&lang=en&month=06&year=2016'><img src=previous" +
+                    ".gif border=0 alt='Prev Month'> \n" +
                     "\t<b>Prev Month</b></a>\n" +
                     "</td><td valign=bottom>\n" +
                     "\t<center><font color=ffffff>\n" +
-                    "\t<a href='vcal.php?CIID=398&lang=en&month=08&year=2016'><img src=next.gif border=0 alt='Next Month'> \n" +
+                    "\t<a href='vcal.php?CIID=398&lang=en&month=08&year=2016'><img src=next.gif " +
+                    "border=0 alt='Next Month'> \n" +
                     "\t<b>Next Month</b></a>\n" +
                     "</td><!--<td valign=bottom>\n" +
                     "\t<center><font color=ffffff>\n" +
-                    "\t<a href='ics.php?CIID=398&month=07&year=2016&lang=en'><img src=ics.gif border=0 alt='For your PC or Mobile'> \n" +
+                    "\t<a href='ics.php?CIID=398&month=07&year=2016&lang=en'><img src=ics.gif " +
+                    "border=0 alt='For your PC or Mobile'> \n" +
                     "\t<b>LANG_MENU_ICS</b></a>\n" +
                     "</td>--></tr>\n" +
                     "</TABLE>\n" +
@@ -115,7 +135,8 @@ public class TestHtml {
                     "\t\t// -->\n" +
                     "\t\t</SCRIPT>\n" +
                     "\t\t<FORM name =  'nav2'>\n" +
-                    "\t\t<SELECT NAME='site' SIZE=1 onChange ='nav2Handler(document.nav2.site)'>\n" +
+                    "\t\t<SELECT NAME='site' SIZE=1 onChange ='nav2Handler(document.nav2.site)" +
+                    "'>\n" +
                     "\t\t<OPTION VALUE='servicios.htm'>SELECT LANGUAGE:\n" +
                     "\t\t<OPTION VALUE='vcal.php?CIID=398&lang=en&month=07&year=2016'>English\n" +
                     "\t\t<OPTION VALUE='vcal.php?CIID=398&lang=es&month=07&year=2016'>Español\n" +
@@ -137,7 +158,8 @@ public class TestHtml {
                     "      <option value='11' >....Rosario</option>\n" +
                     "      <option value='12' >....San Juan</option>\n" +
                     "      <option value='504' >....San Luis</option>\n" +
-                    "      <option value='0' >ARMENIA ( &#1344;&#1377;&#1397;&#1377;&#1405;&#1407;&#1377;&#1398; )</option>\n" +
+                    "      <option value='0' >ARMENIA ( &#1344;&#1377;&#1397;&#1377;&#1405;" +
+                    "&#1407;&#1377;&#1398; )</option>\n" +
                     "      <option value='3' >....Yerevan</option>\n" +
                     "      <option value='0' >AUSTRALIA</option>\n" +
                     "      <option value='13' >....Adelaide</option>\n" +
@@ -161,15 +183,18 @@ public class TestHtml {
                     "      <option value='29' >....Vienna</option>\n" +
                     "      <option value='0' >AZERBAIJAN ( AZ&#601;RBAYCAN )</option>\n" +
                     "      <option value='30' >....Baku</option>\n" +
-                    "      <option value='0' >BAHRAIN ( &#8207;&#1575;&#1604;&#1576;&#1581;&#1585;&#1610;&#1606;&#8206; )</option>\n" +
+                    "      <option value='0' >BAHRAIN ( &#8207;&#1575;&#1604;&#1576;&#1581;" +
+                    "&#1585;&#1610;&#1606;&#8206; )</option>\n" +
                     "      <option value='31' >....Manama</option>\n" +
-                    "      <option value='0' >BANGLADESH ( &#2476;&#2494;&#2434;&#2482;&#2494;&#2470;&#2503;&#2486; )</option>\n" +
+                    "      <option value='0' >BANGLADESH ( &#2476;&#2494;&#2434;&#2482;&#2494;" +
+                    "&#2470;&#2503;&#2486; )</option>\n" +
                     "      <option value='32' >....Cittagong</option>\n" +
                     "      <option value='33' >....Dhaka</option>\n" +
                     "      <option value='34' >....Jessore</option>\n" +
                     "      <option value='0' >BARBADOS</option>\n" +
                     "      <option value='35' >....Barbados</option>\n" +
-                    "      <option value='0' >BELARUS ( &#1041;&#1077;&#1083;&#1072;&#1088;&#1091;&#769;&#1089;&#1100; )</option>\n" +
+                    "      <option value='0' >BELARUS ( &#1041;&#1077;&#1083;&#1072;&#1088;" +
+                    "&#1091;&#769;&#1089;&#1100; )</option>\n" +
                     "      <option value='36' >....Minsk</option>\n" +
                     "      <option value='0' >BELGIQUE</option>\n" +
                     "      <option value='37' >....Antwerp</option>\n" +
@@ -180,7 +205,9 @@ public class TestHtml {
                     "      <option value='41' >....Cochabamba</option>\n" +
                     "      <option value='42' >....La Paz</option>\n" +
                     "      <option value='43' >....Santa Cruz</option>\n" +
-                    "      <option value='0' >BOSNIA AND HERZEGOWINA ( &#1041;&#1086;&#1089;&#1085;A &#1080; &#1061;&#1077;&#1088;&#1094;&#1077;&#1075;&#1086;&#1074;&#1080;&#1085;&#1072; )</option>\n" +
+                    "      <option value='0' >BOSNIA AND HERZEGOWINA ( &#1041;&#1086;&#1089;" +
+                    "&#1085;A &#1080; &#1061;&#1077;&#1088;&#1094;&#1077;&#1075;&#1086;&#1074;" +
+                    "&#1080;&#1085;&#1072; )</option>\n" +
                     "      <option value='44' >....Sarajevo</option>\n" +
                     "      <option value='0' >BOTSWANA</option>\n" +
                     "      <option value='478' >....Gaborone</option>\n" +
@@ -302,7 +329,8 @@ public class TestHtml {
                     "      <option value='129' >....Poitiers</option>\n" +
                     "      <option value='130' >....Toulous</option>\n" +
                     "      <option value='131' >....Valencay</option>\n" +
-                    "      <option value='0' >GEORGIA ( &#4321;&#4304;&#4325;&#4304;&#4320;&#4311;&#4309;&#4308;&#4314;&#4317; )</option>\n" +
+                    "      <option value='0' >GEORGIA ( &#4321;&#4304;&#4325;&#4304;&#4320;" +
+                    "&#4311;&#4309;&#4308;&#4314;&#4317; )</option>\n" +
                     "      <option value='132' >....Tbilisi</option>\n" +
                     "      <option value='0' >GERMANY ( DEUTSCHLAND )</option>\n" +
                     "      <option value='133' >....Berlin</option>\n" +
@@ -414,7 +442,8 @@ public class TestHtml {
                     "      <option value='219' >....Denpasar</option>\n" +
                     "      <option value='220' >....Jakarta</option>\n" +
                     "      <option value='453' >....Jogjakarta</option>\n" +
-                    "      <option value='0' >IRAN ( &#1575;&#1740;&#1585;&#1575;&#1606; )</option>\n" +
+                    "      <option value='0' >IRAN ( &#1575;&#1740;&#1585;&#1575;&#1606; )" +
+                    "</option>\n" +
                     "      <option value='221' >....Teheran</option>\n" +
                     "      <option value='0' >IRELAND (IRISH)</option>\n" +
                     "      <option value='374' >....Dublin</option>\n" +
@@ -422,7 +451,8 @@ public class TestHtml {
                     "      <option value='0' >IRELAND N ( ÉIRE )</option>\n" +
                     "      <option value='285' >....Belfast</option>\n" +
                     "      <option value='286' >....Derrylin</option>\n" +
-                    "      <option value='0' >ISRAEL ( &#1497;&#1460;&#1513;&#1456;&#1474;&#1512;&#1464;&#1488;&#1461;&#1500; )</option>\n" +
+                    "      <option value='0' >ISRAEL ( &#1497;&#1460;&#1513;&#1456;&#1474;&#1512;" +
+                    "&#1464;&#1488;&#1461;&#1500; )</option>\n" +
                     "      <option value='222' >....Telaviv</option>\n" +
                     "      <option value='0' >ITALIA</option>\n" +
                     "      <option value='223' >....Bergamo</option>\n" +
@@ -440,13 +470,15 @@ public class TestHtml {
                     "      <option value='234' >....Okinawa</option>\n" +
                     "      <option value='235' >....Sapporo</option>\n" +
                     "      <option value='236' >....Tokyo</option>\n" +
-                    "      <option value='0' >KAZAKHSTAN ( &#1178;&#1072;&#1079;&#1072;&#1179;&#1089;&#1090;&#1072;&#1085; )</option>\n" +
+                    "      <option value='0' >KAZAKHSTAN ( &#1178;&#1072;&#1079;&#1072;&#1179;" +
+                    "&#1089;&#1090;&#1072;&#1085; )</option>\n" +
                     "      <option value='237' >....Alma-ata</option>\n" +
                     "      <option value='0' >KENYA</option>\n" +
                     "      <option value='238' >....Kisumu</option>\n" +
                     "      <option value='239' >....Mombasa</option>\n" +
                     "      <option value='240' >....Nairobi</option>\n" +
-                    "      <option value='0' >KUWAIT ( &#1583;&#1608;&#1604;&#1577; &#1575;&#1604;&#1603;&#1608;&#1610;&#1578; )</option>\n" +
+                    "      <option value='0' >KUWAIT ( &#1583;&#1608;&#1604;&#1577; &#1575;" +
+                    "&#1604;&#1603;&#1608;&#1610;&#1578; )</option>\n" +
                     "      <option value='474' >....Kuwait</option>\n" +
                     "      <option value='0' >LATVIJA</option>\n" +
                     "      <option value='241' >....Riga</option>\n" +
@@ -460,7 +492,8 @@ public class TestHtml {
                     "      <option value='248' >....Shyaulyai</option>\n" +
                     "      <option value='249' >....Utena</option>\n" +
                     "      <option value='250' >....Vilnius</option>\n" +
-                    "      <option value='0' >MACEDONIA ( &#1052;&#1072;&#1082;&#1077;&#1076;&#1086;&#1085;&#1080;&#1112;&#1072; )</option>\n" +
+                    "      <option value='0' >MACEDONIA ( &#1052;&#1072;&#1082;&#1077;&#1076;" +
+                    "&#1086;&#1085;&#1080;&#1112;&#1072; )</option>\n" +
                     "      <option value='506' >....Skopje</option>\n" +
                     "      <option value='0' >MALAYSIA</option>\n" +
                     "      <option value='251' >....Bukit Mertajam</option>\n" +
@@ -514,7 +547,8 @@ public class TestHtml {
                     "      <option value='0' >NORWAY ( NORGE )</option>\n" +
                     "      <option value='287' >....Bergen</option>\n" +
                     "      <option value='288' >....Oslo</option>\n" +
-                    "      <option value='0' >PAKISTAN ( &#1662;&#1575;&#1603;&#1587;&#1578;&#1575;&#1606;&#8206; )</option>\n" +
+                    "      <option value='0' >PAKISTAN ( &#1662;&#1575;&#1603;&#1587;&#1578;" +
+                    "&#1575;&#1606;&#8206; )</option>\n" +
                     "      <option value='492' >....Karachi</option>\n" +
                     "      <option value='0' >PANAMÁ</option>\n" +
                     "      <option value='289' >....Panamá</option>\n" +
@@ -555,7 +589,8 @@ public class TestHtml {
                     "      <option value='0' >ROMÂNIA</option>\n" +
                     "      <option value='309' >....Bucharest</option>\n" +
                     "      <option value='310' >....Timisoara</option>\n" +
-                    "      <option value='0' >RUSSIA ( &#1056;&#1086;&#1089;&#1089;&#1080;&#1103; )</option>\n" +
+                    "      <option value='0' >RUSSIA ( &#1056;&#1086;&#1089;&#1089;&#1080;&#1103;" +
+                    " )</option>\n" +
                     "      <option value='311' >....Ekaterinburg</option>\n" +
                     "      <option value='312' >....Krasnoyarsk</option>\n" +
                     "      <option value='313' >....Moscow</option>\n" +
@@ -563,11 +598,17 @@ public class TestHtml {
                     "      <option value='315' >....St Petersburg</option>\n" +
                     "      <option value='316' >....Vladikavkaz</option>\n" +
                     "      <option value='317' >....Vladivostok</option>\n" +
-                    "      <option value='0' >SAUDI ARABIA ( &#1575;&#1604;&#1605;&#1605;&#1604;&#1603;&#1577; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; &#1575;&#1604;&#1587;&#1593;&#1608;&#1583;&#1610;&#1577; )</option>\n" +
-                    "      <option value='522' >....Damman ( &#1575;&#1604;&#1583;&#1605;&#1575;&#1605;&#8206; )</option>\n" +
-                    "      <option value='521' >....Jeddah ( &#1580;&#1583;&#1617;&#1577; )</option>\n" +
-                    "      <option value='520' >....Riyadh ( &#1604;&#1585;&#1610;&#1575;&#1590;&#8206; )</option>\n" +
-                    "      <option value='0' >SERBIA ( &#1057;&#1088;&#1073;&#1080;&#1112;&#1072; )</option>\n" +
+                    "      <option value='0' >SAUDI ARABIA ( &#1575;&#1604;&#1605;&#1605;&#1604;" +
+                    "&#1603;&#1577; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; &#1575;" +
+                    "&#1604;&#1587;&#1593;&#1608;&#1583;&#1610;&#1577; )</option>\n" +
+                    "      <option value='522' >....Damman ( &#1575;&#1604;&#1583;&#1605;&#1575;" +
+                    "&#1605;&#8206; )</option>\n" +
+                    "      <option value='521' >....Jeddah ( &#1580;&#1583;&#1617;&#1577; )" +
+                    "</option>\n" +
+                    "      <option value='520' >....Riyadh ( &#1604;&#1585;&#1610;&#1575;&#1590;" +
+                    "&#8206; )</option>\n" +
+                    "      <option value='0' >SERBIA ( &#1057;&#1088;&#1073;&#1080;&#1112;&#1072;" +
+                    " )</option>\n" +
                     "      <option value='318' >....Belgrade</option>\n" +
                     "      <option value='319' >....Sombor</option>\n" +
                     "      <option value='0' >SEYCHELLES ( SESEL )</option>\n" +
@@ -587,7 +628,8 @@ public class TestHtml {
                     "      <option value='326' >....Durban</option>\n" +
                     "      <option value='327' >....Johannesburg</option>\n" +
                     "      <option value='328' >....Port Elizabeth</option>\n" +
-                    "      <option value='0' >SOUTH COREA ( &#45824;&#54620;&#48124;&#44397; )</option>\n" +
+                    "      <option value='0' >SOUTH COREA ( &#45824;&#54620;&#48124;&#44397; )" +
+                    "</option>\n" +
                     "      <option value='519' >....Seoul</option>\n" +
                     "      <option value='0' >SPAIN (ESPAÑA)</option>\n" +
                     "      <option value='329' >....Barcelona</option>\n" +
@@ -599,7 +641,8 @@ public class TestHtml {
                     "      <option value='335' >....Málaga</option>\n" +
                     "      <option value='336' >....Santa Cruz de Tenerife</option>\n" +
                     "      <option value='337' >....Valencia</option>\n" +
-                    "      <option value='0' >SRI LANKA ( &#2965;&#3009;&#2975;&#3007;&#2991;&#2992;&#2970;&#3009; )</option>\n" +
+                    "      <option value='0' >SRI LANKA ( &#2965;&#3009;&#2975;&#3007;&#2991;" +
+                    "&#2992;&#2970;&#3009; )</option>\n" +
                     "      <option value='338' >....Colombo</option>\n" +
                     "      <option value='0' >SURINAME</option>\n" +
                     "      <option value='491' >....Nieuw Nickerie</option>\n" +
@@ -629,9 +672,11 @@ public class TestHtml {
                     "      <option value='361' >....Lugano</option>\n" +
                     "      <option value='362' >....Schaffhausen</option>\n" +
                     "      <option value='363' >....Zürich</option>\n" +
-                    "      <option value='0' >SYRIA ( &#1587;&#1608;&#1585;&#1610;&#1575; )</option>\n" +
+                    "      <option value='0' >SYRIA ( &#1587;&#1608;&#1585;&#1610;&#1575; )" +
+                    "</option>\n" +
                     "      <option value='364' >....Al Quneitrah</option>\n" +
-                    "      <option value='0' >THAILAND ( &#3611;&#3619;&#3632;&#3648;&#3607;&#3624;&#3652;&#3607;&#3618; )</option>\n" +
+                    "      <option value='0' >THAILAND ( &#3611;&#3619;&#3632;&#3648;&#3607;" +
+                    "&#3624;&#3652;&#3607;&#3618; )</option>\n" +
                     "      <option value='366' >....Bangkok</option>\n" +
                     "      <option value='0' >TRINIDAD AND TOBAGO</option>\n" +
                     "      <option value='367' >....Trinidad</option>\n" +
@@ -641,10 +686,13 @@ public class TestHtml {
                     "      <option value='456' >....Izhir</option>\n" +
                     "      <option value='0' >UGANDA</option>\n" +
                     "      <option value='368' >....Kampala</option>\n" +
-                    "      <option value='0' >UKRAINE ( &#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1072; )</option>\n" +
+                    "      <option value='0' >UKRAINE ( &#1059;&#1082;&#1088;&#1072;&#1111;" +
+                    "&#1085;&#1072; )</option>\n" +
                     "      <option value='385' >....Kiev</option>\n" +
                     "      <option value='386' >....Odessa</option>\n" +
-                    "      <option value='0' >UNITED ARAB EMIRATES ( &#1575;&#1604;&#1573;&#1605;&#1575;&#1585;&#1575;&#1578; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; &#1575;&#1604;&#1605;&#1578;&#1581;&#1583;&#1577; )</option>\n" +
+                    "      <option value='0' >UNITED ARAB EMIRATES ( &#1575;&#1604;&#1573;&#1605;" +
+                    "&#1575;&#1585;&#1575;&#1578; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;" +
+                    "&#1577; &#1575;&#1604;&#1605;&#1578;&#1581;&#1583;&#1577; )</option>\n" +
                     "      <option value='477' >....Abu Dhabi</option>\n" +
                     "      <option value='469' >....Dubai</option>\n" +
                     "      <option value='0' >UNITED KINGDOM</option>\n" +
@@ -757,22 +805,39 @@ public class TestHtml {
                     "      <option value='00089' >Sri Vamana Dvadasi</option>\n" +
                     "      <option value='00086' >Varaha Dvadasi</option>\n" +
                     "      <option value='' ></option>\n" +
-                    "      <option value='00213' ><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=rathayatra','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Ratha Yatra</a> (Jagannatha Puri)</option>\n" +
-                    "      <option value='00225' ><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=jhulanayatra','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Radha Govinda Jhulana Yatra begins</a></option>\n" +
-                    "      <option value='00226' >Radha Govinda <a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=jhulanayatra','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Jhulana Yatra ends</a></option>\n" +
+                    "      <option value='00213' ><a href=\"javascript:;\" onClick=\"window.open" +
+                    "('/cgi-bin/en.cgi?nam=rathayatra','_blank','width=500, height=450," +
+                    "scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return" +
+                    " false\">Ratha Yatra</a> (Jagannatha Puri)</option>\n" +
+                    "      <option value='00225' ><a href=\"javascript:;\" onClick=\"window.open" +
+                    "('/cgi-bin/en.cgi?nam=jhulanayatra','_blank','width=500, height=450," +
+                    "scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return" +
+                    " false\">Radha Govinda Jhulana Yatra begins</a></option>\n" +
+                    "      <option value='00226' >Radha Govinda <a href=\"javascript:;\" " +
+                    "onClick=\"window.open('/cgi-bin/en.cgi?nam=jhulanayatra','_blank'," +
+                    "'width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0," +
+                    "personalbar=0,status=0'); return false\">Jhulana Yatra ends</a></option>\n" +
                     "      <option value='A908' >Damodara Masa begin</option>\n" +
                     "      <option value='A909' >Damodara Masa ends</option>\n" +
                     "      <option value='00059' >Caturmasya begins</option>\n" +
                     "      <option value='00058' >Caturmasya ends</option>\n" +
                     "      <option value='00036' >Pandava Nirjala Ekadasi</option>\n" +
-                    "      <option value='00201' ><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=govardhanapuja','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Govardhana Puja, Go Puja, Go Krda</a></option>\n" +
+                    "      <option value='00201' ><a href=\"javascript:;\" onClick=\"window.open" +
+                    "('/cgi-bin/en.cgi?nam=govardhanapuja','_blank','width=500, height=450," +
+                    "scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return" +
+                    " false\">Govardhana Puja, Go Puja, Go Krda</a></option>\n" +
                     "      <option value='' ></option>\n" +
                     "      <option value='00090' >Sri Advaita Acarya Appearance</option>\n" +
-                    "      <option value='00091' >Srila Gaura Kisora Dasa Babaji Dissappearance</option>\n" +
-                    "      <option value='00092' >Srila Bhaktivinoda Thakura Appearance</option>\n" +
-                    "      <option value='00093' >Srila Bhaktivinoda Thakura Dissappearance</option>\n" +
-                    "      <option value='00095' >Srila Bhaktisiddhanta Sarasvati Thakura Appearance</option>\n" +
-                    "      <option value='00094' >Srila Bhaktisiddhanta Sarasvati Thakura Dissappearance</option>\n" +
+                    "      <option value='00091' >Srila Gaura Kisora Dasa Babaji " +
+                    "Dissappearance</option>\n" +
+                    "      <option value='00092' >Srila Bhaktivinoda Thakura " +
+                    "Appearance</option>\n" +
+                    "      <option value='00093' >Srila Bhaktivinoda Thakura " +
+                    "Dissappearance</option>\n" +
+                    "      <option value='00095' >Srila Bhaktisiddhanta Sarasvati Thakura " +
+                    "Appearance</option>\n" +
+                    "      <option value='00094' >Srila Bhaktisiddhanta Sarasvati Thakura " +
+                    "Dissappearance</option>\n" +
                     "      <option value='00096' >Srila Prabhupada Appearance</option>\n" +
                     "      <option value='00097' >Srila Prabhupada Dissappearance</option>\n" +
                     "      <option value='' ></option>\n" +
@@ -781,9 +846,11 @@ public class TestHtml {
                     "      <option value='A049' >HH Bhakti Caitanya Svami Vyasa-puja</option>\n" +
                     "      <option value='A016' >HH Bhakti Caru Svami Vyasa-puja</option>\n" +
                     "      <option value='A055' >HH Bhakti Raghava Svami Vyasa-puja</option>\n" +
-                    "      <option value='A026' >HH Bhaktisvarupa Damodar Svami Dissappearance</option>\n" +
+                    "      <option value='A026' >HH Bhaktisvarupa Damodar Svami " +
+                    "Dissappearance</option>\n" +
                     "      <option value='A014' >HH Bhaktitirtha Svami Dissappearance</option>\n" +
-                    "      <option value='A039' >HH Bir Krishna dasa Gosvami Vyasa-puja</option>\n" +
+                    "      <option value='A039' >HH Bir Krishna dasa Gosvami " +
+                    "Vyasa-puja</option>\n" +
                     "      <option value='A051' >HH Danavir Gosvami Vyasa-puja</option>\n" +
                     "      <option value='A047' >HH Chandramukha Svami Vyasa-puja</option>\n" +
                     "      <option value='A051' >HH Danavir Gosvami Vyasa-puja</option>\n" +
@@ -793,7 +860,8 @@ public class TestHtml {
                     "      <option value='0037' >HH Gour Govinda Svami Vyasa-puja</option>\n" +
                     "      <option value='00102' >HH Gour Govinda Svami Dissapearance</option>\n" +
                     "      <option value='A012' >HH Hanumatpresaka Svami Vyasa-puja</option>\n" +
-                    "      <option value='A001' >HH Hridayananda Dasa Gosvami Vyasa-puja</option>\n" +
+                    "      <option value='A001' >HH Hridayananda Dasa Gosvami " +
+                    "Vyasa-puja</option>\n" +
                     "      <option value='A022' >HH Indradyumna Svami Vyasa-puja</option>\n" +
                     "      <option value='A004' >HH Jayapataka Svami Vyasa-puja</option>\n" +
                     "      <option value='A033' >HH Kadamba Kanana Svami Vyasa-puja</option>\n" +
@@ -810,11 +878,17 @@ public class TestHtml {
                     "      <option value='A006' >HH Sridhara Svami Vyasa-puja</option>\n" +
                     "      <option value='A007' >HH Sridhara Svami Dissappearance</option>\n" +
                     "      <option value='A015' >HH Tamal Krishna Gosvami Vyasa-puja</option>\n" +
-                    "      <option value='A009' >HH Tamal Krishna Gosvami Dissappearance</option>\n" +
-                    "      <option value='A045' >HH Vedavyasapriya Svami Vyasa-puja</option></select>\n" +
+                    "      <option value='A009' >HH Tamal Krishna Gosvami " +
+                    "Dissappearance</option>\n" +
+                    "      <option value='A045' >HH Vedavyasapriya Svami " +
+                    "Vyasa-puja</option></select>\n" +
                     "\t</td></tr></table>\n" +
                     "</td><td valign=bottom>\n" +
-                    "\t<iframe src='//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FVaisnavaCalendar&amp;width=325&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;appId=1374613962823729' scrolling='no' frameborder='0' style='border:none; overflow:hidden; height:80px;' allowTransparency='true'></iframe>\n" +
+                    "\t<iframe src='//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww" +
+                    ".facebook.com%2FVaisnavaCalendar&amp;width=325&amp;layout=standard&amp;" +
+                    "action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;" +
+                    "appId=1374613962823729' scrolling='no' frameborder='0' style='border:none; " +
+                    "overflow:hidden; height:80px;' allowTransparency='true'></iframe>\n" +
                     "</td></tr>\n" +
                     "</table>\n" +
                     "<TABLE BORDER=1 WIDTH='100%' CELLPADDING=0 ROWSPACING=0>\n" +
@@ -848,7 +922,9 @@ public class TestHtml {
                     "          <td align=center valign=top>1</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% valign=top><font size=1>Break fast 04:51 - 09:45 <br>(Daylight saving not considered)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% " +
+                    "valign=top><font size=1>Break fast 04:51 - 09:45 <br>(Daylight saving not " +
+                    "considered)</font></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -869,16 +945,27 @@ public class TestHtml {
                     "          <td align=center valign=top>3</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=gadadharapandita','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Sri Gadadhara Pandita <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a " +
+                    "href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=gadadharapandita','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Sri " +
+                    "Gadadhara Pandita <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#FF30AA  valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=bhaktivinodathakura','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Srila Bhaktivinoda Thakura <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#FF30AA  valign=top><a " +
+                    "href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=bhaktivinodathakura','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return " +
+                    "false\">Srila Bhaktivinoda Thakura <img src=dis.gif alt=Disppearance " +
+                    "border=0></a></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><font size=1>(Fasting till noon)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><font " +
+                    "size=1>(Fasting till noon)</font></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=E87AFF height=100% valign=top><img src=amavasya.gif border=0></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=E87AFF height=100% " +
+                    "valign=top><img src=amavasya.gif border=0></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -889,10 +976,19 @@ public class TestHtml {
                     "          <td align=center valign=top>4</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=gundicamarjana','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Gundica Marjana</a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a " +
+                    "href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=gundicamarjana','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return " +
+                    "false\">Gundica Marjana</a></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=FBAC2F height=100% valign=top><a href=\"javascript:;\" onClick=\"window.open('https://secure745.websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=gurubbs','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">HH Bhaktibusana Svami <img src=ap.gif alt=Appearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=FBAC2F height=100% " +
+                    "valign=top><a href=\"javascript:;\" onClick=\"window.open('https://secure745" +
+                    ".websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=gurubbs'," +
+                    "'_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0," +
+                    "personalbar=0,status=0'); return false\">HH Bhaktibusana Svami <img src=ap" +
+                    ".gif alt=Appearance border=0></a></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -903,19 +999,35 @@ public class TestHtml {
                     "          <td align=center valign=top>5</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=rathayatra','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Ratha Yatra</a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a " +
+                    "href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=rathayatra','_blank','width=500, height=450,scrollbars=1,menubar=0," +
+                    "location=0,toolbar=0,personalbar=0,status=0'); return false\">Ratha " +
+                    "Yatra</a></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><font size=1>(Hera Pancami after 4 days)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><font " +
+                    "size=1>(Hera Pancami after 4 days)</font></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><font size=1>(Return Ratha after 8 days)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><font " +
+                    "size=1>(Return Ratha after 8 days)</font></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=svarupadamodaragosvami','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Srila Svarupa Damodara Gosvami <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a " +
+                    "href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=svarupadamodaragosvami','_blank','width=500, height=450," +
+                    "scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return" +
+                    " false\">Srila Svarupa Damodara Gosvami <img src=dis.gif alt=Disppearance " +
+                    "border=0></a></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=sivanandasena','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Srila Sivananda Sena <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% " +
+                    "valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=sivanandasena','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return " +
+                    "false\">Srila Sivananda Sena <img src=dis.gif alt=Disppearance " +
+                    "border=0></a></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -950,7 +1062,12 @@ public class TestHtml {
                     "          <td align=center valign=top>9</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=vakresvarapandita','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Srila Vakresvara Pandita <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% " +
+                    "valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=vakresvarapandita','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return " +
+                    "false\">Srila Vakresvara Pandita <img src=dis.gif alt=Disppearance " +
+                    "border=0></a></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -995,7 +1112,12 @@ public class TestHtml {
                     "          <td align=center valign=top>14</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=FBAC2F height=100% valign=top><a href=\"javascript:;\" onClick=\"window.open('https://secure745.websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=gurulok','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">HH Lokanath Svami <img src=ap.gif alt=Appearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=FBAC2F height=100% " +
+                    "valign=top><a href=\"javascript:;\" onClick=\"window.open('https://secure745" +
+                    ".websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=gurulok'," +
+                    "'_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0," +
+                    "personalbar=0,status=0'); return false\">HH Lokanath Svami <img src=ap.gif " +
+                    "alt=Appearance border=0></a></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1006,7 +1128,8 @@ public class TestHtml {
                     "          <td align=center valign=top>15</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% valign=top>Sayana Ekadasi</td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% " +
+                    "valign=top>Sayana Ekadasi</td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1017,10 +1140,13 @@ public class TestHtml {
                     "          <td align=center valign=top>16</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#862E98  valign=top><font size=1>Break fast 05:00 - 09:49 <br>(Daylight saving not considered)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#862E98  valign=top><font " +
+                    "size=1>Break fast 05:00 - 09:49 <br>(Daylight saving not considered)" +
+                    "</font></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top>Cancer</td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% " +
+                    "valign=top>Cancer</td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1049,19 +1175,29 @@ public class TestHtml {
                     "          <td align=center valign=top>19</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top>Guru (Vyasa) Purnima</td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top>Guru " +
+                    "(Vyasa) Purnima</td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=sanatanagosvami','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Srila Sanatana Gosvami <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a " +
+                    "href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=sanatanagosvami','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return " +
+                    "false\">Srila Sanatana Gosvami <img src=dis.gif alt=Disppearance " +
+                    "border=0></a></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#559FFB  valign=top>First month of Caturmasya</td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#559FFB  valign=top>First " +
+                    "month of Caturmasya</td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#559FFB  valign=top><font size=1>(Fast from sak, green leafy vegetables)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#559FFB  valign=top><font " +
+                    "size=1>(Fast from sak, green leafy vegetables)</font></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#559FFB height=100% valign=top><font size=1>(Caturmasya is not observed during Purusottama Adhika Masa)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#559FFB height=100% " +
+                    "valign=top><font size=1>(Caturmasya is not observed during Purusottama " +
+                    "Adhika Masa)</font></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1072,10 +1208,12 @@ public class TestHtml {
                     "          <td align=center valign=top>20</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=E87AFF  valign=top><img src=\"purnima.gif\" border=0></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=E87AFF  valign=top><img " +
+                    "src=\"purnima.gif\" border=0></td>\n" +
                     "             </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=6F6E6E height=100% valign=top><b>Sridhara Masa</b></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=6F6E6E height=100% " +
+                    "valign=top><b>Sridhara Masa</b></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1112,7 +1250,12 @@ public class TestHtml {
                     "          <td align=center valign=top>24</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=gopalabhattagosvami','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Srila Gopala Bhatta Gosvami <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% " +
+                    "valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=gopalabhattagosvami','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return " +
+                    "false\">Srila Gopala Bhatta Gosvami <img src=dis.gif alt=Disppearance " +
+                    "border=0></a></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1131,7 +1274,12 @@ public class TestHtml {
                     "          <td align=center valign=top>26</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=lokanathagosvami','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Srila Lokanatha Gosvami <img src=dis.gif alt=Disppearance border=0></a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% " +
+                    "valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=lokanathagosvami','_blank','width=500, height=450,scrollbars=1," +
+                    "menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return " +
+                    "false\">Srila Lokanatha Gosvami <img src=dis.gif alt=Disppearance " +
+                    "border=0></a></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1142,7 +1290,11 @@ public class TestHtml {
                     "          <td align=center valign=top>27</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en.cgi?nam=incorporationofiskcon','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">The incorporation of ISKCON in New York</a></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#E87AFF height=100% " +
+                    "valign=top><a href=\"javascript:;\" onClick=\"window.open('/cgi-bin/en" +
+                    ".cgi?nam=incorporationofiskcon','_blank','width=500, height=450," +
+                    "scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return" +
+                    " false\">The incorporation of ISKCON in New York</a></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1161,7 +1313,8 @@ public class TestHtml {
                     "          <td align=center valign=top>29</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% valign=top>Kamika Ekadasi</td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% " +
+                    "valign=top>Kamika Ekadasi</td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1172,7 +1325,9 @@ public class TestHtml {
                     "          <td align=center valign=top>30</td>\n" +
                     "         </tr>\n" +
                     "             <tr>\n" +
-                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% valign=top><font size=1>Break fast 05:11 - 09:53 <br>(Daylight saving not considered)</font></td>\n" +
+                    "              <td colspan=2 align=center bgcolor=#862E98 height=100% " +
+                    "valign=top><font size=1>Break fast 05:11 - 09:53 <br>(Daylight saving not " +
+                    "considered)</font></td>\n" +
                     "             </tr>\n" +
                     "        </table>\n" +
                     "      </td>\n" +
@@ -1220,7 +1375,8 @@ public class TestHtml {
                     "\n" +
                     "<br>\n" +
                     "<CENTER><b><a href='http://www.iskcon.com.mx/daksina/index.php?lang=en' target=_blank>Help us to preach</a> | <a href=\"javascript:;\" onClick=\"window.open('/add_en.php','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false\">Add Vaisnava VCalendar to your webpage</a>\n" +
-                    "<br><br><SCRIPT SRC='http://www.iskcon.com.mx/cgi-bin/carousel.cgi?tell=js'></SCRIPT></CENTER>\n" +
+                    "<br><br><SCRIPT SRC='http://www.iskcon.com.mx/cgi-bin/carousel" +
+                    ".cgi?tell=js'></SCRIPT></CENTER>\n" +
                     "\n" +
                     "\n" +
                     "</BODY>\n" +
