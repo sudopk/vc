@@ -40,7 +40,8 @@ public class CalendarPagerFragment extends Fragment implements CalendarFragment.
         mViewPager = Layout.findViewById(view, R.id.viewPager);
         ((TabLayout) Layout.findViewById(view, R.id.tabs)).setupWithViewPager(mViewPager);
 
-        final CalendarPagerAdapter pagerAdapter = new CalendarPagerAdapter(getChildFragmentManager());
+        final CalendarPagerAdapter pagerAdapter = new CalendarPagerAdapter
+                (getChildFragmentManager());
         mViewPager.setAdapter(pagerAdapter);
         mViewPager.setCurrentItem(pagerAdapter.getCount() / 2);
         return view;

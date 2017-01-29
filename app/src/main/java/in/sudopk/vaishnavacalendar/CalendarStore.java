@@ -28,7 +28,8 @@ public class CalendarStore {
      * @param year  full year e.g. 2016
      */
     public VCalendar getCalendar(int month, int year) {
-        final String calendarString = mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "");
+        final String calendarString = mPreferences.getString(String.format(CALENDAR_KEY_FORMAT,
+                month, year), "");
         if (calendarString.isEmpty()) {
             return null;
         } else {
@@ -52,7 +53,8 @@ public class CalendarStore {
      * @param year  full year e.g. 2016
      */
     public boolean hasCalendar(int month, int year) {
-        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "").isEmpty();
+        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "")
+                .isEmpty();
     }
 
     /**

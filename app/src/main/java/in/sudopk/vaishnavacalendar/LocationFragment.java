@@ -125,7 +125,8 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
                 Call<List<Country>> locationsCall = mVcService.locations();
                 locationsCall.enqueue(new Callback<List<Country>>() {
                     @Override
-                    public void onResponse(final Call<List<Country>> call, final Response<List<Country>> response) {
+                    public void onResponse(final Call<List<Country>> call, final
+                    Response<List<Country>> response) {
                         if (isResumed()) {
                             if (response.body() != null) {
                                 mLocationStore.saveLocations(response.body());

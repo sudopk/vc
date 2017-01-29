@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import in.sudopk.coreandroid.CalUtil;
 import in.sudopk.coreandroid.Layout;
@@ -30,7 +28,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     /**
      * @param month 1 to 12
-     * @param year Full year e.g. 2016
+     * @param year  Full year e.g. 2016
      */
     public CalendarAdapter(int month, int year) {
         mMonth = month;
@@ -99,13 +97,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
             mEventLayout = eventLayout;
 
             mMonthCalendar = Calendar.getInstance();
-            mMonthCalendar.set(Calendar.MONTH, month-1);
+            mMonthCalendar.set(Calendar.MONTH, month - 1);
             mMonthCalendar.set(Calendar.YEAR, year);
         }
 
         public void onBind(final DayCalendar dayCalendar) {
             mMonthCalendar.set(Calendar.DATE, dayCalendar.getDate());
-            mDate.setText(CalUtil.monthAbbreviation(mMonthCalendar) + " " + dayCalendar.getDate() + "\n" + CalUtil.weekDayAbbreviation(mMonthCalendar));
+            mDate.setText(CalUtil.monthAbbreviation(mMonthCalendar) + " " + dayCalendar.getDate()
+                    + "\n" + CalUtil.weekDayAbbreviation(mMonthCalendar));
             mEvents.setAdapter(new ArrayAdapter<>(itemView.getContext(),
                     mEventLayout, dayCalendar.getEvents()));
         }

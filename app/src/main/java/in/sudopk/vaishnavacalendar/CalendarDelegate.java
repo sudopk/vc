@@ -2,6 +2,7 @@ package in.sudopk.vaishnavacalendar;
 
 public interface CalendarDelegate {
     void onRefresh();
+
     void tryShowingCalendar();
 
     void onChangeLocationRequest();

@@ -2,16 +2,14 @@ package in.sudopk.vaishnavacalendar;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import java.util.List;
-
 import in.sudopk.coreandroid.Fm;
 
-public class MainActivity extends AppCompatActivity implements CalendarPagerFragment.Container, LocationContainer {
+public class MainActivity extends AppCompatActivity implements CalendarPagerFragment.Container,
+        LocationContainer {
 
     private CalendarStore mCalendarStore;
 
@@ -40,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements CalendarPagerFrag
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
         }
-        DialogFragment fragment = (DialogFragment) fragmentManager.findFragmentByTag(LocationFragment.TAG);
+        DialogFragment fragment = (DialogFragment) fragmentManager.findFragmentByTag
+                (LocationFragment.TAG);
         if (fragment == null) {
             fragment = LocationFragment.newInstance();
             fragment.show(fragmentManager, LocationFragment.TAG);
