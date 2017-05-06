@@ -2,9 +2,10 @@ package in.sudopk.vaishnavacalendar.retrofit;
 
 import java.util.List;
 
-import in.sudopk.vaishnavacalendar.Country;
+import in.sudopk.vaishnavacalendar.calendar.Country;
 import in.sudopk.vaishnavacalendar.VCalendar;
 import retrofit2.Call;
+import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -19,4 +20,12 @@ public interface VcService {
     @GET("vcal.php")
     @VcApi.Locations
     Call<List<Country>> locations();
+
+    static VcService newInstance() {
+        return new Retrofit.Builder()
+                .baseUrl(VcService.URL)
+                .addConverterFactory(new VcConverterFactory())
+                .build()
+                .create(VcService.class);
+    }
 }

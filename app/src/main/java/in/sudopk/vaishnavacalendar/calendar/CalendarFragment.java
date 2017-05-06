@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.calendar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +16,11 @@ import android.widget.ViewAnimator;
 
 import in.sudopk.coreandroid.Fm;
 import in.sudopk.coreandroid.Layout;
+import in.sudopk.vaishnavacalendar.NoActionCalendar;
+import in.sudopk.vaishnavacalendar.R;
+import in.sudopk.vaishnavacalendar.ResumedCalendar;
+import in.sudopk.vaishnavacalendar.VCalendar;
+import in.sudopk.vaishnavacalendar.VcApp;
 import in.sudopk.vaishnavacalendar.retrofit.VcService;
 import retrofit2.Call;
 import retrofit2.Callback;

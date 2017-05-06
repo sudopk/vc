@@ -1,4 +1,6 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.calendar;
+
+import in.sudopk.vaishnavacalendar.VCalendar;
 
 public interface CalendarDelegate {
     void onRefresh();

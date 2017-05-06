@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import in.sudopk.vaishnavacalendar.Country;
-import in.sudopk.vaishnavacalendar.DayCalendar;
-import in.sudopk.vaishnavacalendar.Location;
+import in.sudopk.vaishnavacalendar.calendar.Country;
+import in.sudopk.vaishnavacalendar.calendar.DayCalendar;
+import in.sudopk.vaishnavacalendar.location.Location;
 import in.sudopk.vaishnavacalendar.VCalendar;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;

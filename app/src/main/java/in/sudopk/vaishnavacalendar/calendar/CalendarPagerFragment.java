@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.calendar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +17,10 @@ import java.util.Calendar;
 
 import in.sudopk.coreandroid.Fm;
 import in.sudopk.coreandroid.Layout;
+import in.sudopk.vaishnavacalendar.location.Location;
+import in.sudopk.vaishnavacalendar.R;
+import in.sudopk.vaishnavacalendar.VcApp;
+import in.sudopk.vaishnavacalendar.core.CalendarUtil;
 
 public class CalendarPagerFragment extends Fragment implements CalendarFragment.Container {
 

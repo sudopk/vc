@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.location;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import in.sudopk.vaishnavacalendar.calendar.Country;
 
 public class LocationStore {
     private static final String LOCATIONS = "locations";

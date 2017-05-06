@@ -1,8 +1,10 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.calendar;
 
 import android.support.annotation.NonNull;
 
 import java.util.List;
+
+import in.sudopk.vaishnavacalendar.location.Location;
 
 public class Country implements Comparable<Country> {
     private final String mName;

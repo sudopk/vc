@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.core;
 
 import java.util.Calendar;
 

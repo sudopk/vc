@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#512DA8</color>
     <color name="colorAccent">#4CAF50</color>
 
-    <color name="headerColor">#E0E0E0</color>
+    <color name="selectedCellColor">#E0E0E0</color>
+    <color name="cellSeparatorColor">#909090</color>
 </resources>

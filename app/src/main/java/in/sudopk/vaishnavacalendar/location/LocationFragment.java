@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.location;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,12 +16,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import java.util.List;
 
 import in.sudopk.coreandroid.Fm;
 import in.sudopk.coreandroid.Layout;
+import in.sudopk.vaishnavacalendar.R;
+import in.sudopk.vaishnavacalendar.VcApp;
+import in.sudopk.vaishnavacalendar.calendar.CalendarStore;
+import in.sudopk.vaishnavacalendar.calendar.Country;
 import in.sudopk.vaishnavacalendar.retrofit.VcService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,6 +55,8 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
         mLocationStore = ((VcApp) getActivity().getApplication()).getLocationStore();
         mCalendarStore = ((VcApp) getActivity().getApplication()).getCalendarStore();
 
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_AppCompat_Light_Dialog);
+
     }
 
     @NonNull
@@ -69,7 +76,7 @@ public class LocationFragment extends AppCompatDialogFragment implements Locatio
         mProgressBar = Layout.findViewById(view, R.id.progressBar);
         mRecyclerView = Layout.findViewById(view, R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new LocationAdapter(this);
+        mAdapter = new LocationAdapter(this, mCalendarStore.getLocation());
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

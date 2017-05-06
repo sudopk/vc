@@ -1,7 +1,11 @@
 package in.sudopk.vaishnavacalendar.retrofit;
 
+import com.google.gson.Gson;
+
 import in.sudopk.vaishnavacalendar.VcConfig;
 import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
 public interface VcConfigService {
@@ -9,4 +13,15 @@ public interface VcConfigService {
 
     @GET(value = "config.json")
     Call<VcConfig> config();
+
+    class Factory {
+
+        public static VcConfigService newInstance(Gson gson) {
+            return new Retrofit.Builder()
+                    .baseUrl(VcConfigService.URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build()
+                    .create(VcConfigService.class);
+        }
+    }
 }

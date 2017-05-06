@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.calendar;
 
 import android.support.annotation.NonNull;
 

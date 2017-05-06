@@ -2,6 +2,8 @@ package in.sudopk.vaishnavacalendar;
 
 import java.util.List;
 
+import in.sudopk.vaishnavacalendar.calendar.DayCalendar;
+
 public class VCalendar {
     private List<DayCalendar> mCalendar;
 

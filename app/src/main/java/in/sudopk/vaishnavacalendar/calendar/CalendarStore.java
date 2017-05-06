@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.calendar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,6 +8,10 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 
 import java.util.Calendar;
+
+import in.sudopk.vaishnavacalendar.location.Location;
+import in.sudopk.vaishnavacalendar.VCalendar;
+import in.sudopk.vaishnavacalendar.core.CalendarUtil;
 
 @SuppressLint("DefaultLocale")  // not end user string
 public class CalendarStore {

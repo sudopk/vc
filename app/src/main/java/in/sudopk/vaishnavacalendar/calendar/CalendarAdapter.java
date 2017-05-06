@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.calendar;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +16,13 @@ import java.util.List;
 import in.sudopk.coreandroid.CalUtil;
 import in.sudopk.coreandroid.Layout;
 import in.sudopk.coreandroid.SimpleList;
+import in.sudopk.vaishnavacalendar.R;
+import in.sudopk.vaishnavacalendar.VCalendar;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
+    private static final int NOT_TODAY_VIEW_TYPE = 0;
+    private static final int TODAY_VIEW_TYPE = 1;
 
     private final List<DayCalendar> mVCalendar;
     private int mDateToHighlight;
@@ -47,7 +51,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
     @Override
     public VH onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final int cell, eventLayout;
-        if (viewType == 0) {
+        if (viewType == NOT_TODAY_VIEW_TYPE) {
             cell = R.layout.calendar_cell;
             eventLayout = R.layout.text_view;
         } else {
@@ -60,10 +64,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.VH> {
 
     @Override
     public int getItemViewType(final int position) {
-        if (mDateToHighlight - 1 == position) {
-            return 1;
+        final DayCalendar cal = mVCalendar.get(position);
+        if(cal != null && cal.getDate() == mDateToHighlight) {
+            return TODAY_VIEW_TYPE;
         } else {
-            return 0;
+            return NOT_TODAY_VIEW_TYPE;
         }
     }
 

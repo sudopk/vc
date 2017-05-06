@@ -1,4 +1,4 @@
-package in.sudopk.vaishnavacalendar;
+package in.sudopk.vaishnavacalendar.location;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 import in.sudopk.coreandroid.Layout;
+import in.sudopk.vaishnavacalendar.R;
+import in.sudopk.vaishnavacalendar.calendar.Country;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
     private static final String TAG = "CalendarAdapter";
@@ -18,12 +20,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
     private final static int CELL_VIEW_TYPE = 1;
     private final List<Country> mCountries = new ArrayList<>();
     private final LocationContainer mContainer;
+    private Location mSelectedLocation;
     private int[] mCountryIndex = new int[0];
     private int[] mCountryIndexCumulative = new int[0];
 
 
-    public LocationAdapter(final LocationContainer container) {
+    public LocationAdapter(final LocationContainer container, Location selectedLocation) {
         mContainer = container;
+        mSelectedLocation = selectedLocation;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
     @Override
     public void onBindViewHolder(final VH holder, final int position) {
         holder.setCountry(mCountries.get(mCountryIndex[position]),
-                mCountryIndexCumulative[position]);
+                mCountryIndexCumulative[position], mSelectedLocation);
     }
 
     @Override
@@ -110,21 +114,24 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.VH> {
         VH(final View itemView, final LocationContainer container) {
             super(itemView);
             mTextView = Layout.findViewById(itemView, R.id.textView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    if (getItemViewType() != HEADER_VIEW_TYPE) {
-                        container.onLocationSelected(mLocation);
-                    }
+            itemView.setOnClickListener(v -> {
+                if (getItemViewType() != HEADER_VIEW_TYPE) {
+                    container.onLocationSelected(mLocation);
                 }
             });
         }
 
-        public void setCountry(final Country country, int countryIndex) {
+        public void setCountry(final Country country, int countryIndex, final Location
+                selectedLocation) {
             if (getItemViewType() == HEADER_VIEW_TYPE) {
                 mTextView.setText(country.getName());
             } else {
                 mLocation = country.getLocations().get(getAdapterPosition() - countryIndex - 1);
+                if(mLocation.equals(selectedLocation)) {
+                    mTextView.setBackgroundColor(mTextView.getContext().getColor(R.color.selectedCellColor));
+                } else {
+                    mTextView.setBackgroundColor(0xffffff);
+                }
                 mTextView.setText(mLocation.getName());
             }
         }
