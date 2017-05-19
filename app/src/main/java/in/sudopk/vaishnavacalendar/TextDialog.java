@@ -34,7 +34,7 @@ public class TextDialog extends AppCompatDialogFragment {
 
     private void onButton(ButtonDescription button) {
         dismiss();
-        onButtonClicked(button.id);
+        onButtonClicked(button.getId());
     }
 
     private void onButtonClicked(final String buttonId) {
@@ -87,7 +87,7 @@ public class TextDialog extends AppCompatDialogFragment {
         button.setOnClickListener(v -> {
             onButton(buttonDescription);
         });
-        button.setText(buttonDescription.title);
+        button.setText(buttonDescription.getTitle());
         parent.addView(button);
     }
 
