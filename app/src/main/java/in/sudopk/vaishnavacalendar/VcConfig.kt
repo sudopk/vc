@@ -1,10 +1,7 @@
 package `in`.sudopk.vaishnavacalendar
 
 class VcConfig {
-    var version: VcVersion = VcVersion()
+    var version: VcVersion = VcVersion(0, 0)
 
-    class VcVersion {
-        var soft: Int = 0
-        var hard: Int = 0
-    }
+    data class VcVersion(val soft: Int, val hard: Int)
 }
