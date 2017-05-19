@@ -80,7 +80,7 @@ public class CalendarPagerFragment extends Fragment implements CalendarFragment.
         @Override
         public Fragment getItem(int position) {
             final Calendar calendar = CalendarUtil.INSTANCE.getCalendar(getMonthOffset(position));
-            return CalendarFragment.newInstance(
+            return CalendarFragment.Companion.newInstance(
                     calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
         }
 
