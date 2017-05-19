@@ -86,7 +86,7 @@ public class CalendarPagerFragment extends Fragment implements CalendarFragment.
 
         @Override
         public int getCount() {
-            return CalendarStore.MONTHS_TO_STORE;
+            return CalendarStore.Companion.getMONTHS_TO_STORE();
         }
 
         private int getMonthOffset(final int position) {
