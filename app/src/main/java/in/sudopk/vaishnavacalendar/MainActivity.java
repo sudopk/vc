@@ -156,10 +156,10 @@ public class MainActivity extends AppCompatActivity implements CalendarPagerFrag
             ex.printStackTrace();
         }
         DialogFragment fragment = (DialogFragment) fragmentManager.findFragmentByTag
-                (LocationFragment.TAG);
+                (LocationFragment.Companion.getTAG());
         if (fragment == null) {
-            fragment = LocationFragment.newInstance();
-            fragment.show(fragmentManager, LocationFragment.TAG);
+            fragment = LocationFragment.Companion.newInstance();
+            fragment.show(fragmentManager, LocationFragment.Companion.getTAG());
         }
     }
 
