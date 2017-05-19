@@ -5,7 +5,7 @@ android {
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
     defaultConfig {
-        applicationId "in.sudopk.vaishnavacalendar"
+        applicationId "in.sudopk.vc"
         minSdkVersion minimum_sdk_version
         targetSdkVersion target_sdk_version
         versionCode 1
@@ -22,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    // Bug: https://code.google.com/p/android/issues/detail?id=219979&q=priority%3DCritical%20label%3AComponent-Tools&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

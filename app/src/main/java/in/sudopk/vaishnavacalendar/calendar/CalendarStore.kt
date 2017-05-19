@@ -88,7 +88,7 @@ class CalendarStore(context: Context, private val mGson: Gson) {
         }
     }
 
-    var location: Location
+    var location: Location?
         get() = mGson.fromJson(mPreferences.getString(LOCATION_KEY, null), Location::class.java)
         set(location) {
             cleanupAll()

@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
 
     private fun goToPlayStore() {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse("market://details?id=com.waze")
+        intent.data = Uri.parse("market://details?id=in.sudopk.vc")
         startActivity(intent)
     }
 
@@ -109,7 +109,8 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
 
     private fun showRecommendedUpdate() {
         if (isActivityResumed) {
-            val snackbar = Snackbar.make(findViewById(R.id.container), "App seems old." + " Recommended to update.",
+            val view = findViewById(R.id.container)
+            val snackbar = Snackbar.make(view, "App seems old. Recommended to update.",
                     Snackbar.LENGTH_LONG)
             snackbar.setAction("UPDATE") { v -> goToPlayStore() }
             snackbar.show()

@@ -14,7 +14,8 @@ import `in`.sudopk.coreandroid.Layout
 import `in`.sudopk.vaishnavacalendar.R
 import `in`.sudopk.vaishnavacalendar.calendar.Country
 
-class LocationAdapter(private val mContainer: LocationContainer, private val mSelectedLocation: Location) : RecyclerView.Adapter<LocationAdapter.VH>() {
+class LocationAdapter(private val mContainer: LocationContainer, private val mSelectedLocation:
+Location?) : RecyclerView.Adapter<LocationAdapter.VH>() {
     private val mCountries = ArrayList<Country>()
     private var mCountryIndex = IntArray(0)
     private var mCountryIndexCumulative = IntArray(0)
@@ -105,7 +106,7 @@ class LocationAdapter(private val mContainer: LocationContainer, private val mSe
             }
         }
 
-        fun setCountry(country: Country, countryIndex: Int, selectedLocation: Location) {
+        fun setCountry(country: Country, countryIndex: Int, selectedLocation: Location?) {
             if (itemViewType == HEADER_VIEW_TYPE) {
                 mTextView.text = country.name
             } else {
