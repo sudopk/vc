@@ -94,7 +94,7 @@ class LocationAdapter(private val mContainer: LocationContainer, private val mSe
 
     class VH internal constructor(itemView: View, container: LocationContainer) : RecyclerView.ViewHolder(itemView) {
         private val mTextView: TextView
-        private var mLocation: Location? = null
+        private lateinit var mLocation: Location
 
         init {
             mTextView = Layout.findViewById<TextView>(itemView, R.id.textView)
@@ -116,7 +116,7 @@ class LocationAdapter(private val mContainer: LocationContainer, private val mSe
                 } else {
                     mTextView.setBackgroundColor(0xffffff)
                 }
-                mTextView.text = mLocation!!.name
+                mTextView.text = mLocation.name
             }
         }
     }
