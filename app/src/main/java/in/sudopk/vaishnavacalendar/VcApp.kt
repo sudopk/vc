@@ -1,21 +1,18 @@
 package `in`.sudopk.vaishnavacalendar
 
-import android.app.Activity
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.support.design.widget.Snackbar
-import android.support.multidex.MultiDexApplication
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.AppCompatDialogFragment
-
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.gson.RemoveFieldNameStrategy
 import `in`.sudopk.vaishnavacalendar.location.LocationStore
 import `in`.sudopk.vaishnavacalendar.retrofit.VcService
+import android.app.Activity
+import android.content.pm.PackageManager
+import android.support.design.widget.Snackbar
+import android.support.multidex.MultiDexApplication
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDialogFragment
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 class VcApp : MultiDexApplication() {
     lateinit var gson: Gson
@@ -39,8 +36,8 @@ class VcApp : MultiDexApplication() {
     }
 
     fun showBlockingNotification() {
-        val activity = currentActivity()
-        if(activity != null) {
+        val activity = currentResumedActivity()
+        if (activity != null) {
             val fm = activity.supportFragmentManager
             val dialogFragment = AppCompatDialogFragment()
             dialogFragment.isCancelable = false
@@ -49,16 +46,16 @@ class VcApp : MultiDexApplication() {
     }
 
     fun showSoftNotification() {
-        val activity = currentActivity()
+        val activity = currentResumedActivity()
 
-        if(activity != null) {
+        if (activity != null) {
             val snackbar = Snackbar.make(activity.window.decorView, "", Snackbar
                     .LENGTH_SHORT)
             snackbar.show()
         }
     }
 
-    private fun currentActivity(): AppCompatActivity? {
+    fun currentResumedActivity(): AppCompatActivity? {
         return mLifecycleCallbacks.currentResumedActivity()
     }
 
@@ -73,3 +70,21 @@ class VcApp : MultiDexApplication() {
     }
 
 }
+
+val Activity.vcApp
+    get() = application as VcApp
+
+val Fragment.vcApp
+    get() = activity.vcApp
+
+
+/**
+ * Do not name this method 'isResumed', there would be a crash.
+ * Actually isResumed() is already a method in some super class but is hidden (@hide)
+ * Crash:
+ * Theme: themes:{default=overlay:system, iconPack:system, fontPkg:system, com.android.systemui=overlay:system, com.android.systemui.navbar=overlay:system}
+ * java.lang.LinkageError
+ * http://stackoverflow.com/questions/34061704/java-lang-linkageerror-mainactivity
+ */
+val AppCompatActivity.resumed
+    get() = vcApp.currentResumedActivity() === this

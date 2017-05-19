@@ -15,11 +15,7 @@ import android.widget.ViewAnimator
 
 import `in`.sudopk.coreandroid.Fm
 import `in`.sudopk.coreandroid.Layout
-import `in`.sudopk.vaishnavacalendar.NoActionCalendar
-import `in`.sudopk.vaishnavacalendar.R
-import `in`.sudopk.vaishnavacalendar.ResumedCalendar
-import `in`.sudopk.vaishnavacalendar.VCalendar
-import `in`.sudopk.vaishnavacalendar.VcApp
+import `in`.sudopk.vaishnavacalendar.*
 import `in`.sudopk.vaishnavacalendar.retrofit.VcService
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,9 +34,8 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        val vcService = (activity.application as VcApp).vcService
-        val calendarStore = (activity.application as VcApp)
-                .calendarStore
+        val vcService = vcApp.vcService
+        val calendarStore = vcApp.calendarStore
 
         val year = arguments.getInt(YEAR)
         val month = arguments.getInt(MONTH)

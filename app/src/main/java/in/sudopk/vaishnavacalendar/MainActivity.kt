@@ -1,15 +1,14 @@
 package `in`.sudopk.vaishnavacalendar
 
+import `in`.sudopk.coreandroid.Fm
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 
-import `in`.sudopk.coreandroid.Fm
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.location.Location
@@ -22,22 +21,12 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, LocationContainer, TextDialog.Container {
     private lateinit var mCalendarStore: CalendarStore
-    /**
-     * Do not name this method 'isResumed', there would be a crash.
-     * Actually isResumed() is already a method in some super class but is hidden (@hide)
-     * Crash:
-     * Theme: themes:{default=overlay:system, iconPack:system, fontPkg:system, com.android.systemui=overlay:system, com.android.systemui.navbar=overlay:system}
-     * java.lang.LinkageError
-     * http://stackoverflow.com/questions/34061704/java-lang-linkageerror-mainactivity
-     */
-    protected var isActivityResumed: Boolean = false
-        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container)
 
-        mCalendarStore = (application as VcApp).calendarStore
+        mCalendarStore = vcApp.calendarStore
 
         if (savedInstanceState == null) {
             launchCalendarPagerFragment()
@@ -46,17 +35,11 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
 
     override fun onResume() {
         super.onResume()
-        isActivityResumed = true
         checkForVersion()
     }
 
-    override fun onPause() {
-        super.onPause()
-        isActivityResumed = false
-    }
-
     private fun showTooOldAppDialog() {
-        if (isActivityResumed) {
+        if (resumed) {
             val tag = "BlockingDialog"
             if (supportFragmentManager.findFragmentByTag(tag) == null) {
                 //            TODO use res
@@ -88,12 +71,11 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
 
 
     private fun checkForVersion() {
-        val configService = VcConfigService.newInstance((application as VcApp)
+        val configService = VcConfigService.newInstance(vcApp
                 .gson).config()
         configService.enqueue(object : Callback<VcConfig> {
             override fun onResponse(call: Call<VcConfig>, response: Response<VcConfig>) {
                 val config = response.body()
-                val vcApp = application as VcApp
                 if (vcApp.versionCode() < config.version.hard) {
                     showTooOldAppDialog()
                 } else if (vcApp.versionCode() < config.version.soft) {
@@ -108,7 +90,7 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
     }
 
     private fun showRecommendedUpdate() {
-        if (isActivityResumed) {
+        if (resumed) {
             val view = findViewById(R.id.container)
             val snackbar = Snackbar.make(view, "App seems old. Recommended to update.",
                     Snackbar.LENGTH_LONG)

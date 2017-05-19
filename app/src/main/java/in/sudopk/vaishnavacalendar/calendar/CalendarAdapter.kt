@@ -12,7 +12,7 @@ import java.util.ArrayList
 import java.util.Calendar
 import java.util.Collections
 
-import `in`.sudopk.coreandroid.CalUtil
+import `in`.sudopk.utils.CalUtil
 import `in`.sudopk.coreandroid.Layout
 import `in`.sudopk.coreandroid.SimpleList
 import `in`.sudopk.vaishnavacalendar.R

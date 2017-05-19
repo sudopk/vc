@@ -24,6 +24,7 @@ import `in`.sudopk.vaishnavacalendar.VcApp
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.calendar.Country
 import `in`.sudopk.vaishnavacalendar.retrofit.VcService
+import `in`.sudopk.vaishnavacalendar.vcApp
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,10 +41,10 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer {
         super.onCreate(savedInstanceState)
         //setHasOptionsMenu(true);
 
-        mVcService = (activity.application as VcApp).vcService
+        mVcService = vcApp.vcService
 
-        mLocationStore = (activity.application as VcApp).locationStore
-        mCalendarStore = (activity.application as VcApp).calendarStore
+        mLocationStore = vcApp.locationStore
+        mCalendarStore = vcApp.calendarStore
 
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_AppCompat_Light_Dialog)
 

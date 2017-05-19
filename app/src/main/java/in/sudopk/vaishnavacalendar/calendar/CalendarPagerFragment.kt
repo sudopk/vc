@@ -20,6 +20,7 @@ import `in`.sudopk.vaishnavacalendar.location.Location
 import `in`.sudopk.vaishnavacalendar.R
 import `in`.sudopk.vaishnavacalendar.VcApp
 import `in`.sudopk.vaishnavacalendar.core.CalendarUtil
+import `in`.sudopk.vaishnavacalendar.vcApp
 
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
 
@@ -35,7 +36,7 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
         mToolbar = Layout.findViewById<Toolbar>(view, R.id.toolbar)
         (activity as AppCompatActivity).setSupportActionBar(mToolbar)
 
-        mCalendarStore = (activity.application as VcApp).calendarStore
+        mCalendarStore = vcApp.calendarStore
         updateSubtitle(mCalendarStore.location)
 
         mViewPager = Layout.findViewById<ViewPager>(view, R.id.viewPager)

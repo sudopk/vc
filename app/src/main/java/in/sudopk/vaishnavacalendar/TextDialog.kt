@@ -13,10 +13,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 
-import java.lang.reflect.Method
-
-import `in`.sudopk.utils.StrUtil
-
 class TextDialog : AppCompatDialogFragment() {
 
     private fun onButton(button: ButtonDescription) {
@@ -38,7 +34,7 @@ class TextDialog : AppCompatDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (StrUtil.isNotEmpty(arguments.getString(TITLE))) {
+        if (arguments.getString(TITLE).isNotBlank()) {
             setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_AppCompat_Light_Dialog)
         } else {
             setStyle(DialogFragment.STYLE_NO_TITLE, 0)
