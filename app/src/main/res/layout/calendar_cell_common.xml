@@ -17,7 +17,8 @@
         android:background="@color/colorAccent"
         android:gravity="center"
         android:textColor="@android:color/white"
-        app:layout_constraintCenterY_toCenterY="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Jan 31\nSat"/>
 
@@ -28,7 +29,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintCenterY_toCenterY="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/date"/>
 </android.support.constraint.ConstraintLayout>
