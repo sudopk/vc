@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 
 internal class VcActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
     private var mCurrentResumedActivity: AppCompatActivity? = null
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 
     }
 
