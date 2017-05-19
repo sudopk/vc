@@ -79,7 +79,7 @@ public class CalendarPagerFragment extends Fragment implements CalendarFragment.
 
         @Override
         public Fragment getItem(int position) {
-            final Calendar calendar = CalendarUtil.getCalendar(getMonthOffset(position));
+            final Calendar calendar = CalendarUtil.INSTANCE.getCalendar(getMonthOffset(position));
             return CalendarFragment.newInstance(
                     calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
         }
@@ -95,7 +95,7 @@ public class CalendarPagerFragment extends Fragment implements CalendarFragment.
 
         @Override
         public CharSequence getPageTitle(final int position) {
-            final Calendar calendar = CalendarUtil.getCalendar(getMonthOffset(position));
+            final Calendar calendar = CalendarUtil.INSTANCE.getCalendar(getMonthOffset(position));
             return (calendar.get(Calendar.MONTH) + 1) + " / " + calendar.get(Calendar.YEAR);
         }
     }

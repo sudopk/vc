@@ -74,9 +74,9 @@ public class CalendarStore {
     public void cleanupExtra() {
         for (int i = 1; i <= 5; i++) {
             final int offset = (MONTHS_TO_STORE / 2) + i;
-            Calendar calendar = CalendarUtil.getCalendar(offset);
+            Calendar calendar = CalendarUtil.INSTANCE.getCalendar(offset);
             removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
-            calendar = CalendarUtil.getCalendar(-offset);
+            calendar = CalendarUtil.INSTANCE.getCalendar(-offset);
             removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
         }
     }
@@ -84,7 +84,7 @@ public class CalendarStore {
     public void cleanupAll() {
         cleanupExtra();
         for (int i = -MONTHS_TO_STORE; i <= MONTHS_TO_STORE; i++) {
-            Calendar calendar = CalendarUtil.getCalendar(i);
+            Calendar calendar = CalendarUtil.INSTANCE.getCalendar(i);
             removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
         }
     }
