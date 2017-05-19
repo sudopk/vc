@@ -33,7 +33,7 @@ public class VcApp extends MultiDexApplication {
         mGson = new GsonBuilder()
                 .setFieldNamingStrategy(new RemoveFieldNameStrategy())
                 .create();
-        mVcService = VcService.newInstance();
+        mVcService = VcService.Companion.newInstance();
 
         mCalendarStore = new CalendarStore(this, mGson);
         mLocationStore = new LocationStore(this, mGson);
