@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity implements CalendarPagerFrag
             public void onResponse(final Call<VcConfig> call, final Response<VcConfig> response) {
                 final VcConfig config = response.body();
                 final VcApp vcApp = (VcApp) getApplication();
-                if (vcApp.versionCode() < config.version.getHard()) {
+                if (vcApp.versionCode() < config.getVersion().getHard()) {
                     showTooOldAppDialog();
-                } else if (vcApp.versionCode() < config.version.getSoft()) {
+                } else if (vcApp.versionCode() < config.getVersion().getSoft()) {
                     showRecommendedUpdate();
                 }
             }
