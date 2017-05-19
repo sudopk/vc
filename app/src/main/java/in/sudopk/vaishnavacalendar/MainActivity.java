@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements CalendarPagerFrag
             final String tag = "BlockingDialog";
             if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
 //            TODO use res
-                TextDialog dialog = TextDialog.newBlockingInstance("This version of the app is " +
+                TextDialog dialog = TextDialog.Companion.newBlockingInstance("This version of the app is " +
                                 "too old and must be updated.",
                         new ButtonDescription[]{
                                 new ButtonDescription("Exit", EXIT_BUTTON_ID),
