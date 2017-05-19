@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements CalendarPagerFrag
 
 
     private void checkForVersion() {
-        final Call<VcConfig> config = VcConfigService.Factory.newInstance(((VcApp) getApplication())
+        final Call<VcConfig> config = VcConfigService.Companion.newInstance(((VcApp) getApplication())
                 .getGson()).config();
         config.enqueue(new Callback<VcConfig>() {
             @Override
