@@ -37,7 +37,7 @@ class VcConverterFactory : Converter.Factory() {
 
     private class VcCalendarResponseConverter : Converter<ResponseBody, VCalendar> {
 
-        private var mEventData: MutableList<String>? = null
+        private var mEventData: MutableList<String> = ArrayList()
         private var mDate: Int = 0
 
         @Throws(IOException::class)
@@ -64,7 +64,7 @@ class VcConverterFactory : Converter.Factory() {
                 parseDayEvent(event, firstRow)
                 firstRow = false
             }
-            if (mDate != 0 && !mEventData!!.isEmpty()) {
+            if (mDate != 0 && !mEventData.isEmpty()) {
                 return DayCalendar(mDate, mEventData)
             }
             return null
@@ -88,7 +88,7 @@ class VcConverterFactory : Converter.Factory() {
                 data += parseImgToText(detail.select("img"))
                 data = data.trim { it <= ' ' }
                 if (!TextUtils.isEmpty(data)) {
-                    mEventData!!.add(data)
+                    mEventData.add(data)
                 }
             }
         }
