@@ -10,9 +10,9 @@ import android.widget.TextView
 import java.util.ArrayList
 import java.util.Collections
 
-import `in`.sudopk.coreandroid.Layout
 import `in`.sudopk.vaishnavacalendar.R
 import `in`.sudopk.vaishnavacalendar.calendar.Country
+import `in`.sudopk.vaishnavacalendar.core.castViewById
 
 class LocationAdapter(private val mContainer: LocationContainer, private val mSelectedLocation:
 Location?) : RecyclerView.Adapter<LocationAdapter.VH>() {
@@ -98,8 +98,8 @@ Location?) : RecyclerView.Adapter<LocationAdapter.VH>() {
         private lateinit var mLocation: Location
 
         init {
-            mTextView = Layout.findViewById<TextView>(itemView, R.id.textView)
-            itemView.setOnClickListener { v ->
+            mTextView = itemView.castViewById(R.id.textView)
+            itemView.setOnClickListener {
                 if (itemViewType != HEADER_VIEW_TYPE) {
                     container.onLocationSelected(mLocation)
                 }

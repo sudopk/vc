@@ -62,7 +62,7 @@ class TextDialog : AppCompatDialogFragment() {
 
     private fun addButton(inflater: LayoutInflater, parent: ViewGroup, buttonDescription: ButtonDescription) {
         val button = inflater.inflate(R.layout.borderless_button, parent, false) as Button
-        button.setOnClickListener { v -> onButton(buttonDescription) }
+        button.setOnClickListener { onButton(buttonDescription) }
         button.text = buttonDescription.title
         parent.addView(button)
     }

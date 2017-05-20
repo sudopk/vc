@@ -1,5 +1,6 @@
 package `in`.sudopk.vaishnavacalendar.retrofit
 
+import `in`.sudopk.coreandroid.StrFromRes
 import `in`.sudopk.vaishnavacalendar.calendar.Country
 import `in`.sudopk.vaishnavacalendar.VCalendar
 import retrofit2.Call
@@ -21,10 +22,10 @@ interface VcService {
     companion object {
         val URL = "http://www.vaisnavacalendar.com/"
 
-        fun newInstance(): VcService {
+        fun newInstance(strFromRes: StrFromRes): VcService {
             return Retrofit.Builder()
                     .baseUrl(VcService.URL)
-                    .addConverterFactory(VcConverterFactory())
+                    .addConverterFactory(VcConverterFactory(strFromRes))
                     .build()
                     .create(VcService::class.java)
         }

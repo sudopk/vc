@@ -1,22 +1,15 @@
 package `in`.sudopk.vaishnavacalendar.calendar
 
+import `in`.sudopk.coreandroid.Fm
+import `in`.sudopk.vaishnavacalendar.*
+import `in`.sudopk.vaishnavacalendar.core.castViewById
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.ViewAnimator
-
-import `in`.sudopk.coreandroid.Fm
-import `in`.sudopk.coreandroid.Layout
-import `in`.sudopk.vaishnavacalendar.*
-import `in`.sudopk.vaishnavacalendar.retrofit.VcService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,9 +34,9 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         val month = arguments.getInt(MONTH)
 
         val view = inflater!!.inflate(R.layout.calendar, container, false)
-        val viewAnimator = Layout.findViewById<ViewAnimator>(view, R.id.viewAnimator)
-        val progressBar = Layout.findViewById<ProgressBar>(view, R.id.progressBar)
-        val recyclerView = Layout.findViewById<RecyclerView>(view, R.id.recyclerView)
+        val viewAnimator = view.castViewById<ViewAnimator>(R.id.viewAnimator)
+        val progressBar = view.castViewById<ProgressBar>(R.id.progressBar)
+        val recyclerView = view.castViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = CalendarAdapter(month, year)
         recyclerView.adapter = adapter

@@ -1,5 +1,10 @@
 package `in`.sudopk.vaishnavacalendar.calendar
 
+import `in`.sudopk.coreandroid.SimpleList
+import `in`.sudopk.utils.CalUtil
+import `in`.sudopk.vaishnavacalendar.R
+import `in`.sudopk.vaishnavacalendar.VCalendar
+import `in`.sudopk.vaishnavacalendar.core.castViewById
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,16 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-
-import java.util.ArrayList
-import java.util.Calendar
-import java.util.Collections
-
-import `in`.sudopk.utils.CalUtil
-import `in`.sudopk.coreandroid.Layout
-import `in`.sudopk.coreandroid.SimpleList
-import `in`.sudopk.vaishnavacalendar.R
-import `in`.sudopk.vaishnavacalendar.VCalendar
+import java.util.*
 
 
 /**
@@ -87,8 +83,8 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
         private val mMonthCalendar: Calendar
 
         init {
-            mDate = Layout.findViewById<TextView>(itemView, R.id.date)
-            mEvents = Layout.findViewById<SimpleList>(itemView, R.id.events)
+            mDate = itemView.castViewById(R.id.date)
+            mEvents = itemView.castViewById(R.id.events)
 
             mMonthCalendar = Calendar.getInstance()
             mMonthCalendar.set(Calendar.MONTH, month - 1)
@@ -97,8 +93,9 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
 
         fun onBind(dayCalendar: DayCalendar) {
             mMonthCalendar.set(Calendar.DATE, dayCalendar.date)
-            mDate.text = "${CalUtil.monthAbbreviation(mMonthCalendar)} ${dayCalendar
-                    .date}\n${CalUtil.weekDayAbbreviation(mMonthCalendar)}"
+            mDate.text = itemView.context.getString(R.string.date_and_weekday, CalUtil
+                    .monthAbbreviation(mMonthCalendar), dayCalendar.date, CalUtil.weekDayAbbreviation
+            (mMonthCalendar))
             mEvents.setAdapter(ArrayAdapter(itemView.context,
                     mEventLayout, dayCalendar.events))
         }

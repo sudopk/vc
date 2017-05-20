@@ -1,9 +1,10 @@
 package `in`.sudopk.vaishnavacalendar.retrofit
 
+import `in`.sudopk.coreandroid.StrFromRes
+import `in`.sudopk.vaishnavacalendar.R
 import android.text.TextUtils
 
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
@@ -20,12 +21,12 @@ import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
 
-class VcConverterFactory : Converter.Factory() {
+class VcConverterFactory(val strFromRes: StrFromRes) : Converter.Factory() {
     override fun responseBodyConverter(type: Type?, annotations: Array<Annotation>?, retrofit: Retrofit?): Converter<ResponseBody, *> {
         if (annotations != null) {
             for (annotation in annotations) {
                 if (annotation.annotationClass == VcApi.Calendar::class) {
-                    return VcCalendarResponseConverter()
+                    return VcCalendarResponseConverter(strFromRes)
                 } else if (annotation.annotationClass == VcApi.Locations::class) {
                     return VcLocationResponseConverter()
                 }
@@ -35,7 +36,8 @@ class VcConverterFactory : Converter.Factory() {
     }
 
 
-    private class VcCalendarResponseConverter : Converter<ResponseBody, VCalendar> {
+    private class VcCalendarResponseConverter(val strFromRes: StrFromRes) : Converter<ResponseBody,
+            VCalendar> {
 
         private var mEventData: MutableList<String> = ArrayList()
         private var mDate: Int = 0
@@ -96,15 +98,14 @@ class VcConverterFactory : Converter.Factory() {
         private fun parseImgToText(imgs: Elements): String {
             if (imgs.size > 0) {
                 val src = imgs.attr("src")
-                //TODO: Use res strings
                 if ("amavasya.gif" == src) {
-                    return "[New moon]"
+                    return strFromRes.getString(R.string.new_moon)
                 } else if ("purnima.gif" == src) {
-                    return "[Full moon]"
+                    return strFromRes.getString(R.string.full_moon)
                 } else if ("ap.gif" == src) {
-                    return " [Appearance]"
+                    return strFromRes.getString(R.string.appearance_day)
                 } else if ("dis.gif" == src) {
-                    return " [Disapperance]"
+                    return strFromRes.getString(R.string.disappearance_day)
                 }
             }
             return ""

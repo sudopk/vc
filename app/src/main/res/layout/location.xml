@@ -5,6 +5,7 @@
               android:minHeight="100dp"
               android:minWidth="4000dp"
               android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -21,7 +22,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:scrollbars="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

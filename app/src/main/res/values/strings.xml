@@ -7,4 +7,13 @@
     <string name="calender_failure">Failed to fetch calendar.</string>
     <string name="location_required">Location must be selected.</string>
     <string name="no_calendar_data">Calendar is not available for this month.</string>
+    <string name="old_app_must_update">This version of the app is  too old and must be updated.</string>
+    <string name="exit">Exit</string>
+    <string name="update">Update</string>
+    <string name="old_app_recommended_update">App seems old. Recommended to update.</string>
+    <string name="new_moon">[New moon]</string>
+    <string name="full_moon">[Full moon]</string>
+    <string name="appearance_day">[Appearance]</string>
+    <string name="disappearance_day">[Disappearance]</string>
+    <string name="date_and_weekday">%1$s %2$d\n%3$s</string>
 </resources>

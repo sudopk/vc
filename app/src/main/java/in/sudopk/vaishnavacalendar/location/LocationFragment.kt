@@ -1,5 +1,12 @@
 package `in`.sudopk.vaishnavacalendar.location
 
+import `in`.sudopk.coreandroid.Fm
+import `in`.sudopk.vaishnavacalendar.R
+import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
+import `in`.sudopk.vaishnavacalendar.calendar.Country
+import `in`.sudopk.vaishnavacalendar.core.castViewById
+import `in`.sudopk.vaishnavacalendar.retrofit.VcService
+import `in`.sudopk.vaishnavacalendar.vcApp
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -8,23 +15,8 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatDialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.ProgressBar
-
-import `in`.sudopk.coreandroid.Fm
-import `in`.sudopk.coreandroid.Layout
-import `in`.sudopk.vaishnavacalendar.R
-import `in`.sudopk.vaishnavacalendar.VcApp
-import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
-import `in`.sudopk.vaishnavacalendar.calendar.Country
-import `in`.sudopk.vaishnavacalendar.retrofit.VcService
-import `in`.sudopk.vaishnavacalendar.vcApp
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,8 +52,8 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.location, container, false)
-        mProgressBar = Layout.findViewById<ProgressBar>(view, R.id.progressBar)
-        mRecyclerView = Layout.findViewById<RecyclerView>(view, R.id.recyclerView)
+        mProgressBar = view.castViewById(R.id.progressBar)
+        mRecyclerView = view.castViewById(R.id.recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         mAdapter = LocationAdapter(this, mCalendarStore.location)
         mRecyclerView.adapter = mAdapter

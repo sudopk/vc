@@ -1,6 +1,12 @@
 package `in`.sudopk.vaishnavacalendar
 
 import `in`.sudopk.coreandroid.Fm
+import `in`.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
+import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
+import `in`.sudopk.vaishnavacalendar.location.Location
+import `in`.sudopk.vaishnavacalendar.location.LocationContainer
+import `in`.sudopk.vaishnavacalendar.location.LocationFragment
+import `in`.sudopk.vaishnavacalendar.retrofit.VcConfigService
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,22 +14,19 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-
-import `in`.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
-import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
-import `in`.sudopk.vaishnavacalendar.location.Location
-import `in`.sudopk.vaishnavacalendar.location.LocationContainer
-import `in`.sudopk.vaishnavacalendar.location.LocationFragment
-import `in`.sudopk.vaishnavacalendar.retrofit.VcConfigService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, LocationContainer, TextDialog.Container {
+class MainActivity : AppCompatActivity(),
+        CalendarPagerFragment.Container,
+        LocationContainer,
+        TextDialog.Container {
     private lateinit var mCalendarStore: CalendarStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.container)
 
         mCalendarStore = vcApp.calendarStore
@@ -40,11 +43,12 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
 
     private fun showTooOldAppDialog() {
         if (resumed) {
+            dismissLocationDialog()
             val tag = "BlockingDialog"
             if (supportFragmentManager.findFragmentByTag(tag) == null) {
-                //            TODO use res
-                val dialog = TextDialog.newBlockingInstance("This version of the app is " + "too old and must be updated.",
-                        arrayOf(ButtonDescription("Exit", EXIT_BUTTON_ID), ButtonDescription("Update", UPDATE_BUTTON_ID)))
+                val dialog = TextDialog.newBlockingInstance(getString(R.string.old_app_must_update),
+                        arrayOf(ButtonDescription(getString(R.string.exit) , EXIT_BUTTON_ID),
+                                ButtonDescription(getString(R.string.update), UPDATE_BUTTON_ID)))
                 dialog.show(supportFragmentManager, tag)
             }
         }
@@ -91,11 +95,20 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
 
     private fun showRecommendedUpdate() {
         if (resumed) {
+            dismissLocationDialog()
             val view = findViewById(R.id.container)
-            val snackbar = Snackbar.make(view, "App seems old. Recommended to update.",
+            val snackbar = Snackbar.make(view, getString(R.string.old_app_recommended_update),
                     Snackbar.LENGTH_LONG)
-            snackbar.setAction("UPDATE") { v -> goToPlayStore() }
+            snackbar.setAction(R.string.update) { goToPlayStore() }
             snackbar.show()
+        }
+    }
+
+    private fun dismissLocationDialog() {
+        val fragment = fragmentManager.findFragmentByTag(LocationFragment.TAG)
+                as DialogFragment?
+        if (fragment != null && fragment.isVisible) {
+            fragment.dismiss();
         }
     }
 
@@ -104,7 +117,6 @@ class MainActivity : AppCompatActivity(), CalendarPagerFragment.Container, Locat
     }
 
     override fun onChangeLocationRequest() {
-        // TODO handle when there is blocking update
         val fragmentManager = supportFragmentManager
         try {
             // throws IllegalStateException, for reason which is not clear to me

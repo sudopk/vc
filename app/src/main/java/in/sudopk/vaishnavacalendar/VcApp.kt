@@ -1,5 +1,6 @@
 package `in`.sudopk.vaishnavacalendar
 
+import `in`.sudopk.coreandroid.StrFromRes
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.gson.RemoveFieldNameStrategy
 import `in`.sudopk.vaishnavacalendar.location.LocationStore
@@ -14,7 +15,7 @@ import android.support.v7.app.AppCompatDialogFragment
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
-class VcApp : MultiDexApplication() {
+class VcApp : MultiDexApplication(), StrFromRes {
     lateinit var gson: Gson
     lateinit var locationStore: LocationStore
     lateinit var calendarStore: CalendarStore
@@ -29,7 +30,7 @@ class VcApp : MultiDexApplication() {
         gson = GsonBuilder()
                 .setFieldNamingStrategy(RemoveFieldNameStrategy())
                 .create()
-        vcService = VcService.newInstance()
+        vcService = VcService.newInstance(this)
 
         calendarStore = CalendarStore(this, gson)
         locationStore = LocationStore(this, gson)
