@@ -2,7 +2,7 @@ package `in`.sudopk.vaishnavacalendar
 
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarDelegate
 
-class NoActionCalendar : CalendarDelegate {
+object NoActionCalendar : CalendarDelegate {
     override fun onRefresh() {
 
     }

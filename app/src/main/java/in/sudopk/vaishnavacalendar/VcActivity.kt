@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(),
+class VcActivity : AppCompatActivity(),
         CalendarPagerFragment.Container,
         LocationContainer,
         TextDialog.Container {
@@ -142,6 +142,13 @@ class MainActivity : AppCompatActivity(),
         if (mCalendarStore.location == null) {
             Toast.makeText(this, R.string.location_required, Toast.LENGTH_LONG).show()
             onChangeLocationRequest()
+        }
+    }
+
+    override fun onLocationSelectFailed(error: String) {
+        if(resumed) {
+            val view = findViewById(R.id.container)
+            Snackbar.make(view, error, Snackbar.LENGTH_LONG).show()
         }
     }
 

@@ -1,5 +1,6 @@
 package `in`.sudopk.vaishnavacalendar.calendar
 
+import `in`.sudopk.utils.CalUtil
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,7 +12,6 @@ import java.util.Calendar
 
 import `in`.sudopk.vaishnavacalendar.location.Location
 import `in`.sudopk.vaishnavacalendar.VCalendar
-import `in`.sudopk.vaishnavacalendar.core.CalendarUtil
 
 @SuppressLint("DefaultLocale") // not end user string
 class CalendarStore(context: Context, private val mGson: Gson) {
@@ -73,9 +73,9 @@ class CalendarStore(context: Context, private val mGson: Gson) {
     fun cleanupExtra() {
         for (i in 1..5) {
             val offset = MONTHS_TO_STORE / 2 + i
-            var calendar = CalendarUtil.getCalendar(offset)
+            var calendar = CalUtil.getCalendar(offset)
             removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR))
-            calendar = CalendarUtil.getCalendar(-offset)
+            calendar = CalUtil.getCalendar(-offset)
             removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR))
         }
     }
@@ -83,7 +83,7 @@ class CalendarStore(context: Context, private val mGson: Gson) {
     fun cleanupAll() {
         cleanupExtra()
         for (i in -MONTHS_TO_STORE..MONTHS_TO_STORE) {
-            val calendar = CalendarUtil.getCalendar(i)
+            val calendar = CalUtil.getCalendar(i)
             removeCalendar(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR))
         }
     }

@@ -17,13 +17,12 @@ import retrofit2.Response
 class CalendarFragment : Fragment(), Callback<VCalendar> {
     private lateinit var mDelegate: CalendarDelegate
     private lateinit var mResumed: CalendarDelegate
-    private lateinit var mNoAction: CalendarDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?,
+    override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -33,7 +32,7 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         val year = arguments.getInt(YEAR)
         val month = arguments.getInt(MONTH)
 
-        val view = inflater!!.inflate(R.layout.calendar, container, false)
+        val view = inflater.inflate(R.layout.calendar, container, false)
         val viewAnimator = view.castViewById<ViewAnimator>(R.id.viewAnimator)
         val progressBar = view.castViewById<ProgressBar>(R.id.progressBar)
         val recyclerView = view.castViewById<RecyclerView>(R.id.recyclerView)
@@ -41,9 +40,7 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         val adapter = CalendarAdapter(month, year)
         recyclerView.adapter = adapter
 
-
-        mNoAction = NoActionCalendar()
-        mDelegate = mNoAction
+        mDelegate = NoActionCalendar
         mResumed = ResumedCalendar(calendarStore, month, year, Fm.container<Any>(this) as Container, viewAnimator, progressBar, vcService, this, adapter, recyclerView)
 
         return view
@@ -70,7 +67,7 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
 
     override fun onPause() {
         super.onPause()
-        mDelegate = mNoAction
+        mDelegate = NoActionCalendar
     }
 
     override fun onResponse(call: Call<VCalendar>, response: Response<VCalendar>) {

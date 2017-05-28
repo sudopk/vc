@@ -15,9 +15,9 @@ import android.view.ViewGroup
 import java.util.Calendar
 
 import `in`.sudopk.coreandroid.Fm
+import `in`.sudopk.utils.CalUtil
 import `in`.sudopk.vaishnavacalendar.location.Location
 import `in`.sudopk.vaishnavacalendar.R
-import `in`.sudopk.vaishnavacalendar.core.CalendarUtil
 import `in`.sudopk.vaishnavacalendar.core.castViewById
 import `in`.sudopk.vaishnavacalendar.vcApp
 
@@ -67,7 +67,7 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
     private inner class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            val calendar = CalendarUtil.getCalendar(getMonthOffset(position))
+            val calendar = CalUtil.getCalendar(getMonthOffset(position))
             return CalendarFragment.newInstance(
                     calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR))
         }
@@ -81,7 +81,7 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
         }
 
         override fun getPageTitle(position: Int): CharSequence {
-            val calendar = CalendarUtil.getCalendar(getMonthOffset(position))
+            val calendar = CalUtil.getCalendar(getMonthOffset(position))
             return (calendar.get(Calendar.MONTH) + 1).toString() + " / " + calendar.get(Calendar.YEAR)
         }
     }

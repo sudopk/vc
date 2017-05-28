@@ -2,7 +2,6 @@ package `in`.sudopk.vaishnavacalendar.retrofit
 
 import `in`.sudopk.coreandroid.StrFromRes
 import `in`.sudopk.vaishnavacalendar.R
-import android.text.TextUtils
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -17,11 +16,15 @@ import `in`.sudopk.vaishnavacalendar.calendar.Country
 import `in`.sudopk.vaishnavacalendar.calendar.DayCalendar
 import `in`.sudopk.vaishnavacalendar.location.Location
 import `in`.sudopk.vaishnavacalendar.VCalendar
+import android.util.Log
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
 
 class VcConverterFactory(val strFromRes: StrFromRes) : Converter.Factory() {
+    companion object {
+        val TAG = VcConverterFactory::class.java.simpleName
+    }
     override fun responseBodyConverter(type: Type?, annotations: Array<Annotation>?, retrofit: Retrofit?): Converter<ResponseBody, *> {
         if (annotations != null) {
             for (annotation in annotations) {
@@ -85,11 +88,16 @@ class VcConverterFactory(val strFromRes: StrFromRes) : Converter.Factory() {
         private fun parseEventDetail(detail: Element, dateEvent: Boolean) {
             var data = detail.text()
             if (dateEvent) {
+                if(mDate != 0) {
+                    val error = "Error parsing the date events. Date repeated: old- ${mDate}, new- ${data}"
+                    Log.e(TAG, error)
+                    throw IllegalStateException(error)
+                }
                 mDate = Integer.parseInt(data)
             } else {
                 data += parseImgToText(detail.select("img"))
                 data = data.trim { it <= ' ' }
-                if (!TextUtils.isEmpty(data)) {
+                if (data.isNotBlank()) {
                     mEventData.add(data)
                 }
             }
@@ -153,7 +161,7 @@ class VcConverterFactory(val strFromRes: StrFromRes) : Converter.Factory() {
 
         private fun addCountryData(country: String,
                                    locations: List<Location>) {
-            if (!locations.isEmpty() && !TextUtils.isEmpty(country)) {
+            if (locations.isNotEmpty() && country.isNotBlank()) {
                 Collections.sort(locations)
                 mLocationData.add(Country(country, locations))
             }

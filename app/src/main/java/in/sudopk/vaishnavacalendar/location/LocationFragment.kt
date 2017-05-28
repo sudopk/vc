@@ -5,23 +5,20 @@ import `in`.sudopk.vaishnavacalendar.R
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.calendar.Country
 import `in`.sudopk.vaishnavacalendar.core.castViewById
+import `in`.sudopk.vaishnavacalendar.core.weak
 import `in`.sudopk.vaishnavacalendar.retrofit.VcService
 import `in`.sudopk.vaishnavacalendar.vcApp
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatDialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ProgressBar
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class LocationFragment : AppCompatDialogFragment(), LocationContainer {
+class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
     private lateinit var mAdapter: LocationAdapter
     private lateinit var mProgressBar: ProgressBar
     private lateinit var mVcService: VcService
@@ -60,12 +57,12 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer {
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.calendar, menu)
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        inflater.inflate(R.menu.calendar, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == R.id.refresh) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.refresh) {
             refresh()
         }
         return super.onOptionsItemSelected(item)
@@ -78,7 +75,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer {
 
     override fun onCancel(dialog: DialogInterface?) {
         super.onCancel(dialog)
-        container.onLocationSelectCanceled()
+        onLocationSelectCanceled()
     }
 
     override fun onLocationSelected(location: Location) {
@@ -87,8 +84,12 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer {
     }
 
     override fun onLocationSelectCanceled() {
-        dismiss()
         container.onLocationSelectCanceled()
+    }
+
+    override fun onLocationSelectFailed(error: String) {
+        dismiss()
+        container.onLocationSelectFailed(error)
     }
 
     private val container: LocationContainer
@@ -101,37 +102,23 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer {
             if (mLocationStore.hasLocations()) {
                 onLocationResponse(mLocationStore.locations)
             } else {
-                val locationsCall = mVcService.locations()
-                locationsCall.enqueue(object : Callback<List<Country>> {
-                    override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
-                        if (isResumed) {
-                            if (response.body() != null) {
-                                mLocationStore.saveLocations(response.body())
-                                onLocationResponse(mLocationStore.locations)
-                            } else {
-                                failed()
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<List<Country>>, t: Throwable) {
-                        t.printStackTrace()
-                        failed()
-                    }
-                })
+                val locationRequest = LocationRemoteRequest(this.weak)
+                locationRequest.makeRequest(mVcService)
             }
         }
     }
 
-    private fun failed() {
+    override fun onLocationsReceived(countries: List<Country>) {
         if (isResumed) {
-            mProgressBar.visibility = View.GONE
-            val v = view
-            if (v != null) {
-                Snackbar.make(v, R.string.locations_failure, Snackbar.LENGTH_SHORT).show()
-            }
+            mLocationStore.saveLocations(countries)
+            onLocationResponse(mLocationStore.locations)
         }
     }
+
+    override fun onLocationRequestFailed() {
+        onLocationSelectFailed(getString(R.string.locations_failure))
+    }
+
 
     private fun onLocationResponse(response: List<Country>) {
         if (isResumed) {
