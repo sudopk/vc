@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/../Libraries/CoreJava/CoreJava.iml" filepath="$PROJECT_DIR$/../Libraries/CoreJava/CoreJava.iml" />
       <module fileurl="file://$PROJECT_DIR$/VaishnavaCalendar.iml" filepath="$PROJECT_DIR$/VaishnavaCalendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/helloworld/helloworld.iml" filepath="$PROJECT_DIR$/helloworld/helloworld.iml" />
     </modules>
   </component>
 </project>

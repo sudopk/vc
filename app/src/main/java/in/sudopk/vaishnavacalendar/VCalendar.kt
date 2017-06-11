@@ -1,10 +1,9 @@
 package `in`.sudopk.vaishnavacalendar
 
 import `in`.sudopk.vaishnavacalendar.calendar.DayCalendar
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
-class VCalendar(val calendar: List<DayCalendar>) {
+typealias VCalendar = List<DayCalendar>
 
-    fun hasData(): Boolean {
-        return !calendar.isEmpty()
-    }
-}
+val VCalendarTypeToken : Type = object : TypeToken<VCalendar>() {}.type

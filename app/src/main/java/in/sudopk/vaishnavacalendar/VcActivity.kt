@@ -1,8 +1,8 @@
 package `in`.sudopk.vaishnavacalendar
 
-import `in`.sudopk.coreandroid.Fm
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
+import `in`.sudopk.vaishnavacalendar.core.replace
 import `in`.sudopk.vaishnavacalendar.location.Location
 import `in`.sudopk.vaishnavacalendar.location.LocationContainer
 import `in`.sudopk.vaishnavacalendar.location.LocationFragment
@@ -42,7 +42,7 @@ class VcActivity : AppCompatActivity(),
     }
 
     private fun showTooOldAppDialog() {
-        if (resumed) {
+        ifResumed {
             dismissLocationDialog()
             val tag = "BlockingDialog"
             if (supportFragmentManager.findFragmentByTag(tag) == null) {
@@ -58,8 +58,6 @@ class VcActivity : AppCompatActivity(),
         when (buttonId) {
             UPDATE_BUTTON_ID -> goToPlayStore()
             EXIT_BUTTON_ID -> onDialogCanceled()
-            else -> {
-            }
         }
     }
 
@@ -113,7 +111,7 @@ class VcActivity : AppCompatActivity(),
     }
 
     private fun launchCalendarPagerFragment() {
-        Fm.replace(supportFragmentManager, R.id.container, CalendarPagerFragment())
+        supportFragmentManager.replace(R.id.container, CalendarPagerFragment())
     }
 
     override fun onChangeLocationRequest() {

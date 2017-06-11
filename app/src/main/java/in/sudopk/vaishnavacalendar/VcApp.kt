@@ -78,6 +78,9 @@ val Activity.vcApp
 val Fragment.vcApp
     get() = activity.vcApp
 
+val Fragment.appCompatActivity
+    get() = activity as AppCompatActivity
+
 
 /**
  * Do not name this method 'isResumed', there would be a crash.
@@ -89,3 +92,18 @@ val Fragment.vcApp
  */
 val AppCompatActivity.resumed
     get() = vcApp.currentResumedActivity() === this
+
+
+inline fun AppCompatActivity.ifResumed(block: ()-> Unit) {
+    if(resumed) {
+        block()
+    }
+}
+
+inline fun Fragment.ifResumed(block: ()-> Unit) {
+    if(isResumed) {
+        block()
+    }
+}
+
+

@@ -1,9 +1,8 @@
-package `in`.sudopk.vaishnavacalendar
+package `in`.sudopk.vaishnavacalendar.retrofit
 
+const val DAYS_IN_VC_HTML = 31
 
-val map = mapOf("a" to "b", "b" to "c")
-
-val Html: String = """
+const val VC_HTML: String = """
 <HTML>
 <HEAD>
 <TITLE>Vaisnava Calendar</TITLE>

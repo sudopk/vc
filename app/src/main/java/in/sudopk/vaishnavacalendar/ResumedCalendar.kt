@@ -39,7 +39,7 @@ class ResumedCalendar(private val mCalendarStore: CalendarStore,
         mProgressBar.visibility = View.VISIBLE
 
         if (mCalendarStore.hasCalendar(mMonth, mYear)) {
-            onCalendarResponse(mCalendarStore.getCalendar(mMonth, mYear)!!)
+            onCalendarResponse(mCalendarStore.getCalendar(mMonth, mYear))
         } else {
             val location = mCalendarStore.location
             if (location == null) {
@@ -59,12 +59,12 @@ class ResumedCalendar(private val mCalendarStore: CalendarStore,
     }
 
     override fun onCalendarResponse(body: VCalendar) {
-            mCalendarStore.saveCalendar(mMonth, mYear, body)
-            showCalendar(body)
+        mCalendarStore.saveCalendar(mMonth, mYear, body)
+        showCalendar(body)
     }
 
     private fun showCalendar(vCalendar: VCalendar) {
-        if (vCalendar.hasData()) {
+        if (vCalendar.isNotEmpty()) {
             mProgressBar.visibility = View.GONE
             mAdapter.setData(vCalendar)
 

@@ -1,31 +1,26 @@
 package `in`.sudopk.vaishnavacalendar.location
 
+import `in`.sudopk.vaishnavacalendar.calendar.Country
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-
-import java.util.ArrayList
-
-import `in`.sudopk.vaishnavacalendar.calendar.Country
+import java.util.*
 
 class LocationStore(context: Context, private val mGson: Gson) {
     private val mPreferences: SharedPreferences
     var locations: List<Country>
-    private set
+        private set
 
     init {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
         val savedLocations = mPreferences.getString(LOCATIONS, "")
-        if (savedLocations == null || savedLocations.isEmpty()) {
+        if (savedLocations.isBlank()) {
             locations = ArrayList<Country>()
         } else {
-            locations = mGson.fromJson<List<Country>>(savedLocations, object : TypeToken<List<Country>>() {
-
-            }.type)
+            locations = mGson.fromJson<List<Country>>(savedLocations, object : TypeToken<List<Country>>() {}.type)
         }
     }
 

@@ -1,5 +1,6 @@
 package `in`.sudopk.vaishnavacalendar
 
+import `in`.sudopk.vaishnavacalendar.core.castViewById
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -41,11 +42,13 @@ class TextDialog : AppCompatDialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.text_dialog, container, false)
-        (view.findViewById(R.id.message) as TextView).text = arguments.getString(MESSAGE)
-        val buttons = view.findViewById(R.id.buttons) as LinearLayout
+        val view = inflater.inflate(R.layout.text_dialog, container, false)
+        view.castViewById<TextView>(R.id.message).text = arguments.getString(MESSAGE)
+
+        val buttons = view.castViewById<LinearLayout>(R.id.buttons)
+
         buttons.removeAllViews()
 
         for (button in arguments.getParcelableArray(BUTTONS)!!) {

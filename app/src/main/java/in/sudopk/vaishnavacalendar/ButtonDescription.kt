@@ -3,15 +3,7 @@ package `in`.sudopk.vaishnavacalendar
 import android.os.Parcel
 import android.os.Parcelable
 
-class ButtonDescription : Parcelable {
-    val title: String
-    val id: String
-
-    constructor(title: String, id: String) {
-        this.title = title
-        this.id = id
-    }
-
+class ButtonDescription(val title: String, val id: String) : Parcelable {
     override fun describeContents(): Int {
         return 0
     }
@@ -21,10 +13,9 @@ class ButtonDescription : Parcelable {
         dest.writeString(id)
     }
 
-    private constructor(`in`: Parcel) {
-        title = `in`.readString()
-        id = `in`.readString()
-    }
+    private constructor(`in`: Parcel) :
+            this(title = `in`.readString(),
+                    id = `in`.readString())
 
     companion object {
 

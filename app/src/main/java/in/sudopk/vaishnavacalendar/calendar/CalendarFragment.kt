@@ -1,8 +1,8 @@
 package `in`.sudopk.vaishnavacalendar.calendar
 
-import `in`.sudopk.coreandroid.Fm
 import `in`.sudopk.vaishnavacalendar.*
 import `in`.sudopk.vaishnavacalendar.core.castViewById
+import `in`.sudopk.vaishnavacalendar.core.parent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -41,17 +41,18 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         recyclerView.adapter = adapter
 
         mDelegate = NoActionCalendar
-        mResumed = ResumedCalendar(calendarStore, month, year, Fm.container<Any>(this) as Container, viewAnimator, progressBar, vcService, this, adapter, recyclerView)
+        mResumed = ResumedCalendar(calendarStore, month, year, parent(), viewAnimator,
+                progressBar, vcService, this, adapter, recyclerView)
 
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.calendar, menu)
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        inflater.inflate(R.menu.calendar, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == R.id.refresh) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.refresh) {
             mDelegate.onRefresh()
         } else if (item.itemId == R.id.location) {
             mDelegate.onChangeLocationRequest()

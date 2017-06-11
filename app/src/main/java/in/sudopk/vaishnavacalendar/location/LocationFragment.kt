@@ -1,10 +1,10 @@
 package `in`.sudopk.vaishnavacalendar.location
 
-import `in`.sudopk.coreandroid.Fm
 import `in`.sudopk.vaishnavacalendar.R
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.calendar.Country
 import `in`.sudopk.vaishnavacalendar.core.castViewById
+import `in`.sudopk.vaishnavacalendar.core.parent
 import `in`.sudopk.vaishnavacalendar.core.weak
 import `in`.sudopk.vaishnavacalendar.retrofit.VcService
 import `in`.sudopk.vaishnavacalendar.vcApp
@@ -93,7 +93,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     }
 
     private val container: LocationContainer
-        get() = Fm.container<LocationContainer>(this)
+        get() = parent()
 
     private fun refresh() {
         if (isResumed) {

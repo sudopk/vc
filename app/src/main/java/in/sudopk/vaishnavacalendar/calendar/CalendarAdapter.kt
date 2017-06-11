@@ -1,7 +1,8 @@
 package `in`.sudopk.vaishnavacalendar.calendar
 
 import `in`.sudopk.coreandroid.SimpleList
-import `in`.sudopk.utils.CalUtil
+import `in`.sudopk.utils.monthAbbreviation
+import `in`.sudopk.utils.weekDayAbbreviation
 import `in`.sudopk.vaishnavacalendar.R
 import `in`.sudopk.vaishnavacalendar.VCalendar
 import `in`.sudopk.vaishnavacalendar.core.castViewById
@@ -72,7 +73,7 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
 
     fun setData(calendar: VCalendar) {
         mVCalendar.clear()
-        mVCalendar.addAll(calendar.calendar)
+        mVCalendar.addAll(calendar)
         Collections.sort(mVCalendar)
         notifyDataSetChanged()
     }
@@ -93,9 +94,9 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
 
         fun onBind(dayCalendar: DayCalendar) {
             mMonthCalendar.set(Calendar.DATE, dayCalendar.date)
-            mDate.text = itemView.context.getString(R.string.date_and_weekday, CalUtil
-                    .monthAbbreviation(mMonthCalendar), dayCalendar.date, CalUtil.weekDayAbbreviation
-            (mMonthCalendar))
+            mDate.text = itemView.context.getString(R.string.date_and_weekday,
+                    mMonthCalendar.monthAbbreviation(), dayCalendar.date,
+                    mMonthCalendar.weekDayAbbreviation())
             mEvents.setAdapter(ArrayAdapter(itemView.context,
                     mEventLayout, dayCalendar.events))
         }
@@ -107,3 +108,4 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
         private val TODAY_VIEW_TYPE = 1
     }
 }
+

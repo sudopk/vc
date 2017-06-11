@@ -1,17 +1,16 @@
 package `in`.sudopk.vaishnavacalendar.calendar
 
 import `in`.sudopk.utils.CalUtil
+import `in`.sudopk.vaishnavacalendar.VCalendar
+import `in`.sudopk.vaishnavacalendar.VCalendarTypeToken
+import `in`.sudopk.vaishnavacalendar.location.Location
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-
 import com.google.gson.Gson
+import java.util.*
 
-import java.util.Calendar
-
-import `in`.sudopk.vaishnavacalendar.location.Location
-import `in`.sudopk.vaishnavacalendar.VCalendar
 
 @SuppressLint("DefaultLocale") // not end user string
 class CalendarStore(context: Context, private val mGson: Gson) {
@@ -27,13 +26,13 @@ class CalendarStore(context: Context, private val mGson: Gson) {
      * *
      * @param year  full year e.g. 2016
      */
-    fun getCalendar(month: Int, year: Int): VCalendar? {
+    fun getCalendar(month: Int, year: Int): VCalendar {
         val calendarString = mPreferences.getString(String.format(CALENDAR_KEY_FORMAT,
                 month, year), "")
-        if (calendarString!!.isEmpty()) {
-            return null
+        if (calendarString.isEmpty()) {
+            return emptyList()
         } else {
-            return mGson.fromJson(calendarString, VCalendar::class.java)
+            return mGson.fromJson(calendarString, VCalendarTypeToken)
         }
     }
 
@@ -55,8 +54,7 @@ class CalendarStore(context: Context, private val mGson: Gson) {
      * @param year  full year e.g. 2016
      */
     fun hasCalendar(month: Int, year: Int): Boolean {
-        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "")!!
-                .isEmpty()
+        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "").isEmpty()
     }
 
     /**

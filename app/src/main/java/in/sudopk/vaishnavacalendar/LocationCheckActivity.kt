@@ -1,10 +1,10 @@
 package `in`.sudopk.vaishnavacalendar
 
-import `in`.sudopk.coreandroid.Fm
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.core.hasFragmentByTag
 import `in`.sudopk.vaishnavacalendar.core.isNull
+import `in`.sudopk.vaishnavacalendar.core.replace
 import `in`.sudopk.vaishnavacalendar.location.LocationStore
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -37,7 +37,7 @@ class LocationCheckActivity : AppCompatActivity() {
     }
 
     private fun launchCalendarFragment() {
-        Fm.replace(supportFragmentManager, R.id.container, CalendarPagerFragment())
+        supportFragmentManager.replace(R.id.container, CalendarPagerFragment())
     }
 
     private fun launchLocationFragment() {

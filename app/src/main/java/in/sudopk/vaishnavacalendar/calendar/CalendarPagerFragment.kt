@@ -1,25 +1,23 @@
 package `in`.sudopk.vaishnavacalendar.calendar
 
+import `in`.sudopk.utils.CalUtil
+import `in`.sudopk.vaishnavacalendar.R
+import `in`.sudopk.vaishnavacalendar.appCompatActivity
+import `in`.sudopk.vaishnavacalendar.core.castViewById
+import `in`.sudopk.vaishnavacalendar.location.Location
+import `in`.sudopk.vaishnavacalendar.core.parent
+import `in`.sudopk.vaishnavacalendar.vcApp
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import java.util.Calendar
-
-import `in`.sudopk.coreandroid.Fm
-import `in`.sudopk.utils.CalUtil
-import `in`.sudopk.vaishnavacalendar.location.Location
-import `in`.sudopk.vaishnavacalendar.R
-import `in`.sudopk.vaishnavacalendar.core.castViewById
-import `in`.sudopk.vaishnavacalendar.vcApp
+import java.util.*
 
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
 
@@ -33,7 +31,7 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
         val view = inflater.inflate(R.layout.calendar_pager, container, false)
 
         mToolbar = view.castViewById<Toolbar>(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(mToolbar)
+        appCompatActivity.setSupportActionBar(mToolbar)
 
         mCalendarStore = vcApp.calendarStore
         updateSubtitle(mCalendarStore.location)
@@ -56,33 +54,30 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
     }
 
     override fun onChangeLocationRequest() {
-        container.onChangeLocationRequest()
+        parent<Container>().onChangeLocationRequest()
     }
 
-    private val container: CalendarPagerFragment.Container
-        get() = Fm.container<CalendarPagerFragment.Container>(this)
-
     interface Container : CalendarFragment.Container
+}
 
-    private inner class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+private class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-        override fun getItem(position: Int): Fragment {
-            val calendar = CalUtil.getCalendar(getMonthOffset(position))
-            return CalendarFragment.newInstance(
-                    calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR))
-        }
+    override fun getItem(position: Int): Fragment {
+        val calendar = CalUtil.getCalendar(getMonthOffset(position))
+        return CalendarFragment.newInstance(
+                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR))
+    }
 
-        override fun getCount(): Int {
-            return CalendarStore.MONTHS_TO_STORE
-        }
+    override fun getCount(): Int {
+        return CalendarStore.MONTHS_TO_STORE
+    }
 
-        private fun getMonthOffset(position: Int): Int {
-            return position - count / 2
-        }
+    private fun getMonthOffset(position: Int): Int {
+        return position - count / 2
+    }
 
-        override fun getPageTitle(position: Int): CharSequence {
-            val calendar = CalUtil.getCalendar(getMonthOffset(position))
-            return (calendar.get(Calendar.MONTH) + 1).toString() + " / " + calendar.get(Calendar.YEAR)
-        }
+    override fun getPageTitle(position: Int): CharSequence {
+        val calendar = CalUtil.getCalendar(getMonthOffset(position))
+        return "${calendar.get(Calendar.MONTH) + 1} / ${calendar.get(Calendar.YEAR)}"
     }
 }
