@@ -14,6 +14,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import java.util.*
+import kotlin.collections.ArrayList
+
+
+private const val NOT_TODAY_VIEW_TYPE = 0
+private const val TODAY_VIEW_TYPE = 1
 
 
 /**
@@ -24,13 +29,9 @@ import java.util.*
 class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : RecyclerView
 .Adapter<CalendarAdapter.VH>() {
 
-    private val mVCalendar: MutableList<DayCalendar>
+    private val mVCalendar: MutableList<DayCalendar> = ArrayList()
     private var mDateToHighlight: Int = 0
 
-
-    init {
-        mVCalendar = ArrayList<DayCalendar>()
-    }
 
     /**
      * @param dateToHighlight Month dates i.e. 1 to 31. Pass 0 if don't want to highlight any date
@@ -67,9 +68,7 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
         holder.onBind(mVCalendar[position])
     }
 
-    override fun getItemCount(): Int {
-        return mVCalendar.size
-    }
+    override fun getItemCount() = mVCalendar.size
 
     fun setData(calendar: VCalendar) {
         mVCalendar.clear()
@@ -101,11 +100,4 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
                     mEventLayout, dayCalendar.events))
         }
     }
-
-    companion object {
-        private val TAG = "CalendarAdapter"
-        private val NOT_TODAY_VIEW_TYPE = 0
-        private val TODAY_VIEW_TYPE = 1
-    }
 }
-

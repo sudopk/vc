@@ -47,8 +47,8 @@ class VcActivity : AppCompatActivity(),
             val tag = "BlockingDialog"
             if (supportFragmentManager.findFragmentByTag(tag) == null) {
                 val dialog = TextDialog.newBlockingInstance(getString(R.string.old_app_must_update),
-                        arrayOf(ButtonDescription(getString(R.string.exit) , EXIT_BUTTON_ID),
-                                ButtonDescription(getString(R.string.update), UPDATE_BUTTON_ID)))
+                        arrayOf(ButtonDescription(EXIT_BUTTON_ID, getString(R.string.exit)),
+                                ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
                 dialog.show(supportFragmentManager, tag)
             }
         }
