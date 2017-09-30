@@ -2,7 +2,10 @@ package `in`.sudopk.vaishnavacalendar
 
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
 import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
+import `in`.sudopk.vaishnavacalendar.core.ifResumed
 import `in`.sudopk.vaishnavacalendar.core.replace
+import `in`.sudopk.vaishnavacalendar.core.resumed
+import `in`.sudopk.vaishnavacalendar.core.vcApp
 import `in`.sudopk.vaishnavacalendar.location.Location
 import `in`.sudopk.vaishnavacalendar.location.LocationContainer
 import `in`.sudopk.vaishnavacalendar.location.LocationFragment

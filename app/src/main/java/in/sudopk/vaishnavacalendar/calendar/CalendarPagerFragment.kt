@@ -2,11 +2,11 @@ package `in`.sudopk.vaishnavacalendar.calendar
 
 import `in`.sudopk.utils.CalUtil
 import `in`.sudopk.vaishnavacalendar.R
-import `in`.sudopk.vaishnavacalendar.appCompatActivity
+import `in`.sudopk.vaishnavacalendar.core.appCompatActivity
 import `in`.sudopk.vaishnavacalendar.core.castViewById
 import `in`.sudopk.vaishnavacalendar.location.Location
 import `in`.sudopk.vaishnavacalendar.core.parent
-import `in`.sudopk.vaishnavacalendar.vcApp
+import `in`.sudopk.vaishnavacalendar.core.vcApp
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment

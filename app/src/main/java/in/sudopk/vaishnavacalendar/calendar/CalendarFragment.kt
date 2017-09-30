@@ -3,6 +3,7 @@ package `in`.sudopk.vaishnavacalendar.calendar
 import `in`.sudopk.vaishnavacalendar.*
 import `in`.sudopk.vaishnavacalendar.core.castViewById
 import `in`.sudopk.vaishnavacalendar.core.parent
+import `in`.sudopk.vaishnavacalendar.core.vcApp
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager

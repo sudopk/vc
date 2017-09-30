@@ -7,7 +7,7 @@ import `in`.sudopk.vaishnavacalendar.core.castViewById
 import `in`.sudopk.vaishnavacalendar.core.parent
 import `in`.sudopk.vaishnavacalendar.core.weak
 import `in`.sudopk.vaishnavacalendar.retrofit.VcService
-import `in`.sudopk.vaishnavacalendar.vcApp
+import `in`.sudopk.vaishnavacalendar.core.vcApp
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle

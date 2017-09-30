@@ -5,6 +5,7 @@ import `in`.sudopk.vaishnavacalendar.calendar.CalendarStore
 import `in`.sudopk.vaishnavacalendar.core.hasFragmentByTag
 import `in`.sudopk.vaishnavacalendar.core.isNull
 import `in`.sudopk.vaishnavacalendar.core.replace
+import `in`.sudopk.vaishnavacalendar.core.vcApp
 import `in`.sudopk.vaishnavacalendar.location.LocationStore
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
