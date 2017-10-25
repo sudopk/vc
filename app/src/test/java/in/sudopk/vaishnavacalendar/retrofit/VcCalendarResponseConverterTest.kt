@@ -1,10 +1,10 @@
-package `in`.sudopk.vaishnavacalendar.retrofit
+package com.sudopk.vaishnavacalendar.retrofit
 
 import org.junit.Test
 
 import java.util.HashSet
 
-import `in`.sudopk.vaishnavacalendar.calendar.DayCalendar
+import com.sudopk.vaishnavacalendar.calendar.DayCalendar
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 

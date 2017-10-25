@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Jan 31\nSat"/>
 
-    <in.sudopk.coreandroid.SimpleList
+    <com.sudopk.coreandroid.SimpleList
         android:id="@+id/events"
         style="@style/Base.TextAppearance.AppCompat.Subhead"
         android:layout_width="0dp"

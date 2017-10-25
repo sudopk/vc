@@ -1,6 +1,6 @@
-package `in`.sudopk.vaishnavacalendar.retrofit
+package com.sudopk.vaishnavacalendar.retrofit
 
-import `in`.sudopk.coreandroid.StrFromRes
+import com.sudopk.coreandroid.StrFromRes
 import android.test.mock.MockContext
 
 

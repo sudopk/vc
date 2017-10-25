@@ -1,4 +1,4 @@
-package `in`.sudopk.vaishnavacalendar.retrofit
+package com.sudopk.vaishnavacalendar.retrofit
 
 const val DAYS_IN_VC_HTML = 31
 

@@ -1,4 +1,4 @@
-package `in`.sudopk.vaishnavacalendar
+package com.sudopk.vaishnavacalendar
 
 import org.junit.Test
 
