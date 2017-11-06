@@ -2,10 +2,7 @@ package com.sudopk.vaishnavacalendar.calendar
 
 import com.sudopk.utils.CalUtil
 import com.sudopk.vaishnavacalendar.R
-import com.sudopk.vaishnavacalendar.core.appCompatActivity
-import com.sudopk.vaishnavacalendar.core.castViewById
 import com.sudopk.vaishnavacalendar.location.Location
-import com.sudopk.vaishnavacalendar.core.parent
 import com.sudopk.vaishnavacalendar.core.vcApp
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -17,6 +14,9 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mcxiaoke.koi.ext.find
+import com.sudopk.kandroid.appCompatActivity
+import com.sudopk.kandroid.parent
 import java.util.*
 
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
@@ -30,14 +30,14 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.calendar_pager, container, false)
 
-        mToolbar = view.castViewById<Toolbar>(R.id.toolbar)
+        mToolbar = view.find<Toolbar>(R.id.toolbar)
         appCompatActivity.setSupportActionBar(mToolbar)
 
         mCalendarStore = vcApp.calendarStore
         updateSubtitle(mCalendarStore.location)
 
-        mViewPager = view.castViewById(R.id.viewPager)
-        view.castViewById<TabLayout>(R.id.tabs).setupWithViewPager(mViewPager)
+        mViewPager = view.find(R.id.viewPager)
+        view.find<TabLayout>(R.id.tabs).setupWithViewPager(mViewPager)
 
         val pagerAdapter = CalendarPagerAdapter(childFragmentManager)
         mViewPager.adapter = pagerAdapter

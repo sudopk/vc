@@ -2,13 +2,13 @@ package com.sudopk.vaishnavacalendar
 
 import com.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
 import com.sudopk.vaishnavacalendar.calendar.CalendarStore
-import com.sudopk.vaishnavacalendar.core.hasFragmentByTag
-import com.sudopk.vaishnavacalendar.core.isNull
-import com.sudopk.vaishnavacalendar.core.replace
 import com.sudopk.vaishnavacalendar.core.vcApp
 import com.sudopk.vaishnavacalendar.location.LocationStore
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.sudopk.kandroid.hasFragmentByTag
+import com.sudopk.kandroid.isNull
+import com.sudopk.kandroid.replace
 
 const val CONTAINTED_FRAGMENT = "ContainedFragment";
 

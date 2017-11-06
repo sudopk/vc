@@ -39,8 +39,10 @@ dependencies {
     compile 'com.android.support:multidex:1.0.2'
     compile 'org.jsoup:jsoup:1.9.2'
 
-    compile "android.arch.lifecycle:runtime:1.0.0"
+    compile "android.arch.lifecycle:runtime:1.0.3"
     compile "android.arch.lifecycle:extensions:1.0.0-alpha9-1"
+    compile 'com.sudopk:KAndroidCommon:1.0.2@aar'
+    compile 'com.mcxiaoke.koi:core:0.5.5@aar'
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9-1"
 
 

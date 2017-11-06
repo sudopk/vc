@@ -3,7 +3,6 @@ package com.sudopk.vaishnavacalendar
 import com.sudopk.vaishnavacalendar.calendar.CalendarPagerFragment
 import com.sudopk.vaishnavacalendar.calendar.CalendarStore
 import com.sudopk.vaishnavacalendar.core.ifResumed
-import com.sudopk.vaishnavacalendar.core.replace
 import com.sudopk.vaishnavacalendar.core.resumed
 import com.sudopk.vaishnavacalendar.core.vcApp
 import com.sudopk.vaishnavacalendar.location.Location
@@ -16,7 +15,9 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.Toast
+import com.sudopk.kandroid.replace
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -97,7 +98,7 @@ class VcActivity : AppCompatActivity(),
     private fun showRecommendedUpdate() {
         if (resumed) {
             dismissLocationDialog()
-            val view = findViewById(R.id.container)
+            val view: View = findViewById(R.id.container)
             val snackbar = Snackbar.make(view, getString(R.string.old_app_recommended_update),
                     Snackbar.LENGTH_LONG)
             snackbar.setAction(R.string.update) { goToPlayStore() }
@@ -148,7 +149,7 @@ class VcActivity : AppCompatActivity(),
 
     override fun onLocationSelectFailed(error: String) {
         if(resumed) {
-            val view = findViewById(R.id.container)
+            val view: View = findViewById(R.id.container)
             Snackbar.make(view, error, Snackbar.LENGTH_LONG).show()
         }
     }

@@ -3,8 +3,6 @@ package com.sudopk.vaishnavacalendar.location
 import com.sudopk.vaishnavacalendar.R
 import com.sudopk.vaishnavacalendar.calendar.CalendarStore
 import com.sudopk.vaishnavacalendar.calendar.Country
-import com.sudopk.vaishnavacalendar.core.castViewById
-import com.sudopk.vaishnavacalendar.core.parent
 import com.sudopk.vaishnavacalendar.core.weak
 import com.sudopk.vaishnavacalendar.retrofit.VcService
 import com.sudopk.vaishnavacalendar.core.vcApp
@@ -17,6 +15,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ProgressBar
+import com.mcxiaoke.koi.ext.find
+import com.sudopk.kandroid.parent
 
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
     private lateinit var mAdapter: LocationAdapter
@@ -49,8 +49,8 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.location, container, false)
-        mProgressBar = view.castViewById(R.id.progressBar)
-        mRecyclerView = view.castViewById(R.id.recyclerView)
+        mProgressBar = view.find(R.id.progressBar)
+        mRecyclerView = view.find(R.id.recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         mAdapter = LocationAdapter(this, mCalendarStore.location)
         mRecyclerView.adapter = mAdapter

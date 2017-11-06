@@ -1,8 +1,6 @@
 package com.sudopk.vaishnavacalendar.calendar
 
 import com.sudopk.vaishnavacalendar.*
-import com.sudopk.vaishnavacalendar.core.castViewById
-import com.sudopk.vaishnavacalendar.core.parent
 import com.sudopk.vaishnavacalendar.core.vcApp
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,6 +9,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.ViewAnimator
+import com.mcxiaoke.koi.ext.find
+import com.sudopk.kandroid.parent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,9 +34,9 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         val month = arguments.getInt(MONTH)
 
         val view = inflater.inflate(R.layout.calendar, container, false)
-        val viewAnimator = view.castViewById<ViewAnimator>(R.id.viewAnimator)
-        val progressBar = view.castViewById<ProgressBar>(R.id.progressBar)
-        val recyclerView = view.castViewById<RecyclerView>(R.id.recyclerView)
+        val viewAnimator = view.find<ViewAnimator>(R.id.viewAnimator)
+        val progressBar = view.find<ProgressBar>(R.id.progressBar)
+        val recyclerView = view.find<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = CalendarAdapter(month, year)
         recyclerView.adapter = adapter
