@@ -10,7 +10,7 @@ val Activity.vcApp
     get() = application as VcApp
 
 val Fragment.vcApp
-    get() = activity.vcApp
+    get() = activity!!.vcApp
 
 /**
  * Do not name this method 'isResumed', there would be a crash.

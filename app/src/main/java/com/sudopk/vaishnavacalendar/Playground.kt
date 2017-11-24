@@ -1,12 +1,12 @@
 package com.sudopk.vaishnavacalendar
 
-import android.support.design.widget.Snackbar
-import android.view.View
-import android.R.attr.button
 import android.arch.lifecycle.*
-import android.support.v4.app.Fragment
+import android.view.View
+import com.sudopk.kandroid.logd
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
 
-class UserModel: ViewModel() {
+class UserModel : ViewModel() {
     val userLiveData: LiveData<Any> = object : LiveData<Any>() {}
 
     fun doAction() {
@@ -16,7 +16,7 @@ class UserModel: ViewModel() {
 }
 
 
-class Playground: LifecycleFragment() {
+class Playground : LifecycleFragment() {
     fun play() {
         val view: View;
         val provider: ViewModelProvider
@@ -25,4 +25,23 @@ class Playground: LifecycleFragment() {
 //        findViewById(R.id.button).setOnClickListener(View.OnClickListener { viewModel.doAction() })
     }
 }
+
+class MyObserver : LifecycleObserver, AnkoLogger {
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun connectListener() {
+        debug("onresume 1");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun connectListener2() {
+        logd("onresume 2")
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun disconnectListener() {
+        logd("onpause")
+    }
+}
+
 

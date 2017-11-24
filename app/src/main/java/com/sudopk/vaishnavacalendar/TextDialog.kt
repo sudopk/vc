@@ -34,7 +34,7 @@ class TextDialog : AppCompatDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments.getString(TITLE).isNotBlank()) {
+        if (arguments!!.getString(TITLE).isNotBlank()) {
             setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_AppCompat_Light_Dialog)
         } else {
             setStyle(DialogFragment.STYLE_NO_TITLE, 0)
@@ -44,13 +44,13 @@ class TextDialog : AppCompatDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.text_dialog, container, false)
-        view.find<TextView>(R.id.message).text = arguments.getString(MESSAGE)
+        view.find<TextView>(R.id.message).text = arguments!!.getString(MESSAGE)
 
         val buttons = view.find<LinearLayout>(R.id.buttons)
 
         buttons.removeAllViews()
 
-        for (button in arguments.getParcelableArray(BUTTONS)!!) {
+        for (button in arguments!!.getParcelableArray(BUTTONS)!!) {
             addButton(inflater, buttons, button as ButtonDescription)
         }
         return view
@@ -58,7 +58,7 @@ class TextDialog : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setTitle(arguments.getString(TITLE))
+        dialog.setTitle(arguments!!.getString(TITLE))
         return dialog
     }
 

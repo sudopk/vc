@@ -10,8 +10,10 @@ import android.support.design.widget.Snackbar
 import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDialogFragment
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.mcxiaoke.koi.KoiConfig
 
 class VcApp : MultiDexApplication(), StrFromRes {
     lateinit var gson: Gson
@@ -32,6 +34,8 @@ class VcApp : MultiDexApplication(), StrFromRes {
 
         calendarStore = CalendarStore(this, gson)
         locationStore = LocationStore(this, gson)
+
+        KoiConfig.logLevel = Log.DEBUG
     }
 
     fun showBlockingNotification() {

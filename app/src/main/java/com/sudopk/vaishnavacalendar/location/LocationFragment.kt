@@ -17,6 +17,7 @@ import android.view.*
 import android.widget.ProgressBar
 import com.mcxiaoke.koi.ext.find
 import com.sudopk.kandroid.parent
+import com.sudopk.vaishnavacalendar.MyObserver
 
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
     private lateinit var mAdapter: LocationAdapter
@@ -45,15 +46,20 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         return dialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater?,
+    override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.location, container, false)
+        val view = inflater.inflate(R.layout.location, container, false)
         mProgressBar = view.find(R.id.progressBar)
         mRecyclerView = view.find(R.id.recyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         mAdapter = LocationAdapter(this, mCalendarStore.location)
         mRecyclerView.adapter = mAdapter
+
+        lifecycle.addObserver(MyObserver())
+
+
+
         return view
     }
 

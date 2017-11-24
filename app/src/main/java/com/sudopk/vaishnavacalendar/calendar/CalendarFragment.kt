@@ -19,10 +19,6 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
     private lateinit var mDelegate: CalendarDelegate
     private lateinit var mResumed: CalendarDelegate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -30,8 +26,8 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         val vcService = vcApp.vcService
         val calendarStore = vcApp.calendarStore
 
-        val year = arguments.getInt(YEAR)
-        val month = arguments.getInt(MONTH)
+        val year = arguments!!.getInt(YEAR)
+        val month = arguments!!.getInt(MONTH)
 
         val view = inflater.inflate(R.layout.calendar, container, false)
         val viewAnimator = view.find<ViewAnimator>(R.id.viewAnimator)
@@ -44,6 +40,8 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         mDelegate = NoActionCalendar
         mResumed = ResumedCalendar(calendarStore, month, year, parent(), viewAnimator,
                 progressBar, vcService, this, adapter, recyclerView)
+
+
 
         return view
     }
