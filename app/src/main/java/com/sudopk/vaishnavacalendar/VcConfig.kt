@@ -1,5 +1,9 @@
 package com.sudopk.vaishnavacalendar
 
-class VcConfig(val version: VcVersion = VcVersion(0, 0))
+import java.io.Serializable
 
-data class VcVersion(val soft: Int, val hard: Int)
+data class VcConfig(val version: VcVersion = VcVersion(0, 0)) : Serializable
+
+data class VcVersion(val soft: Int, val hard: Int) : Serializable
+
+val defaultVcConfig = VcConfig()

@@ -1,11 +1,11 @@
 package com.sudopk.vaishnavacalendar.location
 
-import com.sudopk.vaishnavacalendar.calendar.Country
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.sudopk.vaishnavacalendar.calendar.Country
 import java.util.*
 
 class LocationStore(context: Context, private val mGson: Gson) {

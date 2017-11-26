@@ -1,7 +1,6 @@
 package com.sudopk.vaishnavacalendar.calendar
 
-import com.sudopk.vaishnavacalendar.*
-import com.sudopk.vaishnavacalendar.core.vcApp
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,13 +10,20 @@ import android.widget.ProgressBar
 import android.widget.ViewAnimator
 import com.mcxiaoke.koi.ext.find
 import com.sudopk.kandroid.parent
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.sudopk.vaishnavacalendar.MonthYear
+import com.sudopk.vaishnavacalendar.R
+import com.sudopk.vaishnavacalendar.VCalendar
+import com.sudopk.vaishnavacalendar.core.vcApp
+import java.util.*
 
-class CalendarFragment : Fragment(), Callback<VCalendar> {
-    private lateinit var mDelegate: CalendarDelegate
-    private lateinit var mResumed: CalendarDelegate
+class CalendarFragment : Fragment() {
+    private lateinit var mViewAnimator: ViewAnimator
+    private lateinit var mProgressBar: ProgressBar
+    private lateinit var mRecyclerView: RecyclerView
+
+    private lateinit var mAdapter: CalendarAdapter
+    private lateinit var mCalendarApi: CalendarApi
+    private lateinit var mMonthYear: MonthYear
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -26,22 +32,20 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
         val vcService = vcApp.vcService
         val calendarStore = vcApp.calendarStore
 
-        val year = arguments!!.getInt(YEAR)
-        val month = arguments!!.getInt(MONTH)
+        mMonthYear = MonthYear(arguments!!.getInt(MONTH), arguments!!.getInt(YEAR))
 
         val view = inflater.inflate(R.layout.calendar, container, false)
-        val viewAnimator = view.find<ViewAnimator>(R.id.viewAnimator)
-        val progressBar = view.find<ProgressBar>(R.id.progressBar)
-        val recyclerView = view.find<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = CalendarAdapter(month, year)
-        recyclerView.adapter = adapter
+        mViewAnimator = view.find<ViewAnimator>(R.id.viewAnimator)
+        mProgressBar = view.find<ProgressBar>(R.id.progressBar)
+        mRecyclerView = view.find<RecyclerView>(R.id.recyclerView)
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        mAdapter = CalendarAdapter(mMonthYear)
+        mRecyclerView.adapter = mAdapter
 
-        mDelegate = NoActionCalendar
-        mResumed = ResumedCalendar(calendarStore, month, year, parent(), viewAnimator,
-                progressBar, vcService, this, adapter, recyclerView)
+        mCalendarApi = ViewModelProviders.of(this).get(CalendarApi::class.java)
+        mCalendarApi.init(vcService, calendarStore, mMonthYear)
 
-
+        fetchCalendar()
 
         return view
     }
@@ -52,32 +56,75 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.refresh) {
-            mDelegate.onRefresh()
+            onRefresh()
         } else if (item.itemId == R.id.location) {
-            mDelegate.onChangeLocationRequest()
+            parent<Container>().onChangeLocationRequest()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        mDelegate = mResumed
-        mDelegate.tryShowingCalendar()
+    fun onRefresh() {
+        mCalendarApi.removeCalendar(mMonthYear)
+        fetchCalendar()
     }
 
-    override fun onPause() {
-        super.onPause()
-        mDelegate = NoActionCalendar
+    fun fetchCalendar() {
+        val calendar = mCalendarApi.fetchCalendar()
+
+        calendar.removeObservers(this)
+        calendar.observe(this, android.arch.lifecycle.Observer {
+            when (it) {
+                DataStatus.READY -> showCalendar(mCalendarApi.calendar)
+                DataStatus.FAILED -> onCalendarRequestFailed()
+                else -> onFetchingCalendar()
+            }
+        })
     }
 
-    override fun onResponse(call: Call<VCalendar>, response: Response<VCalendar>) {
-        mDelegate.onCalendarResponse(response.body())
+    fun onFetchingCalendar() {
+        mViewAnimator.displayedChild = CalendarFragment.CALENDAR_VIEW_INDEX
+        mProgressBar.visibility = View.VISIBLE
+
     }
 
-    override fun onFailure(call: Call<VCalendar>, t: Throwable) {
-        t.printStackTrace()
-        mDelegate.onCalendarRequestFailed()
+    fun onCalendarRequestFailed() {
+        mProgressBar.visibility = View.GONE
+        mViewAnimator.displayedChild = CalendarFragment.FAILED_VIEW_INDEX
     }
+
+    private fun showCalendar(vCalendar: VCalendar) {
+        if (vCalendar.isNotEmpty()) {
+            mProgressBar.visibility = View.GONE
+
+            mAdapter.setData(vCalendar)
+
+            scrollRecyclerViewToCorrectDate()
+        } else {
+            mViewAnimator.displayedChild = CalendarFragment.NO_DATA_VIEW_INDEX
+        }
+    }
+
+    private fun scrollRecyclerViewToCorrectDate() {
+        val calendar = Calendar.getInstance()
+        val currentMonth = mMonthYear.month == calendar.get(Calendar.MONTH) + 1 && mMonthYear
+                .year ==
+                calendar
+                        .get(Calendar.YEAR)
+        if (currentMonth) {
+            var positionToScrollTo = calendar.get(Calendar.DATE) - 1   // -1 for 0-based index
+            // scroll one before the date
+            if (positionToScrollTo > 0) {
+                positionToScrollTo--
+            }
+            mRecyclerView.layoutManager
+                    .scrollToPosition(positionToScrollTo)
+
+            mAdapter.setDateToHighlight(calendar.get(Calendar.DATE))
+        } else {
+            mAdapter.setDateToHighlight(0)
+        }
+    }
+
 
     interface Container {
         fun onChangeLocationRequest()
@@ -86,6 +133,7 @@ class CalendarFragment : Fragment(), Callback<VCalendar> {
     companion object {
         val CALENDAR_VIEW_INDEX = 0
         val NO_DATA_VIEW_INDEX = 1
+        val FAILED_VIEW_INDEX = 2
         private val MONTH = "month"
         private val YEAR = "year"
 

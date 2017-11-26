@@ -10,6 +10,8 @@ buildscript {
         support_lib_version = '27.0.1'
         build_tools_version = support_lib_version
 
+        sudopk_kandroid_version = '1.0.4'
+
         anko_version = '0.10.3'
     }
 

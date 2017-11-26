@@ -1,8 +1,8 @@
 package com.sudopk.vaishnavacalendar.retrofit
 
-import com.sudopk.coreandroid.StrFromRes
-import com.sudopk.vaishnavacalendar.calendar.Country
+import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vaishnavacalendar.VCalendar
+import com.sudopk.vaishnavacalendar.calendar.Country
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.http.GET

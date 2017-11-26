@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.mcxiaoke.koi.ext.find
-
-import java.util.ArrayList
-import java.util.Collections
-
 import com.sudopk.vaishnavacalendar.R
 import com.sudopk.vaishnavacalendar.calendar.Country
+import java.util.*
 
 class LocationAdapter(private val mContainer: LocationContainer, private val mSelectedLocation:
 Location?) : RecyclerView.Adapter<LocationAdapter.VH>() {

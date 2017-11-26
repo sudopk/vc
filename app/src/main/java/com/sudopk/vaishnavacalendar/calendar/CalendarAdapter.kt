@@ -1,10 +1,5 @@
 package com.sudopk.vaishnavacalendar.calendar
 
-import com.sudopk.coreandroid.SimpleList
-import com.sudopk.utils.monthAbbreviation
-import com.sudopk.utils.weekDayAbbreviation
-import com.sudopk.vaishnavacalendar.R
-import com.sudopk.vaishnavacalendar.VCalendar
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,6 +8,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.mcxiaoke.koi.ext.find
+import com.sudopk.vaishnavacalendar.MonthYear
+import com.sudopk.vaishnavacalendar.R
+import com.sudopk.vaishnavacalendar.VCalendar
+import com.sudopk.vaishnavacalendar.core.SimpleList
+import com.sudopk.vaishnavacalendar.core.monthAbbreviation
+import com.sudopk.vaishnavacalendar.core.weekDayAbbreviation
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,7 +27,7 @@ private const val TODAY_VIEW_TYPE = 1
  * *
  * @param year  Full year e.g. 2016
  */
-class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : RecyclerView
+class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
 .Adapter<CalendarAdapter.VH>() {
 
     private val mVCalendar: MutableList<DayCalendar> = ArrayList()
@@ -52,7 +53,7 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
             eventLayout = R.layout.text_view
         }
         return VH(LayoutInflater.from(parent.context)
-                .inflate(cell, parent, false), eventLayout, mMonth, mYear)
+                .inflate(cell, parent, false), eventLayout, mMonthYear)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -77,7 +78,8 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
         notifyDataSetChanged()
     }
 
-    class VH(itemView: View, @param:LayoutRes private val mEventLayout: Int, month: Int, year: Int) : RecyclerView.ViewHolder(itemView) {
+    class VH(itemView: View, @param:LayoutRes private val mEventLayout: Int, monthYear: MonthYear) :
+            RecyclerView.ViewHolder(itemView) {
         private val mEvents: SimpleList
         private val mDate: TextView
         private val mMonthCalendar: Calendar
@@ -87,8 +89,8 @@ class CalendarAdapter(private val mMonth: Int, private val mYear: Int) : Recycle
             mEvents = itemView.find(R.id.events)
 
             mMonthCalendar = Calendar.getInstance()
-            mMonthCalendar.set(Calendar.MONTH, month - 1)
-            mMonthCalendar.set(Calendar.YEAR, year)
+            mMonthCalendar.set(Calendar.MONTH, monthYear.month - 1)
+            mMonthCalendar.set(Calendar.YEAR, monthYear.year)
         }
 
         fun onBind(dayCalendar: DayCalendar) {

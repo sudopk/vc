@@ -1,14 +1,15 @@
 package com.sudopk.vaishnavacalendar.calendar
 
-import com.sudopk.utils.CalUtil
-import com.sudopk.vaishnavacalendar.VCalendar
-import com.sudopk.vaishnavacalendar.VCalendarTypeToken
-import com.sudopk.vaishnavacalendar.location.Location
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
+import com.sudopk.vaishnavacalendar.MonthYear
+import com.sudopk.vaishnavacalendar.VCalendar
+import com.sudopk.vaishnavacalendar.VCalendarTypeToken
+import com.sudopk.vaishnavacalendar.core.CalUtil
+import com.sudopk.vaishnavacalendar.location.Location
 import java.util.*
 
 
@@ -47,6 +48,9 @@ class CalendarStore(context: Context, private val mGson: Gson) {
                 .apply()
     }
 
+    fun saveCalendar(monthYear: MonthYear, calendar: VCalendar) {
+        saveCalendar(monthYear.month, monthYear.year, calendar)
+    }
 
     /**
      * @param month 1 to 12
@@ -55,6 +59,18 @@ class CalendarStore(context: Context, private val mGson: Gson) {
      */
     fun hasCalendar(month: Int, year: Int): Boolean {
         return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "").isEmpty()
+    }
+
+    fun hasCalendar(monthYear: MonthYear): Boolean {
+        return hasCalendar(monthYear.month, monthYear.year)
+    }
+
+    fun removeCalendar(monthYear: MonthYear) {
+        removeCalendar(monthYear.month, monthYear.year)
+    }
+
+    fun getCalendar(monthYear: MonthYear): VCalendar {
+        return getCalendar(monthYear.month, monthYear.year)
     }
 
     /**

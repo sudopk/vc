@@ -1,4 +1,1 @@
-include ':app', ':CoreJava', ':CoreAndroid'
-
-project(':CoreJava').projectDir = new File(rootProject.projectDir, '../Libraries/CoreJava')
-project(':CoreAndroid').projectDir = new File(rootProject.projectDir, '../Libraries/CoreAndroid')
+include ':app'

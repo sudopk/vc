@@ -1,10 +1,5 @@
 package com.sudopk.vaishnavacalendar
 
-import com.sudopk.coreandroid.StrFromRes
-import com.sudopk.vaishnavacalendar.calendar.CalendarStore
-import com.sudopk.vaishnavacalendar.gson.RemoveFieldNameStrategy
-import com.sudopk.vaishnavacalendar.location.LocationStore
-import com.sudopk.vaishnavacalendar.retrofit.VcService
 import android.content.pm.PackageManager
 import android.support.design.widget.Snackbar
 import android.support.multidex.MultiDexApplication
@@ -14,6 +9,11 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mcxiaoke.koi.KoiConfig
+import com.sudopk.kandroid.StrFromRes
+import com.sudopk.vaishnavacalendar.calendar.CalendarStore
+import com.sudopk.vaishnavacalendar.gson.RemoveFieldNameStrategy
+import com.sudopk.vaishnavacalendar.location.LocationStore
+import com.sudopk.vaishnavacalendar.retrofit.VcService
 
 class VcApp : MultiDexApplication(), StrFromRes {
     lateinit var gson: Gson

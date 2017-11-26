@@ -1,11 +1,5 @@
 package com.sudopk.vaishnavacalendar.location
 
-import com.sudopk.vaishnavacalendar.R
-import com.sudopk.vaishnavacalendar.calendar.CalendarStore
-import com.sudopk.vaishnavacalendar.calendar.Country
-import com.sudopk.vaishnavacalendar.core.weak
-import com.sudopk.vaishnavacalendar.retrofit.VcService
-import com.sudopk.vaishnavacalendar.core.vcApp
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -14,10 +8,16 @@ import android.support.v7.app.AppCompatDialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.Button
 import android.widget.ProgressBar
 import com.mcxiaoke.koi.ext.find
 import com.sudopk.kandroid.parent
-import com.sudopk.vaishnavacalendar.MyObserver
+import com.sudopk.vaishnavacalendar.R
+import com.sudopk.vaishnavacalendar.calendar.CalendarStore
+import com.sudopk.vaishnavacalendar.calendar.Country
+import com.sudopk.vaishnavacalendar.core.vcApp
+import com.sudopk.vaishnavacalendar.core.weak
+import com.sudopk.vaishnavacalendar.retrofit.VcService
 
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
     private lateinit var mAdapter: LocationAdapter
@@ -56,9 +56,9 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         mAdapter = LocationAdapter(this, mCalendarStore.location)
         mRecyclerView.adapter = mAdapter
 
-        lifecycle.addObserver(MyObserver())
-
-
+        view.find<Button>(R.id.exitButton).setOnClickListener {
+            onLocationSelectExit()
+        }
 
         return view
     }
@@ -96,6 +96,11 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     override fun onLocationSelectFailed(error: String) {
         dismiss()
         container.onLocationSelectFailed(error)
+    }
+
+    override fun onLocationSelectExit() {
+        dismiss()
+        container.onLocationSelectExit()
     }
 
     private val container: LocationContainer

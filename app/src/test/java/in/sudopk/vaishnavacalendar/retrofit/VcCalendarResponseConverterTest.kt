@@ -1,12 +1,10 @@
 package com.sudopk.vaishnavacalendar.retrofit
 
-import org.junit.Test
-
-import java.util.HashSet
-
 import com.sudopk.vaishnavacalendar.calendar.DayCalendar
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Test
+import java.util.*
 
 
 class VcCalendarResponseConverterTest {

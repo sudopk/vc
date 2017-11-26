@@ -1,9 +1,5 @@
 package com.sudopk.vaishnavacalendar.calendar
 
-import com.sudopk.utils.CalUtil
-import com.sudopk.vaishnavacalendar.R
-import com.sudopk.vaishnavacalendar.location.Location
-import com.sudopk.vaishnavacalendar.core.vcApp
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -17,6 +13,10 @@ import android.view.ViewGroup
 import com.mcxiaoke.koi.ext.find
 import com.sudopk.kandroid.appCompatActivity
 import com.sudopk.kandroid.parent
+import com.sudopk.vaishnavacalendar.R
+import com.sudopk.vaishnavacalendar.core.CalUtil
+import com.sudopk.vaishnavacalendar.core.vcApp
+import com.sudopk.vaishnavacalendar.location.Location
 import java.util.*
 
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {

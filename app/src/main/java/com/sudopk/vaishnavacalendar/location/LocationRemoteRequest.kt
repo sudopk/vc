@@ -1,7 +1,6 @@
 package com.sudopk.vaishnavacalendar.location
 
 import com.sudopk.vaishnavacalendar.calendar.Country
-import com.sudopk.vaishnavacalendar.core.Mortal
 import com.sudopk.vaishnavacalendar.core.get
 import com.sudopk.vaishnavacalendar.retrofit.VcService
 import retrofit2.Call
@@ -21,11 +20,11 @@ class LocationRemoteRequest(val weakCallback: WeakReference<LocationCallback>) {
         val locationsCall = vcService.locations()
         locationsCall.enqueue(object : Callback<List<Country>> {
             override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
-                    if (response.body() != null) {
-                        weakCallback.get?.onLocationsReceived(response.body())
-                    } else {
-                        failed()
-                    }
+                if (response.body() != null) {
+                    weakCallback.get?.onLocationsReceived(response.body())
+                } else {
+                    failed()
+                }
             }
 
             override fun onFailure(call: Call<List<Country>>, t: Throwable) {

@@ -1,12 +1,12 @@
 package com.sudopk.vaishnavacalendar.retrofit
 
-import com.sudopk.coreandroid.StrFromRes
+import android.util.Log
+import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vaishnavacalendar.R
 import com.sudopk.vaishnavacalendar.VCalendar
 import com.sudopk.vaishnavacalendar.calendar.Country
 import com.sudopk.vaishnavacalendar.calendar.DayCalendar
 import com.sudopk.vaishnavacalendar.location.Location
-import android.util.Log
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -27,7 +27,7 @@ class VcConverterFactory(val strFromRes: StrFromRes) : Converter.Factory() {
     override fun responseBodyConverter(type: Type?, annotations: Array<Annotation>?, retrofit: Retrofit?): Converter<ResponseBody, *> {
         if (annotations != null) {
             for (annotation in annotations) {
-                when(annotation.annotationClass) {
+                when (annotation.annotationClass) {
                     VcApi.Calendar::class -> return VcCalendarResponseConverter(strFromRes)
                     VcApi.Locations::class -> return VcLocationResponseConverter()
                 }
@@ -49,7 +49,7 @@ class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
         return convert(value.string())
     }
 
-    fun  convert(htmlBody: String): VCalendar {
+    fun convert(htmlBody: String): VCalendar {
         val document = Jsoup.parse(htmlBody)
         val days = document.select("body center>table:nth-child(3)" + ">tbody>tr>td>table>tbody")
         val calendar = ArrayList<DayCalendar>()

@@ -6,4 +6,6 @@ interface LocationContainer {
     fun onLocationSelectCanceled()
 
     fun onLocationSelectFailed(error: String)
+
+    fun onLocationSelectExit()
 }
