@@ -56,7 +56,7 @@ class VcConfigActivity : AppCompatActivity(), TextDialog.Container {
         } else if (vcApp.versionCode() < config.version.soft) {
             showRecommendedUpdate()
         } else {
-            showRecommendedUpdate()
+            launchVCalendar()
         }
     }
 
