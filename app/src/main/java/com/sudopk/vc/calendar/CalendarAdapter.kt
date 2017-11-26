@@ -31,7 +31,6 @@ class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
     private val mVCalendar: MutableList<DayCalendar> = ArrayList()
     private var mDateToHighlight: Int = 0
 
-
     /**
      * @param dateToHighlight Month dates i.e. 1 to 31. Pass 0 if don't want to highlight any date
      */

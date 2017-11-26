@@ -7,8 +7,8 @@ buildscript {
         compile_sdk_version = 27
         minimum_sdk_version = 16
         target_sdk_version = compile_sdk_version
-        support_lib_version = '27.0.1'
-        build_tools_version = support_lib_version
+        support_lib_version = '27.0.2'
+        build_tools_version = '27.0.1'
 
         sudopk_kandroid_version = '1.0.4'
 
@@ -20,7 +20,7 @@ buildscript {
         maven { url 'https://maven.google.com' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-alpha04'
+        classpath 'com.android.tools.build:gradle:3.1.0-alpha05'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong

@@ -69,9 +69,7 @@ class VcApp : MultiDexApplication(), StrFromRes {
         } catch (e: PackageManager.NameNotFoundException) {
             throw RuntimeException(e)
         }
-
     }
-
 }
 
 

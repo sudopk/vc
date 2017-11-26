@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.sudopk.kandroid.isNull
 import com.sudopk.kandroid.notFoundById
 import com.sudopk.kandroid.notFoundByTag
 import com.sudopk.kandroid.replace
@@ -56,7 +57,9 @@ class VcActivity : AppCompatActivity(),
     }
 
     override fun onLocationSelectCanceled() {
-        finish()
+        if(mCalendarStore.location.isNull()) {
+            finish()
+        }
     }
 
     override fun onLocationSelectFailed(error: String) {
@@ -73,9 +76,5 @@ class VcActivity : AppCompatActivity(),
             }
             snackbar.show()
         }
-    }
-
-    override fun onLocationSelectExit() {
-        finish()
     }
 }
