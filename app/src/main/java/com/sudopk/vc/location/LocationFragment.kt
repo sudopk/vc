@@ -56,10 +56,6 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         mAdapter = LocationAdapter(this, mCalendarStore.location)
         mRecyclerView.adapter = mAdapter
 
-        view.find<Button>(R.id.exitButton).setOnClickListener {
-            onLocationSelectExit()
-        }
-
         return view
     }
 
@@ -96,11 +92,6 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     override fun onLocationSelectFailed(error: String) {
         dismiss()
         container.onLocationSelectFailed(error)
-    }
-
-    override fun onLocationSelectExit() {
-        dismiss()
-        container.onLocationSelectExit()
     }
 
     private val container: LocationContainer
