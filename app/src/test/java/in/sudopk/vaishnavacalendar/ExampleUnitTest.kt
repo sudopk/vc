@@ -1,4 +1,4 @@
-package com.sudopk.vaishnavacalendar
+package com.sudopk.vc
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

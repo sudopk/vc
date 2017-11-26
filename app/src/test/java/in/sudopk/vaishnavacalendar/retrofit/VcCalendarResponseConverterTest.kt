@@ -1,6 +1,6 @@
-package com.sudopk.vaishnavacalendar.retrofit
+package com.sudopk.vc.retrofit
 
-import com.sudopk.vaishnavacalendar.calendar.DayCalendar
+import com.sudopk.vc.calendar.DayCalendar
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test

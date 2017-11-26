@@ -1,4 +1,4 @@
-package com.sudopk.vaishnavacalendar.retrofit
+package com.sudopk.vc.retrofit
 
 
 class MockStrFromRes : StrFromRes {
