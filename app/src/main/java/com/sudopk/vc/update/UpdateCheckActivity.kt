@@ -6,13 +6,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.sudopk.kandroid.dialog.ButtonDescription
+import com.sudopk.kandroid.dialog.TextDialogFragment
 import com.sudopk.kandroid.notFoundByTag
 import com.sudopk.kandroid.replace
-import com.sudopk.vc.*
+import com.sudopk.vc.R
 import com.sudopk.vc.calendar.VcActivity
-import com.sudopk.vc.components.ButtonDescription
 import com.sudopk.vc.components.ProgressFragment
-import com.sudopk.vc.components.TextDialog
 import com.sudopk.vc.core.vcApp
 import org.jetbrains.anko.startActivity
 
@@ -43,7 +43,7 @@ private val EXIT_BUTTON_ID = "cancel"
 private val UPDATE_BUTTON_ID = "update"
 private val IGNORE_BUTTON_ID = "ignore"
 
-class VcConfigActivity : AppCompatActivity(), TextDialog.Container {
+class VcConfigActivity : AppCompatActivity(), TextDialogFragment.Container {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,7 +64,7 @@ class VcConfigActivity : AppCompatActivity(), TextDialog.Container {
 
     private fun showTooOldAppDialog() {
         supportFragmentManager.notFoundByTag(DIALOG_TAG) {
-            val dialog = TextDialog.newBlockingInstance(getString(R.string.old_app_must_update),
+            val dialog = TextDialogFragment.newBlockingInstance(getString(R.string.old_app_must_update),
                     arrayOf(ButtonDescription(EXIT_BUTTON_ID, getString(R.string.exit_app)),
                             ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
             dialog.show(supportFragmentManager, it)
@@ -73,7 +73,8 @@ class VcConfigActivity : AppCompatActivity(), TextDialog.Container {
 
     private fun showRecommendedUpdate() {
         supportFragmentManager.notFoundByTag(DIALOG_TAG) {
-            val dialog = TextDialog.newBlockingInstance(getString(R.string.old_app_recommended_update),
+            val dialog = TextDialogFragment.newBlockingInstance(getString(R.string
+                    .old_app_recommended_update),
                     arrayOf(ButtonDescription(IGNORE_BUTTON_ID, getString(R.string.ignore)),
                             ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
             dialog.show(supportFragmentManager, it)
