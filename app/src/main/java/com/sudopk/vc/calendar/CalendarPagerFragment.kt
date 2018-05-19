@@ -1,55 +1,50 @@
 package com.sudopk.vc.calendar
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mcxiaoke.koi.ext.find
 import com.sudopk.kandroid.appCompatActivity
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.core.CalUtil
 import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.location.Location
+import kotlinx.android.synthetic.main.calendar_pager.*
 import java.util.*
 
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
 
-    private lateinit var mToolbar: Toolbar
     private lateinit var mCalendarStore: CalendarStore
-    private lateinit var mViewPager: ViewPager
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.calendar_pager, container, false)
+        return inflater.inflate(R.layout.calendar_pager, container, false)
+    }
 
-        mToolbar = view.find<Toolbar>(R.id.toolbar)
-        appCompatActivity.setSupportActionBar(mToolbar)
+    override fun onStart() {
+        super.onStart()
+        appCompatActivity.setSupportActionBar(toolbar)
 
         mCalendarStore = vcApp.calendarStore
         updateSubtitle(mCalendarStore.location)
 
-        mViewPager = view.find(R.id.viewPager)
-        view.find<TabLayout>(R.id.tabs).setupWithViewPager(mViewPager)
+        tabs.setupWithViewPager(viewPager)
 
         val pagerAdapter = CalendarPagerAdapter(childFragmentManager)
-        mViewPager.adapter = pagerAdapter
-        mViewPager.currentItem = pagerAdapter.count / 2
-        return view
+        viewPager.adapter = pagerAdapter
+        viewPager.currentItem = pagerAdapter.count / 2
     }
 
     private fun updateSubtitle(location: Location?) {
         if (location != null) {
-            mToolbar.subtitle = location.name
+            toolbar.subtitle = location.name
         } else {
-            mToolbar.subtitle = ""
+            toolbar.subtitle = ""
         }
     }
 

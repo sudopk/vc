@@ -3,7 +3,6 @@ package com.sudopk.vc.calendar
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.sudopk.kandroid.isNull
 import com.sudopk.kandroid.notFoundById
 import com.sudopk.kandroid.notFoundByTag
@@ -16,6 +15,7 @@ import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.location.Location
 import com.sudopk.vc.location.LocationContainer
 import com.sudopk.vc.location.LocationFragment
+import kotlinx.android.synthetic.main.container.*
 
 class VcActivity : AppCompatActivity(),
         CalendarPagerFragment.Container,
@@ -68,8 +68,7 @@ class VcActivity : AppCompatActivity(),
                 supportFragmentManager.replace(it, ToolbarFragment())
             }
 
-            val view: View = findViewById(R.id.container)
-            val snackbar = Snackbar.make(view, error, Snackbar.LENGTH_INDEFINITE)
+            val snackbar = Snackbar.make(container, error, Snackbar.LENGTH_INDEFINITE)
             snackbar.setAction(R.string.retry) {
                 snackbar.dismiss()
                 launchCalendarPagerFragment()

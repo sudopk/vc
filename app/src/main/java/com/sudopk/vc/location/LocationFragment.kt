@@ -6,11 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatDialogFragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.Button
-import android.widget.ProgressBar
-import com.mcxiaoke.koi.ext.find
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.CalendarStore
@@ -18,14 +14,13 @@ import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.core.weak
 import com.sudopk.vc.retrofit.VcService
+import kotlinx.android.synthetic.main.location.*
 
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
     private lateinit var mAdapter: LocationAdapter
-    private lateinit var mProgressBar: ProgressBar
     private lateinit var mVcService: VcService
     private lateinit var mLocationStore: LocationStore
     private lateinit var mCalendarStore: CalendarStore
-    private lateinit var mRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +44,14 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.location, container, false)
-        mProgressBar = view.find(R.id.progressBar)
-        mRecyclerView = view.find(R.id.recyclerView)
-        mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mAdapter = LocationAdapter(this, mCalendarStore.location)
-        mRecyclerView.adapter = mAdapter
+        return inflater.inflate(R.layout.location, container, false)
+    }
 
-        return view
+    override fun onStart() {
+        super.onStart()
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        mAdapter = LocationAdapter(this, mCalendarStore.location)
+        recyclerView.adapter = mAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
@@ -99,7 +94,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
 
     private fun refresh() {
         if (isResumed) {
-            mProgressBar.visibility = View.VISIBLE
+            progressBar.visibility = View.VISIBLE
 
             if (mLocationStore.hasLocations()) {
                 onLocationResponse(mLocationStore.locations)
@@ -124,7 +119,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
 
     private fun onLocationResponse(response: List<Country>) {
         if (isResumed) {
-            mProgressBar.visibility = View.GONE
+            progressBar.visibility = View.GONE
             mAdapter.setData(response)
 
             var position = mAdapter.getPosition(mCalendarStore.location)
@@ -132,7 +127,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
                 // lets scroll to location one before the actual one, looks little better
                 position--
             }
-            mRecyclerView.layoutManager
+            recyclerView.layoutManager
                     .scrollToPosition(position)
         }
     }

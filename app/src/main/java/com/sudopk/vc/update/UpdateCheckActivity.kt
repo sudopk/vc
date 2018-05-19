@@ -15,6 +15,7 @@ import com.sudopk.vc.calendar.VcActivity
 import com.sudopk.vc.components.ProgressFragment
 import com.sudopk.vc.core.vcApp
 import org.jetbrains.anko.startActivity
+import kotlinx.android.synthetic.main.container.*
 
 class UpdateCheckActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,10 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.mcxiaoke.koi.ext.find
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.Country
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.location_cell.textView as textViewCell
+import kotlinx.android.synthetic.main.location_header_cell.textView as textViewHeader
 import java.util.*
 
 class LocationAdapter(private val mContainer: LocationContainer, private val mSelectedLocation:
@@ -90,12 +91,10 @@ Location?) : RecyclerView.Adapter<LocationAdapter.VH>() {
         return 0
     }
 
-    class VH internal constructor(itemView: View, container: LocationContainer) : RecyclerView.ViewHolder(itemView) {
-        private val mTextView: TextView
+    class VH internal constructor(itemView: View, container: LocationContainer) : RecyclerView.ViewHolder(itemView), LayoutContainer {
         private lateinit var mLocation: Location
 
         init {
-            mTextView = itemView.find(R.id.textView)
             itemView.setOnClickListener {
                 if (itemViewType != HEADER_VIEW_TYPE) {
                     container.onLocationSelected(mLocation)
@@ -103,18 +102,21 @@ Location?) : RecyclerView.Adapter<LocationAdapter.VH>() {
             }
         }
 
+        override val containerView: View?
+            get() = itemView
+
         fun setCountry(country: Country, countryIndex: Int, selectedLocation: Location?) {
             if (itemViewType == HEADER_VIEW_TYPE) {
-                mTextView.text = country.name
+                textViewCell.text = country.name
             } else {
                 mLocation = country.locations[adapterPosition - countryIndex - 1]
                 if (mLocation == selectedLocation) {
-                    mTextView.setBackgroundColor(ContextCompat.getColor(mTextView.context, R
+                    textViewCell.setBackgroundColor(ContextCompat.getColor(textViewCell.context, R
                             .color.selectedCellColor))
                 } else {
-                    mTextView.setBackgroundColor(0xffffff)
+                    textViewCell.setBackgroundColor(0xffffff)
                 }
-                mTextView.text = mLocation.name
+                textViewCell.text = mLocation.name
             }
         }
     }

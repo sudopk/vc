@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.mcxiaoke.koi.ext.find
 import com.sudopk.vc.R
 import com.sudopk.vc.components.SimpleList
 import com.sudopk.vc.core.monthAbbreviation
 import com.sudopk.vc.core.weekDayAbbreviation
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.calendar_cell_common.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -76,26 +77,24 @@ class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
     }
 
     class VH(itemView: View, @param:LayoutRes private val mEventLayout: Int, monthYear: MonthYear) :
-            RecyclerView.ViewHolder(itemView) {
-        private val mEvents: SimpleList
-        private val mDate: TextView
+            RecyclerView.ViewHolder(itemView), LayoutContainer {
         private val mMonthCalendar: Calendar
 
         init {
-            mDate = itemView.find(R.id.date)
-            mEvents = itemView.find(R.id.events)
-
             mMonthCalendar = Calendar.getInstance()
             mMonthCalendar.set(Calendar.MONTH, monthYear.month - 1)
             mMonthCalendar.set(Calendar.YEAR, monthYear.year)
         }
 
+        override val containerView: View?
+            get() = itemView
+
         fun onBind(dayCalendar: DayCalendar) {
             mMonthCalendar.set(Calendar.DATE, dayCalendar.date)
-            mDate.text = itemView.context.getString(R.string.date_and_weekday,
+            date.text = itemView.context.getString(R.string.date_and_weekday,
                     mMonthCalendar.monthAbbreviation(), dayCalendar.date,
                     mMonthCalendar.weekDayAbbreviation())
-            mEvents.setAdapter(ArrayAdapter(itemView.context,
+            events.setAdapter(ArrayAdapter(itemView.context,
                     mEventLayout, dayCalendar.events))
         }
     }

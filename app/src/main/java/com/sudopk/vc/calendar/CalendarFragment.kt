@@ -4,21 +4,16 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.ProgressBar
-import android.widget.ViewAnimator
-import com.mcxiaoke.koi.ext.find
+import com.sudopk.vc.core.vcApp
+
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
-import com.sudopk.vc.core.vcApp
+import kotlinx.android.synthetic.main.calendar.*
 import java.util.*
 
-class CalendarFragment : Fragment() {
-    private lateinit var mViewAnimator: ViewAnimator
-    private lateinit var mProgressBar: ProgressBar
-    private lateinit var mRecyclerView: RecyclerView
 
+class CalendarFragment : Fragment() {
     private lateinit var mAdapter: CalendarAdapter
     private lateinit var mCalendarApi: CalendarApi
     private lateinit var mMonthYear: MonthYear
@@ -26,26 +21,25 @@ class CalendarFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.calendar, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
         setHasOptionsMenu(true)
         val vcService = vcApp.vcService
         val calendarStore = vcApp.calendarStore
 
         mMonthYear = MonthYear(arguments!!.getInt(MONTH), arguments!!.getInt(YEAR))
 
-        val view = inflater.inflate(R.layout.calendar, container, false)
-        mViewAnimator = view.find<ViewAnimator>(R.id.viewAnimator)
-        mProgressBar = view.find<ProgressBar>(R.id.progressBar)
-        mRecyclerView = view.find<RecyclerView>(R.id.recyclerView)
-        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)
         mAdapter = CalendarAdapter(mMonthYear)
-        mRecyclerView.adapter = mAdapter
+        recyclerView.adapter = mAdapter
 
         mCalendarApi = ViewModelProviders.of(this).get(CalendarApi::class.java)
         mCalendarApi.init(vcService, calendarStore, mMonthYear)
 
         fetchCalendar()
-
-        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
@@ -80,25 +74,25 @@ class CalendarFragment : Fragment() {
     }
 
     fun onFetchingCalendar() {
-        mViewAnimator.displayedChild = CalendarFragment.CALENDAR_VIEW_INDEX
-        mProgressBar.visibility = View.VISIBLE
+        viewAnimator.displayedChild = CalendarFragment.CALENDAR_VIEW_INDEX
+        progressBar.visibility = View.VISIBLE
 
     }
 
     fun onCalendarRequestFailed() {
-        mProgressBar.visibility = View.GONE
-        mViewAnimator.displayedChild = CalendarFragment.FAILED_VIEW_INDEX
+        progressBar.visibility = View.GONE
+        viewAnimator.displayedChild = CalendarFragment.FAILED_VIEW_INDEX
     }
 
     private fun showCalendar(vCalendar: VCalendar) {
         if (vCalendar.isNotEmpty()) {
-            mProgressBar.visibility = View.GONE
+            progressBar.visibility = View.GONE
 
             mAdapter.setData(vCalendar)
 
             scrollRecyclerViewToCorrectDate()
         } else {
-            mViewAnimator.displayedChild = CalendarFragment.NO_DATA_VIEW_INDEX
+            viewAnimator.displayedChild = CalendarFragment.NO_DATA_VIEW_INDEX
         }
     }
 
@@ -114,7 +108,7 @@ class CalendarFragment : Fragment() {
             if (positionToScrollTo > 0) {
                 positionToScrollTo--
             }
-            mRecyclerView.layoutManager
+            recyclerView.layoutManager
                     .scrollToPosition(positionToScrollTo)
 
             mAdapter.setDateToHighlight(calendar.get(Calendar.DATE))
