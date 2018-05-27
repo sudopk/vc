@@ -71,7 +71,7 @@ class VcActivity : AppCompatActivity(),
             val snackbar = Snackbar.make(container, error, Snackbar.LENGTH_INDEFINITE)
             snackbar.setAction(R.string.retry) {
                 snackbar.dismiss()
-                launchCalendarPagerFragment()
+                onChangeLocationRequest()
             }
             snackbar.show()
         }

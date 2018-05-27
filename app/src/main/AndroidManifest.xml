@@ -4,7 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!--For usesCleartextTraffic="true":
+    We aren't passing any sensitive information and the website used for scrapping uses http.
+    Otherwise Retrofit throws:
+        java.net.UnknownServiceException: CLEARTEXT communication not supported
+    -->
     <application
+        android:usesCleartextTraffic="true"
         android:name=".app.VcApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
