@@ -114,3 +114,5 @@ class CalendarStore(context: Context, private val mGson: Gson) {
         private val LOCATION_KEY = "location"
     }
 }
+
+//inline class Month(val value:Int)
