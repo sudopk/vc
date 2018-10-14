@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.AppCompatTextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/textView"
     style="@style/Base.TextAppearance.AppCompat.Title"
@@ -9,4 +8,4 @@
     android:background="@color/colorAccent"
     android:padding="16dp"
     android:textColor="@android:color/white"
-    tools:text="Country"/>
+    tools:text="Country" />

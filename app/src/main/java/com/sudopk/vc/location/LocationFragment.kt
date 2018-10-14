@@ -127,8 +127,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
                 // lets scroll to location one before the actual one, looks little better
                 position--
             }
-            recyclerView.layoutManager
-                    .scrollToPosition(position)
+            recyclerView.layoutManager?.scrollToPosition(position)
         }
     }
 

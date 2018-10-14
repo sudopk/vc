@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.Country
 import kotlinx.android.extensions.LayoutContainer
+import java.util.*
 import kotlinx.android.synthetic.main.location_cell.textView as textViewCell
 import kotlinx.android.synthetic.main.location_header_cell.textView as textViewHeader
-import java.util.*
 
 class LocationAdapter(private val mContainer: LocationContainer, private val mSelectedLocation:
 Location?) : RecyclerView.Adapter<LocationAdapter.VH>() {

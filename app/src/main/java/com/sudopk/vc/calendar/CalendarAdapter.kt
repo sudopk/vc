@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import com.sudopk.vc.R
-import com.sudopk.vc.components.SimpleList
 import com.sudopk.vc.core.monthAbbreviation
 import com.sudopk.vc.core.weekDayAbbreviation
 import kotlinx.android.extensions.LayoutContainer

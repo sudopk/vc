@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import com.sudopk.vc.core.vcApp
-
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
+import com.sudopk.vc.core.vcApp
 import kotlinx.android.synthetic.main.calendar.*
 import java.util.*
 
@@ -109,7 +108,7 @@ class CalendarFragment : Fragment() {
                 positionToScrollTo--
             }
             recyclerView.layoutManager
-                    .scrollToPosition(positionToScrollTo)
+                    ?.scrollToPosition(positionToScrollTo)
 
             mAdapter.setDateToHighlight(calendar.get(Calendar.DATE))
         } else {

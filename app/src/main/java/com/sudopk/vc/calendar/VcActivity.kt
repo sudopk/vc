@@ -57,7 +57,7 @@ class VcActivity : AppCompatActivity(),
     }
 
     override fun onLocationSelectCanceled() {
-        if(mCalendarStore.location.isNull()) {
+        if (mCalendarStore.location.isNull()) {
             finish()
         }
     }

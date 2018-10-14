@@ -19,6 +19,7 @@ class ButtonDescription(val id: String, val title: String) : Parcelable {
 
     companion object {
 
+        @JvmField
         val CREATOR: Parcelable.Creator<ButtonDescription> = object : Parcelable.Creator<ButtonDescription> {
             override fun createFromParcel(parcel: Parcel): ButtonDescription {
                 return ButtonDescription(parcel)

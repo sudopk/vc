@@ -1,8 +1,8 @@
 package com.sudopk.vc.retrofit
 
 import com.sudopk.kandroid.StrFromRes
-import com.sudopk.vc.calendar.VCalendar
 import com.sudopk.vc.calendar.Country
+import com.sudopk.vc.calendar.VCalendar
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.http.GET
