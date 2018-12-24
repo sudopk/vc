@@ -41,7 +41,7 @@ androidExtensions {
 }
 
 dependencies {
-    val kotlin = "1.3-M1"
+    val kotlin = "1.3.0"
     val supportLib = "28.0.0"
     val anko = "0.10.3"
 
