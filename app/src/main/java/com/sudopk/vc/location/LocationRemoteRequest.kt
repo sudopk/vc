@@ -20,7 +20,7 @@ class LocationRemoteRequest(val weakCallback: WeakReference<LocationCallback>) {
         val locationsCall = vcService.locations()
         locationsCall.enqueue(object : Callback<List<Country>> {
             override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
-                if (response.body() != null) {
+                if (response.isSuccessful && response.body() != null) {
                     weakCallback.get?.onLocationsReceived(response.body())
                 } else {
                     failed()

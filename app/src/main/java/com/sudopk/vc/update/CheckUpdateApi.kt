@@ -25,7 +25,11 @@ class CheckUpdateApi : ViewModel() {
         val configService = VcConfigService.newInstance(Globals.gson).config()
         configService.enqueue(object : Callback<VcConfig> {
             override fun onResponse(call: Call<VcConfig>, response: Response<VcConfig>) {
-                vcConfig.value = response.body()
+                if(response.isSuccessful && response.body() != null) {
+                    vcConfig.value = response.body()
+                } else {
+                    vcConfig.value = defaultVcConfig
+                }
             }
 
             override fun onFailure(call: Call<VcConfig>, t: Throwable) {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.sudopk.vc.retrofit.VcService
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +42,16 @@ class CalendarApi : ViewModel() {
                     mMonthYear.year, "en", mCalendarStore.location!!.id)
             call.enqueue(object : Callback<VCalendar> {
                 override fun onResponse(call: Call<VCalendar>, response: Response<VCalendar>) {
+                    if (!response.isSuccessful) {
+                        Log.e("CalendarApi", "Invalid response code: " + response.code())
+                        mStatus.value = DataStatus.FAILED
+                        return
+                    }
+                    if (response.body() == null) {
+                        Log.e("CalendarApi", "Empty body")
+                        mStatus.value = DataStatus.FAILED
+                        return
+                    }
                     mCalendarStore.saveCalendar(mMonthYear, response.body())
                     mStatus.value = DataStatus.READY
                 }
@@ -48,7 +59,6 @@ class CalendarApi : ViewModel() {
                 override fun onFailure(call: Call<VCalendar>, t: Throwable?) {
                     mStatus.value = DataStatus.FAILED
                 }
-
             })
         }
         return mStatus
