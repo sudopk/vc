@@ -5,12 +5,10 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.sudopk.vc.calendar.Country
-import java.util.*
 
 class LocationStore(context: Context, private val mGson: Gson) {
     private val mPreferences: SharedPreferences
-    var locations: List<Country>
+    var locations: List<Location>
         private set
 
     init {
@@ -18,13 +16,13 @@ class LocationStore(context: Context, private val mGson: Gson) {
 
         val savedLocations = mPreferences.getString(LOCATIONS, "")
         if (savedLocations.isBlank()) {
-            locations = ArrayList<Country>()
+            locations = listOf()
         } else {
-            locations = mGson.fromJson<List<Country>>(savedLocations, object : TypeToken<List<Country>>() {}.type)
+            locations = mGson.fromJson<List<Location>>(savedLocations, object : TypeToken<List<Location>>() {}.type)
         }
     }
 
-    fun saveLocations(locations: List<Country>) {
+    fun saveLocations(locations: List<Location>) {
         this.locations = locations
         mPreferences.edit()
                 .putString(LOCATIONS, mGson.toJson(locations))
@@ -33,6 +31,10 @@ class LocationStore(context: Context, private val mGson: Gson) {
 
     fun hasLocations(): Boolean {
         return !locations.isEmpty()
+    }
+
+    fun cleanupAll() {
+        locations = listOf()
     }
 
     companion object {

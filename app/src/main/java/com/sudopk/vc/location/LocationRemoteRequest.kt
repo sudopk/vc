@@ -1,6 +1,5 @@
 package com.sudopk.vc.location
 
-import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.core.get
 import com.sudopk.vc.retrofit.VcService
 import retrofit2.Call
@@ -9,7 +8,7 @@ import retrofit2.Response
 import java.lang.ref.WeakReference
 
 interface LocationCallback {
-    fun onLocationsReceived(countries: List<Country>)
+    fun onLocationsReceived(locations: List<Location>)
 
     fun onLocationRequestFailed()
 
@@ -18,8 +17,8 @@ interface LocationCallback {
 class LocationRemoteRequest(val weakCallback: WeakReference<LocationCallback>) {
     fun makeRequest(vcService: VcService) {
         val locationsCall = vcService.locations()
-        locationsCall.enqueue(object : Callback<List<Country>> {
-            override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
+        locationsCall.enqueue(object : Callback<List<Location>> {
+            override fun onResponse(call: Call<List<Location>>, response: Response<List<Location>>) {
                 if (response.isSuccessful && response.body() != null) {
                     weakCallback.get?.onLocationsReceived(response.body())
                 } else {
@@ -27,7 +26,7 @@ class LocationRemoteRequest(val weakCallback: WeakReference<LocationCallback>) {
                 }
             }
 
-            override fun onFailure(call: Call<List<Country>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Location>>, t: Throwable) {
                 t.printStackTrace()
                 failed()
             }

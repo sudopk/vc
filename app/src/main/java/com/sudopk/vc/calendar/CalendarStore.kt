@@ -27,7 +27,7 @@ class CalendarStore(context: Context, private val mGson: Gson) {
     fun getCalendar(month: Int, year: Int): VCalendar {
         val calendarString = mPreferences.getString(String.format(CALENDAR_KEY_FORMAT,
                 month, year), "")
-        if (calendarString.isEmpty()) {
+        if (calendarString.isBlank()) {
             return emptyList()
         } else {
             return mGson.fromJson(calendarString, VCalendarTypeToken)
@@ -55,7 +55,7 @@ class CalendarStore(context: Context, private val mGson: Gson) {
      * @param year  full year e.g. 2016
      */
     fun hasCalendar(month: Int, year: Int): Boolean {
-        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "").isEmpty()
+        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "").isBlank()
     }
 
     fun hasCalendar(monthYear: MonthYear): Boolean {

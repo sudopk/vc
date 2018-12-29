@@ -1,9 +1,7 @@
 package com.sudopk.vc.retrofit
 
-import android.util.Log
 import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.R
-import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.calendar.DayCalendar
 import com.sudopk.vc.calendar.VCalendar
 import com.sudopk.vc.location.Location
@@ -15,7 +13,6 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import java.io.IOException
 import java.lang.reflect.Type
-import java.util.*
 
 
 const val TAG = "VcConverterFactory"
@@ -41,9 +38,6 @@ class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
         Converter<ResponseBody,
                 VCalendar> {
 
-    private var mEventData: MutableList<String> = ArrayList()
-    private var mDate: Int = 0
-
     @Throws(IOException::class)
     override fun convert(value: ResponseBody): VCalendar {
         return convert(value.string())
@@ -51,119 +45,135 @@ class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
 
     fun convert(htmlBody: String): VCalendar {
         val document = Jsoup.parse(htmlBody)
-        val days = document.select("body center>table:nth-child(3)" + ">tbody>tr>td>table>tbody")
-        val calendar = ArrayList<DayCalendar>()
-        for (day in days) {
-            val dayCalendar = parseDay(day)
-            if (dayCalendar != null) {
-                calendar.add(dayCalendar)
+
+        val tables = document.getElementsByTag("table")
+
+        val vCalendar = ArrayList<DayCalendar>(31)
+        for (table in tables) {
+            parseDayCalendar(table)?.let {
+                vCalendar.add(it)
+
+
             }
         }
-        return calendar
+
+        return vCalendar
     }
 
-    private fun parseDay(day: Element): DayCalendar? {
-        // each day is a <table>
-        val events = day.select(">tr")
-        mDate = 0
-        mEventData = ArrayList<String>(events.size)
-        var firstRow = true
-        for (event in events) {
-            parseDayEvent(event, firstRow)
-            firstRow = false
+    private fun parseDayCalendar(table: Element): DayCalendar? {
+        if (!isDayEventTable(table)) {
+            return null
         }
-        if (mDate != 0 && !mEventData.isEmpty()) {
-            return DayCalendar(mDate, mEventData)
+
+        // First row, second column is date
+        val rows = table.getElementsByTag("tr")
+        var date = -1
+        val rowData = ArrayList<String>(rows.size)
+        for (rowIndex in 0..rows.size - 1) {
+            val cols = rows[rowIndex].getElementsByTag("td")
+            for (colIndex in 0..cols.size - 1) {
+                if (rowIndex == 0 && colIndex == 1) {
+                    val toIntOrNull = cols[colIndex].text().toIntOrNull()
+
+                    if (toIntOrNull != null && toIntOrNull >= 1 && toIntOrNull <= 31) {
+                        date = toIntOrNull
+                    }
+                } else {
+                    val parseImgToText = parseImgToText(cols[colIndex].select("img"))
+                    val entry = cols[colIndex].text() + if (parseImgToText.isNotBlank()) (" $parseImgToText") else ""
+                    if (entry.isNotBlank()) {
+                        rowData.add(entry)
+                    }
+                }
+            }
         }
+        if (date != -1 && rowData.isNotEmpty()) {
+            return DayCalendar(date, rowData)
+        }
+
         return null
     }
 
-    private fun parseDayEvent(event: Element, dateEvent: Boolean) {
-        var col = 0
-        val details = event.select(">td")
-        for (detail in details) {
-            parseEventDetail(detail, dateEvent && col == 1)
-            col++
+    private fun isDayEventTable(table: Element): Boolean {
+        // First row, second column is the date
+        val rows = table.getElementsByTag("tr")
+        if (rows.size < 1) {
+            return false
         }
-    }
-
-
-    private fun parseEventDetail(detail: Element, dateEvent: Boolean) {
-        var data = detail.text()
-        if (dateEvent) {
-            if (mDate != 0) {
-                val error = "Error parsing the date events. Date repeated: old- ${mDate}, new- ${data}"
-                Log.e(TAG, error)
-                throw IllegalStateException(error)
-            }
-            mDate = Integer.parseInt(data)
-        } else {
-            data += parseImgToText(detail.select("img"))
-            if (data.isNotBlank()) {
-                mEventData.add(data)
-            }
+        val cols = rows[0].getElementsByTag("td")
+        if (cols.size < 2) {
+            return false
         }
+
+        val toIntOrNull = cols[1].text().toIntOrNull()
+
+        if (toIntOrNull == null || toIntOrNull < 1 || toIntOrNull > 31) {
+            return false
+        }
+
+        return true
     }
 
     private fun parseImgToText(imgs: Elements): String {
         if (imgs.size > 0) {
             val src = imgs.attr("src")
-            when (src) {
-                "amavasya.gif" -> return strFromRes.getString(R.string.new_moon)
-                "purnima.gif" -> return strFromRes.getString(R.string.full_moon)
-                "ap.gif" -> return strFromRes.getString(R.string.appearance_day)
-                "dis.gif" -> return strFromRes.getString(R.string.disappearance_day)
+            when {
+                src.endsWith("amavasya.gif") -> return strFromRes.getString(R.string.new_moon)
+                src.endsWith("purnima.gif") -> return strFromRes.getString(R.string.full_moon)
+                src.endsWith("ap.gif") -> return strFromRes.getString(R.string.appearance_day)
+                src.endsWith("dis.gif") -> return strFromRes.getString(R.string.disappearance_day)
             }
         }
         return ""
     }
 }
 
-class VcLocationResponseConverter : Converter<ResponseBody, List<Country>> {
-    private var mLocationData: MutableList<Country> = ArrayList()
+class VcLocationResponseConverter : Converter<ResponseBody, List<Location>> {
 
     @Throws(IOException::class)
-    override fun convert(value: ResponseBody): List<Country> {
+    override fun convert(value: ResponseBody): List<Location> {
         val document = Jsoup.parse(value.string())
-        val locationGroups = document.select("select[id=CIID]")
-        mLocationData = ArrayList()
-        for (locationGroup in locationGroups) {
-            parseLocationGroup(locationGroup)
-        }
-
-        return mLocationData
-    }
-
-    private fun parseLocationGroup(locationGroup: Element) {
-        val locations = locationGroup.select(">option")
-        // initializing it to avoid null check, but it should be overridden in the loop
-        var locationsWithId: MutableList<Location> = ArrayList()
-        var country = ""
-        for (location in locations) {
-            val locationName = location.text()
-            if (isCountryName(locationName)) {
-                // add data of last country
-                addCountryData(country, locationsWithId)
-
-                country = locationName
-                locationsWithId = ArrayList<Location>()
-            } else {
-                // strip the prefix from locationName
-                locationsWithId.add(
-                        Location(
-                                locationName.substring(PREFIX_OF_LOCATIONS_WITH_ID.length),
-                                location.attr("value")))
+        val selectTags = document.getElementsByTag("select")
+        for (selectTag in selectTags) {
+            if (isLocationSelectTag(selectTag)) {
+                return parseLocations(selectTag)
             }
         }
-        addCountryData(country, locationsWithId)
+
+        return listOf()
     }
 
-    private fun addCountryData(country: String,
-                               locations: List<Location>) {
-        if (locations.isNotEmpty() && country.isNotBlank()) {
-            Collections.sort(locations)
-            mLocationData.add(Country(country, locations))
+    private fun parseLocations(selectTag: Element): List<Location> {
+        val locations = ArrayList<Location>()
+        val optionTags = selectTag.getElementsByTag("option")
+        for (optionTag in optionTags) {
+            val valueAttr = optionTag.attr("value")
+            val text = optionTag.text()
+            if (valueAttr.isBlank() || text.isBlank()) {
+                continue
+            }
+
+            for (token in valueAttr.split('/')) {
+                if (token.isBlank()) {
+                    continue
+                }
+
+                // First token is location id and tag text is location name
+                locations.add(Location(text.trim(), token.trim()))
+                break
+            }
         }
+        return locations
+    }
+
+    private fun isLocationSelectTag(selectTag: Element): Boolean {
+        val optionTags = selectTag.getElementsByTag("option")
+        for (optionTag in optionTags) {
+            if (optionTag.text() == "SELECT CITY") {
+                return true
+            }
+        }
+        return false
     }
 
     companion object {

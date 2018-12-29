@@ -14,6 +14,7 @@ import com.sudopk.vc.calendar.CalendarStore
 import com.sudopk.vc.gson.RemoveFieldNameStrategy
 import com.sudopk.vc.location.LocationStore
 import com.sudopk.vc.retrofit.VcService
+import org.jetbrains.anko.defaultSharedPreferences
 
 class VcApp : MultiDexApplication(), StrFromRes {
     lateinit var gson: Gson
@@ -34,6 +35,14 @@ class VcApp : MultiDexApplication(), StrFromRes {
 
         calendarStore = CalendarStore(this, gson)
         locationStore = LocationStore(this, gson)
+
+        val cleanedupKeyVersionCode3 = "CleanupVersionCode3"
+        val cleanedup = defaultSharedPreferences.getBoolean(cleanedupKeyVersionCode3, false)
+        if (!cleanedup) {
+            calendarStore.cleanupAll()
+            locationStore.cleanupAll()
+            defaultSharedPreferences.edit().putBoolean(cleanedupKeyVersionCode3, true).apply()
+        }
 
         KoiConfig.logLevel = Log.DEBUG
     }

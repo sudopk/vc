@@ -2,7 +2,7 @@
     <string name="app_name">Vaishnava Calendar</string>
     <string name="refresh">Refresh</string>
     <string name="location">Location</string>
-    <string name="location_title">Select location</string>
+    <string name="location_title">Select a region near you</string>
     <string name="locations_failure">Failed to fetch locations.</string>
     <string name="location_required">Location must be selected.</string>
     <string name="no_calendar_data">Calendar is not available for this month.</string>

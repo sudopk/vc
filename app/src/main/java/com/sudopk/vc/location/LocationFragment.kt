@@ -10,7 +10,6 @@ import android.view.*
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.CalendarStore
-import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.core.weak
 import com.sudopk.vc.retrofit.VcService
@@ -105,9 +104,9 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         }
     }
 
-    override fun onLocationsReceived(countries: List<Country>) {
+    override fun onLocationsReceived(locations: List<Location>) {
         if (isResumed) {
-            mLocationStore.saveLocations(countries)
+            mLocationStore.saveLocations(locations)
             onLocationResponse(mLocationStore.locations)
         }
     }
@@ -117,12 +116,16 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     }
 
 
-    private fun onLocationResponse(response: List<Country>) {
+    private fun onLocationResponse(response: List<Location>) {
         if (isResumed) {
             progressBar.visibility = View.GONE
             mAdapter.setData(response)
 
             var position = mAdapter.getPosition(mCalendarStore.location)
+            if (position < 0) {
+                return
+            }
+
             if (position > 0) {
                 // lets scroll to location one before the actual one, looks little better
                 position--

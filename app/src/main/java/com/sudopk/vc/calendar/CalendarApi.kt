@@ -38,8 +38,7 @@ class CalendarApi : ViewModel() {
             mStatus.value = DataStatus.READY
         } else {
             @SuppressLint("DefaultLocale") // The string formatted here is not for end user
-            val call = mVcService.calendar(String.format("%02d", mMonthYear.month),
-                    mMonthYear.year, "en", mCalendarStore.location!!.id)
+            val call = mVcService.calendar(mCalendarStore.location!!.id, mMonthYear.year, mMonthYear.month)
             call.enqueue(object : Callback<VCalendar> {
                 override fun onResponse(call: Call<VCalendar>, response: Response<VCalendar>) {
                     if (!response.isSuccessful) {
