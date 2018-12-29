@@ -48,12 +48,10 @@ class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
 
         val tables = document.getElementsByTag("table")
 
-        val vCalendar = ArrayList<DayCalendar>(31)
+        val vCalendar = ArrayList<DayCalendar>(/* Max days in a month= */31)
         for (table in tables) {
             parseDayCalendar(table)?.let {
                 vCalendar.add(it)
-
-
             }
         }
 
@@ -61,10 +59,6 @@ class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
     }
 
     private fun parseDayCalendar(table: Element): DayCalendar? {
-        if (!isDayEventTable(table)) {
-            return null
-        }
-
         // First row, second column is date
         val rows = table.getElementsByTag("tr")
         var date = -1
@@ -73,10 +67,10 @@ class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
             val cols = rows[rowIndex].getElementsByTag("td")
             for (colIndex in 0..cols.size - 1) {
                 if (rowIndex == 0 && colIndex == 1) {
-                    val toIntOrNull = cols[colIndex].text().toIntOrNull()
+                    val dateOrNull = cols[colIndex].text().toIntOrNull()
 
-                    if (toIntOrNull != null && toIntOrNull >= 1 && toIntOrNull <= 31) {
-                        date = toIntOrNull
+                    if (dateOrNull != null && dateOrNull >= 1 && dateOrNull <= 31) {
+                        date = dateOrNull
                     }
                 } else {
                     val parseImgToText = parseImgToText(cols[colIndex].select("img"))
@@ -92,26 +86,6 @@ class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
         }
 
         return null
-    }
-
-    private fun isDayEventTable(table: Element): Boolean {
-        // First row, second column is the date
-        val rows = table.getElementsByTag("tr")
-        if (rows.size < 1) {
-            return false
-        }
-        val cols = rows[0].getElementsByTag("td")
-        if (cols.size < 2) {
-            return false
-        }
-
-        val toIntOrNull = cols[1].text().toIntOrNull()
-
-        if (toIntOrNull == null || toIntOrNull < 1 || toIntOrNull > 31) {
-            return false
-        }
-
-        return true
     }
 
     private fun parseImgToText(imgs: Elements): String {
