@@ -7,8 +7,8 @@ buildscript {
         maven(url = "http://dl.bintray.com/kotlin/kotlin-eap")
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.3.0-rc03")
-        val kotlinVersion = "1.3.0"
+        classpath("com.android.tools.build:gradle:3.6.0-rc02")
+        val kotlinVersion = "1.3.61"
         classpath(kotlin("gradle-plugin", version = kotlinVersion))
         classpath(kotlin("android-extensions", version = kotlinVersion))
 

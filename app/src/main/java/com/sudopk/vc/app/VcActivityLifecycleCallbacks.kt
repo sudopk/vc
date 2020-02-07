@@ -3,7 +3,7 @@ package com.sudopk.vc.app
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 internal class VcActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
     private var mCurrentResumedActivity: AppCompatActivity? = null

@@ -1,8 +1,8 @@
 package com.sudopk.vc.calendar
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.sudopk.kandroid.isNull
 import com.sudopk.kandroid.notFoundById
 import com.sudopk.kandroid.notFoundByTag

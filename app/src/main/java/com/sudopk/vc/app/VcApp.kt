@@ -1,14 +1,15 @@
 package com.sudopk.vc.app
 
 import android.content.pm.PackageManager
-import android.support.design.widget.Snackbar
-import android.support.multidex.MultiDexApplication
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.AppCompatDialogFragment
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.multidex.MultiDexApplication
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mcxiaoke.koi.KoiConfig
+import com.mcxiaoke.koi.log.logf
 import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.calendar.CalendarStore
 import com.sudopk.vc.gson.RemoveFieldNameStrategy

@@ -3,10 +3,10 @@ package com.sudopk.vc.location
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AppCompatDialogFragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatDialogFragment
 import android.view.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.CalendarStore
@@ -53,7 +53,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         recyclerView.adapter = mAdapter
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.calendar, menu)
     }
 
@@ -69,7 +69,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         refresh()
     }
 
-    override fun onCancel(dialog: DialogInterface?) {
+    override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
         onLocationSelectCanceled()
     }

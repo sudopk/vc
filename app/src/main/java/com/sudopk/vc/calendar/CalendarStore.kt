@@ -3,7 +3,7 @@ package com.sudopk.vc.calendar
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.sudopk.vc.core.CalUtil
 import com.sudopk.vc.location.Location
@@ -27,7 +27,7 @@ class CalendarStore(context: Context, private val mGson: Gson) {
     fun getCalendar(month: Int, year: Int): VCalendar {
         val calendarString = mPreferences.getString(String.format(CALENDAR_KEY_FORMAT,
                 month, year), "")
-        if (calendarString.isBlank()) {
+        if (calendarString!!.isBlank()) {
             return emptyList()
         } else {
             return mGson.fromJson(calendarString, VCalendarTypeToken)
@@ -55,7 +55,7 @@ class CalendarStore(context: Context, private val mGson: Gson) {
      * @param year  full year e.g. 2016
      */
     fun hasCalendar(month: Int, year: Int): Boolean {
-        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "").isBlank()
+        return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "")!!.isBlank()
     }
 
     fun hasCalendar(monthYear: MonthYear): Boolean {

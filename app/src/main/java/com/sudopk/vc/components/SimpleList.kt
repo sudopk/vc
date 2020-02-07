@@ -2,10 +2,10 @@ package com.sudopk.vc.components
 
 import android.content.Context
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.util.AttributeSet
 import android.widget.Adapter
 import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 
 
 class SimpleList : LinearLayout {

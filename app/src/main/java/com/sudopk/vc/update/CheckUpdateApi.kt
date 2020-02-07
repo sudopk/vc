@@ -1,8 +1,8 @@
 package com.sudopk.vc.update
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.sudopk.kandroid.isNotNull
 import com.sudopk.vc.globals.Globals
 import com.sudopk.vc.retrofit.VcConfigService

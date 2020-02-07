@@ -1,11 +1,11 @@
 package com.sudopk.vc.update
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.sudopk.kandroid.dialog.ButtonDescription
 import com.sudopk.kandroid.dialog.TextDialogFragment
 import com.sudopk.kandroid.notFoundByTag
@@ -47,7 +47,7 @@ class VcConfigActivity : AppCompatActivity(), TextDialogFragment.Container {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        handleConfig(intent.extras.get(VC_CONFIG) as VcConfig)
+        handleConfig(intent.extras!!.get(VC_CONFIG) as VcConfig)
     }
 
     private fun handleConfig(config: VcConfig) {

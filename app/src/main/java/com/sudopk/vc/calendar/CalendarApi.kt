@@ -1,10 +1,10 @@
 package com.sudopk.vc.calendar
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.sudopk.vc.retrofit.VcService
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,8 +37,8 @@ class CalendarApi : ViewModel() {
         if (mCalendarStore.hasCalendar(mMonthYear)) {
             mStatus.value = DataStatus.READY
         } else {
-            @SuppressLint("DefaultLocale") // The string formatted here is not for end user
-            val call = mVcService.calendar(mCalendarStore.location!!.id, mMonthYear.year, mMonthYear.month)
+            val call = mVcService.calendar(mCalendarStore.location!!.id, mMonthYear.year, "%02d".format(mMonthYear.month))
+            Log.i("CalendarApi", call.request().url().toString())
             call.enqueue(object : Callback<VCalendar> {
                 override fun onResponse(call: Call<VCalendar>, response: Response<VCalendar>) {
                     if (!response.isSuccessful) {
@@ -56,6 +56,7 @@ class CalendarApi : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<VCalendar>, t: Throwable?) {
+                    Log.e("CalenderApi", t?.message!!)
                     mStatus.value = DataStatus.FAILED
                 }
             })

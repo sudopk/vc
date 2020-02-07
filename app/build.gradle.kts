@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
 
 plugins {
@@ -9,11 +8,14 @@ plugins {
 
 
 android {
-    compileSdkVersion("android-P")
+    compileSdkVersion(29)
+    buildToolsVersion = "29.0.3"
+//    useAndroidX = true
+
     defaultConfig {
         applicationId = "com.sudopk.vc"
         minSdkVersion(16)
-        targetSdkVersion(28)
+        targetSdkVersion(29)
         versionCode = 3
         versionName = "2.0"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
@@ -32,17 +34,11 @@ android {
     }
 }
 
-androidExtensions {
-    //    https://github.com/gradle/kotlin-dsl/issues/644
-//    isExperimental = true
-    configure(delegateClosureOf<AndroidExtensionsExtension> {
-        isExperimental = true
-    })
-}
+androidExtensions.isExperimental = true
 
 dependencies {
     val kotlin = "1.3.0"
-    val supportLib = "28.0.0"
+    val androidx = "1.1.0"
     val anko = "0.10.3"
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -51,14 +47,15 @@ dependencies {
 
     implementation("android.arch.lifecycle:runtime:1.1.1")
     implementation("android.arch.lifecycle:extensions:1.1.1")
-    annotationProcessor("android.arch.lifecycle:compiler:1.1.1")
+//    annotationProcessor("android.arch.lifecycle:compiler:1.1.1")
+    implementation("android.arch.lifecycle:common-java8:1.1.1")
 
-    implementation("com.android.support:appcompat-v7:${supportLib}")
-    implementation("com.android.support:support-v4:${supportLib}")
-    implementation("com.android.support:cardview-v7:${supportLib}")
-    implementation("com.android.support:recyclerview-v7:${supportLib}")
-    implementation("com.android.support:design:${supportLib}")
-//    implementation("com.android.support:gridlayout-v7:${supportLib}")
+
+    implementation("androidx.core:core-ktx:${androidx}")
+
+    implementation("androidx.appcompat:appcompat:${androidx}")
+    implementation("com.google.android.material:material:${androidx}")
+    implementation("androidx.preference:preference-ktx:${androidx}")
 
     implementation("com.android.support.constraint:constraint-layout:1.1.3")
 
@@ -71,7 +68,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.1.0")
     implementation("com.squareup.retrofit2:converter-gson:2.1.0")
 
-    implementation("com.google.code.gson:gson:2.8.2")
+    implementation("com.google.code.gson:gson:2.8.5")
 
     implementation("org.jsoup:jsoup:1.9.2")
 
@@ -86,8 +83,11 @@ dependencies {
 
     testImplementation("junit:junit:4.12")
 
-    androidTestImplementation("com.android.support.test:runner:1.0.2")
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:3.0.2")
+//    androidTestImplementation("com.android.support.test:runner:1.0.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.1")
+//    androidTestImplementation("com.android.support.test.espresso:espresso-core:3.2.0")
+
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }
 
 

@@ -14,8 +14,8 @@ class ButtonDescription(val id: String, val title: String) : Parcelable {
     }
 
     private constructor(parcel: Parcel) :
-            this(id = parcel.readString(),
-                    title = parcel.readString())
+            this(id = parcel.readString()!!,
+                    title = parcel.readString()!!)
 
     companion object {
 

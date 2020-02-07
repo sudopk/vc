@@ -1,12 +1,12 @@
 package com.sudopk.vc.calendar
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.sudopk.kandroid.appCompatActivity
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
@@ -55,7 +55,7 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
     interface Container : CalendarFragment.Container
 }
 
-private class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+private class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         val calendar = CalUtil.getCalendar(getMonthOffset(position))

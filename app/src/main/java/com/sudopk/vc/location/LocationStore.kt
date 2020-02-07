@@ -2,7 +2,7 @@ package com.sudopk.vc.location
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -15,7 +15,7 @@ class LocationStore(context: Context, private val mGson: Gson) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
         val savedLocations = mPreferences.getString(LOCATIONS, "")
-        if (savedLocations.isBlank()) {
+        if (savedLocations!!.isBlank()) {
             locations = listOf()
         } else {
             locations = mGson.fromJson<List<Location>>(savedLocations, object : TypeToken<List<Location>>() {}.type)

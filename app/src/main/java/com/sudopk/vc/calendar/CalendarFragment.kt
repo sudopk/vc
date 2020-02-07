@@ -1,10 +1,10 @@
 package com.sudopk.vc.calendar
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.core.vcApp
@@ -41,7 +41,7 @@ class CalendarFragment : Fragment() {
         fetchCalendar()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.calendar, menu)
     }
 
@@ -63,7 +63,7 @@ class CalendarFragment : Fragment() {
         val calendar = mCalendarApi.fetchCalendar()
 
         calendar.removeObservers(this)
-        calendar.observe(this, android.arch.lifecycle.Observer {
+        calendar.observe(this, androidx.lifecycle.Observer {
             when (it) {
                 DataStatus.READY -> showCalendar(mCalendarApi.calendar)
                 DataStatus.FAILED -> onCalendarRequestFailed()
