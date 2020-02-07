@@ -27,7 +27,7 @@ interface VcService {
 
         fun newInstance(strFromRes: StrFromRes): VcService {
             val okHttpClient = OkHttpClient.Builder()
-              .readTimeout(50, TimeUnit.SECONDS)
+              .readTimeout(90, TimeUnit.SECONDS)
               .build()
             return Retrofit.Builder()
                     .baseUrl(VcService.URL)
