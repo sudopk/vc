@@ -2,31 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sudopk.vc">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--For usesCleartextTraffic="true":
-    We aren't passing any sensitive information and the website used for scrapping uses http.
-    Otherwise Retrofit throws:
-        java.net.UnknownServiceException: CLEARTEXT communication not supported
-    -->
-    <application
-        android:name=".app.VcApp"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".calendar.VcActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+  <!--For usesCleartextTraffic="true":
+  We aren't passing any sensitive information and the website used for scrapping uses http.
+  Otherwise Retrofit throws:
+      java.net.UnknownServiceException: CLEARTEXT communication not supported
+  -->
+  <application
+      android:name=".app.VcApp"
+      android:allowBackup="true"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme.NoActionBar"
+      android:usesCleartextTraffic="true">
+    <activity android:name=".calendar.VcActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
 
-        <activity android:name=".update.UpdateCheckActivity" />
-        <activity android:name=".update.VcConfigActivity" />
-    </application>
-
+    <activity android:name=".update.UpdateCheckActivity" />
+    <activity android:name=".update.VcConfigActivity" />
+  </application>
 </manifest>

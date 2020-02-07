@@ -6,16 +6,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textView"
-        style="@style/Base.TextAppearance.AppCompat.Subhead"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        tools:text="Locations" />
+  <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/textView"
+      style="@style/Base.TextAppearance.AppCompat.Subhead"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="16dp"
+      tools:text="Locations" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/cellSeparatorColor" />
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="@color/cellSeparatorColor" />
 </LinearLayout>

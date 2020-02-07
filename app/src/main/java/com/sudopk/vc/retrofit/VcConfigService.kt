@@ -10,18 +10,18 @@ import retrofit2.http.GET
 
 interface VcConfigService {
 
-    @GET(value = "config.json")
-    fun config(): Call<VcConfig>
+  @GET(value = "config.json")
+  fun config(): Call<VcConfig>
 
-    companion object {
-        val URL = "http://sudopk.github.io/vc/"
+  companion object {
+    val URL = "http://sudopk.github.io/vc/"
 
-        fun newInstance(gson: Gson): VcConfigService {
-            return Retrofit.Builder()
-                    .baseUrl(VcConfigService.URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build()
-                    .create(VcConfigService::class.java)
-        }
+    fun newInstance(gson: Gson): VcConfigService {
+      return Retrofit.Builder()
+        .baseUrl(VcConfigService.URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build()
+        .create(VcConfigService::class.java)
     }
+  }
 }

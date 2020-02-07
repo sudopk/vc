@@ -1,13 +1,13 @@
 package com.sudopk.vc.calendar
 
 interface CalendarDelegate {
-    fun onRefresh()
+  fun onRefresh()
 
-    fun tryShowingCalendar()
+  fun tryShowingCalendar()
 
-    fun onChangeLocationRequest()
+  fun onChangeLocationRequest()
 
-    fun onCalendarResponse(body: VCalendar)
+  fun onCalendarResponse(body: VCalendar)
 
-    fun onCalendarRequestFailed()
+  fun onCalendarRequestFailed()
 }

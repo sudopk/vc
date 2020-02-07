@@ -17,24 +17,24 @@ import com.sudopk.vc.core.vcApp
 import org.jetbrains.anko.startActivity
 
 class UpdateCheckActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.container)
+    setContentView(R.layout.container)
 
-        supportFragmentManager.replace(R.id.container, ProgressFragment())
+    supportFragmentManager.replace(R.id.container, ProgressFragment())
 
-        val api = ViewModelProviders.of(this).get(CheckUpdateApi::class.java)
-        api.checkUpdate().observe(this, Observer {
-            onConfig(it ?: defaultVcConfig)
-        })
-    }
+    val api = ViewModelProviders.of(this).get(CheckUpdateApi::class.java)
+    api.checkUpdate().observe(this, Observer {
+      onConfig(it ?: defaultVcConfig)
+    })
+  }
 
-    fun onConfig(config: VcConfig) {
-        startActivity<VcConfigActivity>(VC_CONFIG to config)
+  fun onConfig(config: VcConfig) {
+    startActivity<VcConfigActivity>(VC_CONFIG to config)
 
-        finish()
-    }
+    finish()
+  }
 }
 
 private val VC_CONFIG = "vcConfig"
@@ -44,64 +44,64 @@ private val UPDATE_BUTTON_ID = "update"
 private val IGNORE_BUTTON_ID = "ignore"
 
 class VcConfigActivity : AppCompatActivity(), TextDialogFragment.Container {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        handleConfig(intent.extras!!.get(VC_CONFIG) as VcConfig)
+    handleConfig(intent.extras!!.get(VC_CONFIG) as VcConfig)
+  }
+
+  private fun handleConfig(config: VcConfig) {
+    if (vcApp.versionCode() < config.version.hard) {
+      showTooOldAppDialog()
+    } else if (vcApp.versionCode() < config.version.soft) {
+      showRecommendedUpdate()
+    } else {
+      launchVCalendar()
     }
+  }
 
-    private fun handleConfig(config: VcConfig) {
-        if (vcApp.versionCode() < config.version.hard) {
-            showTooOldAppDialog()
-        } else if (vcApp.versionCode() < config.version.soft) {
-            showRecommendedUpdate()
-        } else {
-            launchVCalendar()
-        }
+  private val DIALOG_TAG = "dialogTag";
+
+  private fun showTooOldAppDialog() {
+    supportFragmentManager.notFoundByTag(DIALOG_TAG) {
+      val dialog = TextDialogFragment.newBlockingInstance(getString(R.string.old_app_must_update),
+        arrayOf(ButtonDescription(EXIT_BUTTON_ID, getString(R.string.exit_app)),
+          ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
+      dialog.show(supportFragmentManager, it)
     }
+  }
 
-    private val DIALOG_TAG = "dialogTag";
-
-    private fun showTooOldAppDialog() {
-        supportFragmentManager.notFoundByTag(DIALOG_TAG) {
-            val dialog = TextDialogFragment.newBlockingInstance(getString(R.string.old_app_must_update),
-                    arrayOf(ButtonDescription(EXIT_BUTTON_ID, getString(R.string.exit_app)),
-                            ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
-            dialog.show(supportFragmentManager, it)
-        }
+  private fun showRecommendedUpdate() {
+    supportFragmentManager.notFoundByTag(DIALOG_TAG) {
+      val dialog = TextDialogFragment.newBlockingInstance(getString(R.string
+        .old_app_recommended_update),
+        arrayOf(ButtonDescription(IGNORE_BUTTON_ID, getString(R.string.ignore)),
+          ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
+      dialog.show(supportFragmentManager, it)
     }
+  }
 
-    private fun showRecommendedUpdate() {
-        supportFragmentManager.notFoundByTag(DIALOG_TAG) {
-            val dialog = TextDialogFragment.newBlockingInstance(getString(R.string
-                    .old_app_recommended_update),
-                    arrayOf(ButtonDescription(IGNORE_BUTTON_ID, getString(R.string.ignore)),
-                            ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
-            dialog.show(supportFragmentManager, it)
-        }
+  override fun onDialogButtonClicked(buttonId: String) {
+    when (buttonId) {
+      UPDATE_BUTTON_ID -> goToPlayStore()
+      EXIT_BUTTON_ID -> onDialogCanceled()
+      IGNORE_BUTTON_ID -> launchVCalendar()
     }
+  }
 
-    override fun onDialogButtonClicked(buttonId: String) {
-        when (buttonId) {
-            UPDATE_BUTTON_ID -> goToPlayStore()
-            EXIT_BUTTON_ID -> onDialogCanceled()
-            IGNORE_BUTTON_ID -> launchVCalendar()
-        }
-    }
+  fun launchVCalendar() {
+    startActivity<VcActivity>()
+    finish()
+  }
 
-    fun launchVCalendar() {
-        startActivity<VcActivity>()
-        finish()
-    }
+  override fun onDialogCanceled() {
+    finish()
+  }
 
-    override fun onDialogCanceled() {
-        finish()
-    }
-
-    private fun goToPlayStore() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse("market://details?id=com.sudopk.vc")
-        startActivity(intent)
-        finish()
-    }
+  private fun goToPlayStore() {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse("market://details?id=com.sudopk.vc")
+    startActivity(intent)
+    finish()
+  }
 }

@@ -27,73 +27,73 @@ private const val TODAY_VIEW_TYPE = 1
 class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
 .Adapter<CalendarAdapter.VH>() {
 
-    private val mVCalendar: MutableList<DayCalendar> = ArrayList()
-    private var mDateToHighlight: Int = 0
+  private val mVCalendar: MutableList<DayCalendar> = ArrayList()
+  private var mDateToHighlight: Int = 0
 
-    /**
-     * @param dateToHighlight Month dates i.e. 1 to 31. Pass 0 if don't want to highlight any date
-     */
-    fun setDateToHighlight(dateToHighlight: Int) {
-        mDateToHighlight = dateToHighlight
-        notifyDataSetChanged()
+  /**
+   * @param dateToHighlight Month dates i.e. 1 to 31. Pass 0 if don't want to highlight any date
+   */
+  fun setDateToHighlight(dateToHighlight: Int) {
+    mDateToHighlight = dateToHighlight
+    notifyDataSetChanged()
+  }
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+    val cell: Int
+    val eventLayout: Int
+    if (viewType == NOT_TODAY_VIEW_TYPE) {
+      cell = R.layout.calendar_cell
+      eventLayout = R.layout.text_view
+    } else {
+      cell = R.layout.calendar_cell_today
+      eventLayout = R.layout.text_view
+    }
+    return VH(LayoutInflater.from(parent.context)
+      .inflate(cell, parent, false), eventLayout, mMonthYear)
+  }
+
+  override fun getItemViewType(position: Int): Int {
+    val cal = mVCalendar[position]
+    if (cal.date == mDateToHighlight) {
+      return TODAY_VIEW_TYPE
+    } else {
+      return NOT_TODAY_VIEW_TYPE
+    }
+  }
+
+  override fun onBindViewHolder(holder: VH, position: Int) {
+    holder.onBind(mVCalendar[position])
+  }
+
+  override fun getItemCount() = mVCalendar.size
+
+  fun setData(calendar: VCalendar) {
+    mVCalendar.clear()
+    mVCalendar.addAll(calendar)
+    Collections.sort(mVCalendar)
+    notifyDataSetChanged()
+  }
+
+  class VH(itemView: View, @param:LayoutRes private val mEventLayout: Int, monthYear: MonthYear) :
+    RecyclerView.ViewHolder(itemView), LayoutContainer {
+    private val mMonthCalendar: Calendar
+
+    init {
+      mMonthCalendar = Calendar.getInstance()
+      mMonthCalendar.set(Calendar.MONTH, monthYear.month - 1)
+      mMonthCalendar.set(Calendar.YEAR, monthYear.year)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val cell: Int
-        val eventLayout: Int
-        if (viewType == NOT_TODAY_VIEW_TYPE) {
-            cell = R.layout.calendar_cell
-            eventLayout = R.layout.text_view
-        } else {
-            cell = R.layout.calendar_cell_today
-            eventLayout = R.layout.text_view
-        }
-        return VH(LayoutInflater.from(parent.context)
-                .inflate(cell, parent, false), eventLayout, mMonthYear)
+    override val containerView: View?
+      get() = itemView
+
+    fun onBind(dayCalendar: DayCalendar) {
+      mMonthCalendar.set(Calendar.DATE, dayCalendar.date)
+      date.text = itemView.context.getString(R.string.date_and_weekday,
+        mMonthCalendar.monthAbbreviation(), dayCalendar.date,
+        mMonthCalendar.weekDayAbbreviation())
+      events.setAdapter(ArrayAdapter(itemView.context,
+        mEventLayout, dayCalendar.events))
     }
-
-    override fun getItemViewType(position: Int): Int {
-        val cal = mVCalendar[position]
-        if (cal.date == mDateToHighlight) {
-            return TODAY_VIEW_TYPE
-        } else {
-            return NOT_TODAY_VIEW_TYPE
-        }
-    }
-
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.onBind(mVCalendar[position])
-    }
-
-    override fun getItemCount() = mVCalendar.size
-
-    fun setData(calendar: VCalendar) {
-        mVCalendar.clear()
-        mVCalendar.addAll(calendar)
-        Collections.sort(mVCalendar)
-        notifyDataSetChanged()
-    }
-
-    class VH(itemView: View, @param:LayoutRes private val mEventLayout: Int, monthYear: MonthYear) :
-            RecyclerView.ViewHolder(itemView), LayoutContainer {
-        private val mMonthCalendar: Calendar
-
-        init {
-            mMonthCalendar = Calendar.getInstance()
-            mMonthCalendar.set(Calendar.MONTH, monthYear.month - 1)
-            mMonthCalendar.set(Calendar.YEAR, monthYear.year)
-        }
-
-        override val containerView: View?
-            get() = itemView
-
-        fun onBind(dayCalendar: DayCalendar) {
-            mMonthCalendar.set(Calendar.DATE, dayCalendar.date)
-            date.text = itemView.context.getString(R.string.date_and_weekday,
-                    mMonthCalendar.monthAbbreviation(), dayCalendar.date,
-                    mMonthCalendar.weekDayAbbreviation())
-            events.setAdapter(ArrayAdapter(itemView.context,
-                    mEventLayout, dayCalendar.events))
-        }
-    }
+  }
 }

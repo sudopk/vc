@@ -1,16 +1,16 @@
 package com.sudopk.vc.core
 
 import android.app.Activity
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.sudopk.vc.app.VcApp
 
 
 val Activity.vcApp
-    get() = application as VcApp
+  get() = application as VcApp
 
 val Fragment.vcApp
-    get() = activity!!.vcApp
+  get() = activity!!.vcApp
 
 /**
  * Do not name this method 'isResumed', there would be a crash.
@@ -21,10 +21,10 @@ val Fragment.vcApp
  * http://stackoverflow.com/questions/34061704/java-lang-linkageerror-mainactivity
  */
 val AppCompatActivity.resumed
-    get() = vcApp.currentResumedActivity() === this
+  get() = vcApp.currentResumedActivity() === this
 
 inline fun AppCompatActivity.ifResumed(block: () -> Unit) {
-    if (resumed) {
-        block()
-    }
+  if (resumed) {
+    block()
+  }
 }

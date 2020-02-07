@@ -1,9 +1,9 @@
 package com.sudopk.vc.location
 
 interface LocationContainer {
-    fun onLocationSelected(location: Location)
+  fun onLocationSelected(location: Location)
 
-    fun onLocationSelectCanceled()
+  fun onLocationSelectCanceled()
 
-    fun onLocationSelectFailed(error: String)
+  fun onLocationSelectFailed(error: String)
 }
