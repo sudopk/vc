@@ -18,59 +18,59 @@ import com.sudopk.vc.retrofit.VcService
 import org.jetbrains.anko.defaultSharedPreferences
 
 class VcApp : MultiDexApplication(), StrFromRes {
-  lateinit var gson: Gson
-  lateinit var locationStore: LocationStore
-  lateinit var calendarStore: CalendarStore
-  lateinit var vcService: VcService
-  private lateinit var mLifecycleCallbacks: VcActivityLifecycleCallbacks
+    lateinit var gson: Gson
+    lateinit var locationStore: LocationStore
+    lateinit var calendarStore: CalendarStore
+    lateinit var vcService: VcService
+    private lateinit var mLifecycleCallbacks: VcActivityLifecycleCallbacks
 
-  override fun onCreate() {
-    super.onCreate()
-    mLifecycleCallbacks = VcActivityLifecycleCallbacks()
-    registerActivityLifecycleCallbacks(mLifecycleCallbacks)
+    override fun onCreate() {
+        super.onCreate()
+        mLifecycleCallbacks = VcActivityLifecycleCallbacks()
+        registerActivityLifecycleCallbacks(mLifecycleCallbacks)
 
-    gson = GsonBuilder()
-      .setFieldNamingStrategy(RemoveFieldNameStrategy())
-      .create()
-    vcService = VcService.newInstance(this)
+        gson = GsonBuilder()
+                .setFieldNamingStrategy(RemoveFieldNameStrategy())
+                .create()
+        vcService = VcService.newInstance(this)
 
-    calendarStore = CalendarStore(this, gson)
-    locationStore = LocationStore(this, gson)
+        calendarStore = CalendarStore(this, gson)
+        locationStore = LocationStore(this, gson)
 
-    val cleanedupKeyVersionCode3 = "CleanupVersionCode3"
-    val cleanedup = defaultSharedPreferences.getBoolean(cleanedupKeyVersionCode3, false)
-    if (!cleanedup) {
-      calendarStore.cleanupAll()
-      locationStore.cleanupAll()
-      defaultSharedPreferences.edit().putBoolean(cleanedupKeyVersionCode3, true).apply()
+        val cleanedupKeyVersionCode3 = "CleanupVersionCode3"
+        val cleanedup = defaultSharedPreferences.getBoolean(cleanedupKeyVersionCode3, false)
+        if (!cleanedup) {
+            calendarStore.cleanupAll()
+            locationStore.cleanupAll()
+            defaultSharedPreferences.edit().putBoolean(cleanedupKeyVersionCode3, true).apply()
+        }
+
+        KoiConfig.logLevel = Log.DEBUG
     }
 
-    KoiConfig.logLevel = Log.DEBUG
-  }
-
-  fun showBlockingNotification() {
-    val activity = currentResumedActivity()
-    if (activity != null) {
-      val fm = activity.supportFragmentManager
-      val dialogFragment = AppCompatDialogFragment()
-      dialogFragment.isCancelable = false
-      dialogFragment.show(fm, null)
+    fun showBlockingNotification() {
+        val activity = currentResumedActivity()
+        if (activity != null) {
+            val fm = activity.supportFragmentManager
+            val dialogFragment = AppCompatDialogFragment()
+            dialogFragment.isCancelable = false
+            dialogFragment.show(fm, null)
+        }
     }
-  }
 
-  fun showSoftNotification() {
-    val activity = currentResumedActivity()
+    fun showSoftNotification() {
+        val activity = currentResumedActivity()
 
-    if (activity != null) {
-      val snackbar = Snackbar.make(activity.window.decorView, "", Snackbar
-        .LENGTH_SHORT)
-      snackbar.show()
+        if (activity != null) {
+            val snackbar = Snackbar.make(activity.window.decorView, "", Snackbar
+                    .LENGTH_SHORT)
+            snackbar.show()
+        }
     }
-  }
 
-  fun currentResumedActivity(): AppCompatActivity? {
-    return mLifecycleCallbacks.currentResumedActivity()
-  }
+    fun currentResumedActivity(): AppCompatActivity? {
+        return mLifecycleCallbacks.currentResumedActivity()
+    }
 
   fun versionCode(): Long {
     try {
