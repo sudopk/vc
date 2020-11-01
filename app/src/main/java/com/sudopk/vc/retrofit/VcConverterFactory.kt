@@ -1,186 +1,219 @@
 package com.sudopk.vc.retrofit
 
+import android.util.Log
 import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.R
+import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.calendar.DayCalendar
 import com.sudopk.vc.calendar.VCalendar
 import com.sudopk.vc.location.Location
+import java.lang.reflect.Type
+import java.util.ArrayList
+import java.util.logging.Logger
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import retrofit2.Converter
 import retrofit2.Retrofit
-import java.io.IOException
-import java.lang.reflect.Type
 
+val logger = Logger.getLogger("VcConverterFactory")
 
-const val TAG = "VcConverterFactory"
-
-class VcConverterFactory(val strFromRes: StrFromRes) : Converter.Factory() {
-    companion object {
+class VcConverterFactory(private val strFromRes: StrFromRes) : Converter.Factory() {
+  override fun responseBodyConverter(
+    type: Type,
+    annotations: Array<Annotation>,
+    retrofit: Retrofit
+  ): Converter<ResponseBody, *> {
+    for (annotation in annotations) {
+      when (annotation.annotationClass) {
+        VcApi.Calendar::class -> return VcCalendarResponseConverter(strFromRes)
+        VcApi.Locations::class -> return VcLocationResponseConverter()
+      }
     }
-
-    override fun responseBodyConverter(type: Type?, annotations: Array<Annotation>?, retrofit: Retrofit?): Converter<ResponseBody, *> {
-        if (annotations != null) {
-            for (annotation in annotations) {
-                when (annotation.annotationClass) {
-                    VcApi.Calendar::class -> return VcCalendarResponseConverter(strFromRes)
-                    VcApi.Locations::class -> return VcLocationResponseConverter()
-                }
-            }
-        }
-        return super.responseBodyConverter(type, annotations, retrofit)
-    }
+    return super.responseBodyConverter(type, annotations, retrofit)!!
+  }
 }
 
-class VcCalendarResponseConverter(val strFromRes: StrFromRes) :
-        Converter<ResponseBody,
-                VCalendar> {
+class VcCalendarResponseConverter(private val strFromRes: StrFromRes) :
+  Converter<ResponseBody, VCalendar> {
 
-    @Throws(IOException::class)
-    override fun convert(value: ResponseBody): VCalendar {
-        return convert(value.string())
+  private var mEventData: MutableList<String> = ArrayList()
+  private var mDate: Int = 0
+
+  override fun convert(value: ResponseBody): VCalendar {
+    Log.i(javaClass.simpleName, "Url: $value")
+    return convert(value.string())
+  }
+
+  fun convert(htmlBody: String): VCalendar {
+    val document = Jsoup.parse(htmlBody)
+    Log.i(javaClass.simpleName, "Document: $document")
+    val weeks = document.select("body > center:nth-child(4) > table:nth-child(3) > tbody > tr")
+    logger.info("Calendar rows: ${weeks.size})")
+    val calendar = mutableListOf<DayCalendar>()
+    for ((index, week) in weeks.withIndex()) {
+      // First row is header
+      if (index == 0) {
+        continue
+      }
+      val days = week.select("> td")
+      check(days.size == 7) {
+        "Invalid number of days in a week: ${days.size}"
+      }
+      for (day in days) {
+        val dayCalendar = parseDay(day)
+        if (dayCalendar != null) {
+          calendar.add(dayCalendar)
+        }
+      }
     }
+    return calendar
+  }
 
-    fun convert(htmlBody: String): VCalendar {
-        val document = Jsoup.parse(htmlBody)
-
-        val tables = document.getElementsByTag("table")
-
-        val vCalendar = ArrayList<DayCalendar>(31)
-        for (table in tables) {
-            parseDayCalendar(table)?.let {
-                vCalendar.add(it)
-
-
-            }
-        }
-
-        return vCalendar
+  private fun parseDay(day: Element): DayCalendar? {
+//    logger.info("Day: $day")
+    // each day is a <table>
+    val events = day.getElementsByTag("tr").filter { it.text().isNotEmpty() }
+    if (events.isEmpty()) {
+      logger.info("Calendar cell is not a day, skipping...")
+      return null
     }
-
-    private fun parseDayCalendar(table: Element): DayCalendar? {
-        if (!isDayEventTable(table)) {
-            return null
-        }
-
-        // First row, second column is date
-        val rows = table.getElementsByTag("tr")
-        var date = -1
-        val rowData = ArrayList<String>(rows.size)
-        for (rowIndex in 0..rows.size - 1) {
-            val cols = rows[rowIndex].getElementsByTag("td")
-            for (colIndex in 0..cols.size - 1) {
-                if (rowIndex == 0 && colIndex == 1) {
-                    val toIntOrNull = cols[colIndex].text().toIntOrNull()
-
-                    if (toIntOrNull != null && toIntOrNull >= 1 && toIntOrNull <= 31) {
-                        date = toIntOrNull
-                    }
-                } else {
-                    val parseImgToText = parseImgToText(cols[colIndex].select("img"))
-                    val entry = cols[colIndex].text() + if (parseImgToText.isNotBlank()) (" $parseImgToText") else ""
-                    if (entry.isNotBlank()) {
-                        rowData.add(entry)
-                    }
-                }
-            }
-        }
-        if (date != -1 && rowData.isNotEmpty()) {
-            return DayCalendar(date, rowData)
-        }
-
-        return null
+    mDate = 0
+    mEventData = ArrayList<String>(events.size)
+    var firstRow = true
+    for (event in events) {
+      parseDayEvent(event, dateEvent = firstRow)
+      firstRow = false
     }
+    if (mDate != 0 && mEventData.isNotEmpty()) {
+      return DayCalendar(mDate, mEventData)
+    }
+    return null
+  }
 
-    private fun isDayEventTable(table: Element): Boolean {
-        // First row, second column is the date
-        val rows = table.getElementsByTag("tr")
-        if (rows.size < 1) {
-            return false
+  private fun parseDayEvent(event: Element, dateEvent: Boolean) {
+    val details = event.select(">td")
+    for ((col, detail) in details.withIndex()) {
+      parseEventDetail(detail, dateEvent = dateEvent && col == 1)
+    }
+  }
+
+
+  private fun parseEventDetail(detail: Element, dateEvent: Boolean) {
+    if (dateEvent) {
+      val data = detail.text()
+      check(mDate == 0) {
+        "Error parsing the date events. Date repeated: old- ${mDate}, new- $data"
+      }
+      mDate = Integer.parseInt(data)
+    } else {
+      val centerHtml = detail.getElementsByTag("center").single().html()
+      for (line in centerHtml.split("<br>")) {
+        if (line.isBlank()) {
+          continue
         }
-        val cols = rows[0].getElementsByTag("td")
-        if (cols.size < 2) {
-            return false
+        val parsedLine = Jsoup.parse(line)
+        var lineText = parsedLine.text()
+        val imgText = parseImgToText(parsedLine.getElementsByTag("img"))
+        if (imgText.isNotEmpty()) {
+          lineText = "$lineText [$imgText]"
         }
-
-        val toIntOrNull = cols[1].text().toIntOrNull()
-
-        if (toIntOrNull == null || toIntOrNull < 1 || toIntOrNull > 31) {
-            return false
+        if (lineText.isNotBlank()) {
+          mEventData.add(lineText)
         }
+      }
+    }
+  }
 
+  private fun parseImgToText(imgs: Elements): String {
+    if (imgs.size > 0) {
+      val title = imgs.attr("title")
+      if (title.isNotEmpty()) {
+        return title
+      }
+      val src = imgs.attr("src")
+      return when {
+        src.endsWith("amavasya.gif") -> "New moon"
+        src.endsWith("purnima.gif") -> "Full moon"
+        src.endsWith("ap.gif") -> "Appearance"
+        src.endsWith("dis.gif") -> "Disappearance"
+        else -> ""
+      }
+    }
+    return ""
+  }
+}
+
+class VcLocationResponseConverter : Converter<ResponseBody, List<Country>> {
+  override fun convert(value: ResponseBody): List<Country> {
+    val document = Jsoup.parse(value.string())
+    Log.i(javaClass.simpleName, "Document: $document")
+
+    val locationGroups = document.select("select")
+    Log.i(javaClass.simpleName, "Location groups size: ${locationGroups.size}")
+
+    val locationGroup = locationGroups.single { isLocationSelectTag(it) }
+    val countries = parseLocationGroup(locationGroup)
+    Log.i(javaClass.simpleName, "Countries: $countries")
+    return countries
+  }
+
+  private fun parseLocationGroup(locationGroup: Element): List<Country> {
+    Log.i(javaClass.simpleName, "Location group: $locationGroup")
+    val locations = locationGroup.select(">option")
+    Log.i(javaClass.simpleName, "Locations: $locations")
+
+    var locationsWithId: MutableList<Location> = mutableListOf()
+    var countryName = ""
+    val countries = mutableListOf<Country>()
+    for (location in locations) {
+      val locationName = location.text()
+      if (locationName == "SELECT CITY") {
+        continue
+      }
+      val isCountry = !location.hasAttr("value")
+
+      if (isCountry) {
+        // add data of last country
+        val country = getCountryData(countryName, locationsWithId)
+        if (country != null) {
+          countries.add(country)
+        }
+        countryName = locationName
+        locationsWithId = mutableListOf()
+      } else {
+        locationsWithId.add(
+          Location(
+            locationName,
+            location.attr("value")
+              .split("/").first { it.trim().isNotEmpty() }
+          )
+        )
+      }
+    }
+    return countries
+  }
+
+  private fun isLocationSelectTag(selectTag: Element): Boolean {
+    val optionTags = selectTag.getElementsByTag("option")
+    for (optionTag in optionTags) {
+      if (optionTag.text() == "SELECT CITY") {
         return true
+      }
     }
+    return false
+  }
 
-    private fun parseImgToText(imgs: Elements): String {
-        if (imgs.size > 0) {
-            val src = imgs.attr("src")
-            when {
-                src.endsWith("amavasya.gif") -> return strFromRes.getString(R.string.new_moon)
-                src.endsWith("purnima.gif") -> return strFromRes.getString(R.string.full_moon)
-                src.endsWith("ap.gif") -> return strFromRes.getString(R.string.appearance_day)
-                src.endsWith("dis.gif") -> return strFromRes.getString(R.string.disappearance_day)
-            }
-        }
-        return ""
+
+  private fun getCountryData(
+    country: String,
+    locations: List<Location>
+  ): Country? {
+    return if (locations.isNotEmpty() && country.isNotBlank()) {
+      Country(country, locations.sorted())
+    } else {
+      null
     }
-}
-
-class VcLocationResponseConverter : Converter<ResponseBody, List<Location>> {
-
-    @Throws(IOException::class)
-    override fun convert(value: ResponseBody): List<Location> {
-        val document = Jsoup.parse(value.string())
-        val selectTags = document.getElementsByTag("select")
-        for (selectTag in selectTags) {
-            if (isLocationSelectTag(selectTag)) {
-                return parseLocations(selectTag)
-            }
-        }
-
-        return listOf()
-    }
-
-    private fun parseLocations(selectTag: Element): List<Location> {
-        val locations = ArrayList<Location>()
-        val optionTags = selectTag.getElementsByTag("option")
-        for (optionTag in optionTags) {
-            val valueAttr = optionTag.attr("value")
-            val text = optionTag.text()
-            if (valueAttr.isBlank() || text.isBlank()) {
-                continue
-            }
-
-            for (token in valueAttr.split('/')) {
-                if (token.isBlank()) {
-                    continue
-                }
-
-                // First token is location id and tag text is location name
-                locations.add(Location(text.trim(), token.trim()))
-                break
-            }
-        }
-        return locations
-    }
-
-    private fun isLocationSelectTag(selectTag: Element): Boolean {
-        val optionTags = selectTag.getElementsByTag("option")
-        for (optionTag in optionTags) {
-            if (optionTag.text() == "SELECT CITY") {
-                return true
-            }
-        }
-        return false
-    }
-
-    companion object {
-        private val PREFIX_OF_LOCATIONS_WITH_ID = "...."
-
-        private fun isCountryName(locationName: String): Boolean {
-            return !locationName.startsWith(PREFIX_OF_LOCATIONS_WITH_ID)
-        }
-    }
+  }
 }

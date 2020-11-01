@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sudopk.vc.retrofit.VcService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.util.logging.Logger
+
+private val logger = Logger.getLogger("CalendarApi")
 
 class CalendarApi : ViewModel() {
   private lateinit var mCalendarStore: CalendarStore
@@ -31,35 +31,41 @@ class CalendarApi : ViewModel() {
     mMonthYear = monthYear
   }
 
-  fun fetchCalendar(): LiveData<DataStatus> {
+  suspend fun fetchCalendar(): LiveData<DataStatus> {
     mStatus.value = DataStatus.NOT_READY
     if (mCalendarStore.hasCalendar(mMonthYear)) {
       mStatus.value = DataStatus.READY
     } else {
-      val call = mVcService.calendar(mCalendarStore.location!!.id, mMonthYear.year, "%02d".format(mMonthYear.month))
-      Log.i("CalendarApi", call.request().url().toString())
-      call.enqueue(object : Callback<VCalendar> {
-        override fun onResponse(call: Call<VCalendar>, response: Response<VCalendar>) {
-          if (!response.isSuccessful) {
-            Log.e("CalendarApi", "Invalid response code: " + response.code())
-            mStatus.value = DataStatus.FAILED
-            return
-          }
-          if (response.body() == null) {
-            Log.e("CalendarApi", "Empty body")
-            mStatus.value = DataStatus.FAILED
-            return
-          }
-          mCalendarStore.saveCalendar(mMonthYear, response.body())
-          mStatus.value = DataStatus.READY
-        }
+      val location = mCalendarStore.location!!
 
-        override fun onFailure(call: Call<VCalendar>, t: Throwable?) {
-          Log.e("CalenderApi", t?.message!!)
-          mStatus.value = DataStatus.FAILED
-        }
-      })
+      logger.info("Location: $location")
+      try {
+        val vCalendar: VCalendar = mVcService.calendar(
+          location.id,
+          mMonthYear.year,
+          "%02d".format(mMonthYear.month)
+        )
+//          if (!response.isSuccessful) {
+//            Log.e("CalendarApi", "Invalid response code: " + response.code())
+//            mStatus.value = DataStatus.FAILED
+//            return
+//          }
+//          if (vCalendar == null) {
+//            Log.e("CalendarApi", "Empty body")
+//            mStatus.value = DataStatus.FAILED
+//            return
+//          }
+        mCalendarStore.saveCalendar(mMonthYear, vCalendar)
+        mStatus.value = DataStatus.READY
+      } catch (ex: Exception) {
+        Log.e(javaClass.simpleName, "Failed to fetch calendar", ex)
+        mStatus.value = DataStatus.FAILED
+      }
     }
+//        override fun onFailure(call: Call<VCalendar>, t: Throwable?) {
+//          Log.e("CalenderApi", t?.message!!)
+//          mStatus.value = DataStatus.FAILED
+//        }
     return mStatus
   }
 

@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.sudopk.kandroid.appCompatActivity
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
@@ -15,14 +16,17 @@ import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.location.Location
 import kotlinx.android.synthetic.main.calendar_pager.*
 import java.util.*
+import kotlinx.coroutines.withContext
 
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
 
   private lateinit var mCalendarStore: CalendarStore
 
-  override fun onCreateView(inflater: LayoutInflater,
-                            container: ViewGroup?,
-                            savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     return inflater.inflate(R.layout.calendar_pager, container, false)
   }
 
@@ -33,11 +37,15 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
     mCalendarStore = vcApp.calendarStore
     updateSubtitle(mCalendarStore.location)
 
-    tabs.setupWithViewPager(viewPager)
-
-    val pagerAdapter = CalendarPagerAdapter(childFragmentManager)
+    val pagerAdapter = CalendarPagerAdapter(this)
     viewPager.adapter = pagerAdapter
-    viewPager.currentItem = pagerAdapter.count / 2
+    viewPager.currentItem = pagerAdapter.itemCount / 2
+
+    TabLayoutMediator(tabs, viewPager) { tab, position ->
+      val calendar =
+        CalUtil.getCalendar((viewPager.adapter as CalendarPagerAdapter).getMonthOffset(position))
+      tab.text = "${calendar.get(Calendar.MONTH) + 1} / ${calendar.get(Calendar.YEAR)}"
+    }.attach()
   }
 
   private fun updateSubtitle(location: Location?) {
@@ -55,24 +63,22 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
   interface Container : CalendarFragment.Container
 }
 
-private class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+private class CalendarPagerAdapter(parentFragment: Fragment) :
+  FragmentStateAdapter(parentFragment) {
 
-  override fun getItem(position: Int): Fragment {
+
+  override fun createFragment(position: Int): Fragment {
     val calendar = CalUtil.getCalendar(getMonthOffset(position))
     return CalendarFragment.newInstance(
-      calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR))
+      calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR)
+    )
   }
 
-  override fun getCount(): Int {
+  override fun getItemCount(): Int {
     return CalendarStore.MONTHS_TO_STORE
   }
 
-  private fun getMonthOffset(position: Int): Int {
-    return position - count / 2
-  }
-
-  override fun getPageTitle(position: Int): CharSequence {
-    val calendar = CalUtil.getCalendar(getMonthOffset(position))
-    return "${calendar.get(Calendar.MONTH) + 1} / ${calendar.get(Calendar.YEAR)}"
+  fun getMonthOffset(position: Int): Int {
+    return position - itemCount / 2
   }
 }

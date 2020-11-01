@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.core.vcApp
-import kotlinx.android.synthetic.main.calendar.*
-import java.util.*
+import java.util.Calendar
+import kotlinx.android.synthetic.main.calendar.progressBar
+import kotlinx.android.synthetic.main.calendar.recyclerView
+import kotlinx.android.synthetic.main.calendar.viewAnimator
+import kotlinx.coroutines.launch
 
 
 class CalendarFragment : Fragment() {
@@ -22,9 +26,11 @@ class CalendarFragment : Fragment() {
   private lateinit var mCalendarApi: CalendarApi
   private lateinit var mMonthYear: MonthYear
 
-  override fun onCreateView(inflater: LayoutInflater,
-                            container: ViewGroup?,
-                            savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     return inflater.inflate(R.layout.calendar, container, false)
   }
 
@@ -34,7 +40,7 @@ class CalendarFragment : Fragment() {
     val vcService = vcApp.vcService
     val calendarStore = vcApp.calendarStore
 
-    mMonthYear = MonthYear(arguments!!.getInt(MONTH), arguments!!.getInt(YEAR))
+    mMonthYear = MonthYear(requireArguments().getInt(MONTH), requireArguments().getInt(YEAR))
 
     recyclerView.layoutManager = LinearLayoutManager(context)
     mAdapter = CalendarAdapter(mMonthYear)
@@ -62,19 +68,22 @@ class CalendarFragment : Fragment() {
   fun onRefresh() {
     mCalendarApi.removeCalendar(mMonthYear)
     fetchCalendar()
+
   }
 
   fun fetchCalendar() {
-    val calendar = mCalendarApi.fetchCalendar()
+    lifecycleScope.launch {
+      val calendar = mCalendarApi.fetchCalendar()
 
-    calendar.removeObservers(this)
-    calendar.observe(this, androidx.lifecycle.Observer {
-      when (it) {
-        DataStatus.READY -> showCalendar(mCalendarApi.calendar)
-        DataStatus.FAILED -> onCalendarRequestFailed()
-        else -> onFetchingCalendar()
-      }
-    })
+      calendar.removeObservers(this@CalendarFragment)
+      calendar.observe(this@CalendarFragment, {
+        when (it) {
+          DataStatus.READY -> showCalendar(mCalendarApi.calendar)
+          DataStatus.FAILED -> onCalendarRequestFailed()
+          else -> onFetchingCalendar()
+        }
+      })
+    }
   }
 
   fun onFetchingCalendar() {

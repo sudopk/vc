@@ -1,6 +1,6 @@
 package com.sudopk.vc.calendar
 
-class DayCalendar(val date: Int, val events: List<String>) : Comparable<DayCalendar> {
+data class DayCalendar(val date: Int, val events: List<String>) : Comparable<DayCalendar> {
 
   override fun compareTo(other: DayCalendar): Int {
     return date - other.date

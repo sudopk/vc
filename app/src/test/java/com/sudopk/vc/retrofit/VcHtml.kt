@@ -1,1216 +1,490 @@
 package com.sudopk.vc.retrofit
 
-const val DAYS_IN_VC_HTML = 31
-
 const val VC_HTML: String = """
-<HTML>
-<HEAD>
-<TITLE>Vaisnava Calendar</TITLE>
-<meta name='author' content='.'>
-<meta name='keywords' content='.'>
-<meta http-equiv='Content-Type' content='text/html;charset=iso-8859-1'>
-<meta name='distribution' content='global'>
-<meta name='resource-type' content='document'>
-<meta name='robots' content='all'>
-<link rel='stylesheet' href='style.css' type='text/css'>
 
-<SCRIPT language=JavaScript>
-/*
-* DHTML Menu version 3.3
-* written by Andy Woolley
-* Copyright 2002 Andy Woolley. All Rights Reserved.
-*
-* Please feel free to use this code on your own website free of charge.
-* You can also distribute and modify this source code as long as this
-* Copyright notice remains intact and that you send me notice that you
-* intend to use this code on your website.
-*
-* Limited support for this script is provided
-* Commercial licence agreements are available on request for full support.
-* You can send email to menu3@milonic.com
-*/
-</SCRIPT>
+<head>
+<style>
+	html { 
+	  background: url(/dark.jpg) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+	}
+	table {
+	    background: #E8E8E8;
+	    width: 95%;
+	}
+	table#t01 {
+	    width: 10%;
+	    background-color: #333333;
+	    color: ffffff;
+	}
+	a {
+		color: ffffff;
+		text-decoration: none;
+	}
+	h1 {
+	color: 999999;
+	}
+</style>
 
-<script>
- function CheckCIIDSelect()
-  {
-   val=document.getElementById('CIID').value;
-   if (val==0) return false;
-   document.location='vcal.php?month=05&year=2017&lang=en&CIID='+val;
-   return true;
-  }
+</head>
 
-function CheckSelectHoliday()
- {
-   val=document.getElementById('code').value;
-   if (val==0) return false;
-   window.location='search.php?month=05&year=2017&lang=en&CIID=413&code='+val;
-   return true;
-
- }
-
-</script>
-
-<SCRIPT language=JavaScript src='../menues/scrolling_array2.js' type=text/javascript></SCRIPT>
-<SCRIPT language=JavaScript src='../menues/menu_array.js' type=text/javascript></SCRIPT>
-<!--<SCRIPT language=JavaScript src='../menues/menu2_array.js' type=text/javascript></SCRIPT>-->
-<SCRIPT language=JavaScript src='../menues/lineahalf_array.js' type=text/javascript></SCRIPT>
-<SCRIPT language=JavaScript src='../menues/mmenu.js' type=text/javascript></SCRIPT>
-<!--<SCRIPT LANGUAGE='JavaScript1.2' SRC='../menues/topmenu.js'></SCRIPT>-->
-
-</HEAD>
-
-<BODY topmargin=0 leftmargin=0 BGPROPERTIES='FIXED' TEXT=7E6B46 BGCOLOR=FFE2A9 LINK=7E6B46 VLINK=7E6B46>
+<body>
+<center><img src=/vcal.png></center>
+<title>Vaisnava Calendar</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <center>
-
-<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100% BGCOLOR=000000>
-<TR><TD WIDTH=100 rowspan=2 HEIGTH=62>
-	<OBJECT classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000 codebase=http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0 ID=logo WIDTH=100 HEIGHT=62><PARAM NAME=movie VALUE=http://www.iskcon.com.mx/java/logo.swf><PARAM NAME=quality VALUE=high><PARAM NAME=bgcolor VALUE=000000><EMBED src=http://www.iskcon.com.mx/java/logo.swf quality=high bgcolor=000000 WIDTH=100 HEIGHT=62 TYPE=application/x-shockwave-flash PLUGINSPAGE=http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash></EMBED></OBJECT>
-</TD><TD VALIGN=TOP WIDTH=500 colspan=5>
-	<FONT COLOR=000000>.
-</TD></TR><tr><td valign=bottom>
-	<center><font color=ffffff>
-	<a href='print_cal.php?CIID=413&month=05&year=2017&lang=en'><img src=print.gif border=0 alt='Printable version'>
-	<b>Printable version</b></a>
-</td><td valign=bottom>
-	<a href='javascript:;' onClick=window.open('/help_en.php','_blank','width=500,height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false>
-	<img src=help.gif border=0 alt='Online Help'>
-	<b>Online Help</b></a>
-</td><td valign=bottom>
-	<center>
-	<a href='/facebook/?lang=en'><img src=/facebook.gif border=0 alt='Facebook'>
-	<b>Facebook</b></a>
-</td><td valign=bottom>
-	<center><font color=ffffff>
-	<a href='vcal.php?CIID=413&lang=en&month=04&year=2017'><img src=previous.gif border=0 alt='Prev Month'>
-	<b>Prev Month</b></a>
-</td><td valign=bottom>
-	<center><font color=ffffff>
-	<a href='vcal.php?CIID=413&lang=en&month=06&year=2017'><img src=next.gif border=0 alt='Next Month'>
-	<b>Next Month</b></a>
-</td><!--<td valign=bottom>
-	<center><font color=ffffff>
-	<a href='ics.php?CIID=413&month=05&year=2017&lang=en'><img src=ics.gif border=0 alt='For your PC or Mobile'>
-	<b>LANG_MENU_ICS</b></a>
-</td>--></tr>
-</TABLE>
-
-
-<TABLE BORDER=0 WIDTH='100%' CELLPADDING=0 ROWSPACING=0>
-<TR><td valign=bottom>
-	<center>
-	<img src=title_en.jpg><br>
-	May 2017<br>Chicago, Illinois, USA (087W45 41N53, Time zone = -6.00)
+<table border=0 id="t01"><tr><td valign=top>
+	<form>
+	<select onChange="idx = this.selectedIndex; if (idx>0) top.parent.location=this.options[this.selectedIndex].value; this.selectedIndex=0;">
+		<OPTION>MENU</OPTION>
+		<OPTION VALUE=/>Index</OPTION>
+	</select>
+	</form>
 </td><td valign=top>
-        <center>
-        <table border=0 WIDTH='100%' CELLPADDING=0 ROWSPACING=0>
-        <tr><td valign=bottom>
-		<SCRIPT LANGUAGE='JavaScript'>
-		<!--
-		function nav2Handler(list){
-		window.location.href = list.options[list.selectedIndex].value; }
-		// -->
-		</SCRIPT>
-		<FORM name =  'nav2'>
-		<SELECT NAME='site' SIZE=1 onChange ='nav2Handler(document.nav2.site)'>
-		<OPTION VALUE='servicios.htm'>SELECT LANGUAGE:
-		<OPTION VALUE='vcal.php?CIID=413&lang=en&month=05&year=2017'>English
-		<OPTION VALUE='vcal.php?CIID=413&lang=es&month=05&year=2017'>Español
-		<OPTION VALUE='vcal.php?CIID=413&lang=pt&month=05&year=2017'>Português
-		</SELECT>
-		</FORM>
-	</td><td>
-		<form>
-		<select name=CIID onChange='return CheckCIIDSelect()' ID=CIID>
-      <option value=0>SELECT COUNTRY AND CITY:</option>
-      <option value='0' >ARGENTINA</option>
-      <option value='4' >....Bhaía Blanca</option>
-      <option value='5' >....Buenos Aires</option>
-      <option value='6' >....Córdoba</option>
-      <option value='7' >....Mar del Plata</option>
-      <option value='8' >....Mendoza</option>
-      <option value='9' >....Neuquén</option>
-      <option value='10' >....Río Ceballos</option>
-      <option value='11' >....Rosario</option>
-      <option value='12' >....San Juan</option>
-      <option value='504' >....San Luis</option>
-      <option value='0' >ARMENIA ( &#1344;&#1377;&#1397;&#1377;&#1405;&#1407;&#1377;&#1398; )</option>
-      <option value='3' >....Yerevan</option>
-      <option value='0' >AUSTRALIA</option>
-      <option value='13' >....Adelaide</option>
-      <option value='14' >....Bambra - Victoria</option>
-      <option value='15' >....Brisbane</option>
-      <option value='16' >....Cairns</option>
-      <option value='17' >....Canberra</option>
-      <option value='18' >....Cessnocknsw</option>
-      <option value='493' >....Darwin</option>
-      <option value='19' >....Lismore</option>
-      <option value='20' >....Melbourne</option>
-      <option value='21' >....Murwillumbah</option>
-      <option value='22' >....Perth</option>
-      <option value='23' >....Sydney</option>
-      <option value='24' >....Winchelsea</option>
-      <option value='0' >AUSTRIA</option>
-      <option value='25' >....Graz</option>
-      <option value='26' >....Klagenfurt</option>
-      <option value='27' >....Salzburg</option>
-      <option value='28' >....St Aegyd</option>
-      <option value='29' >....Vienna</option>
-      <option value='0' >AZERBAIJAN ( AZ&#601;RBAYCAN )</option>
-      <option value='30' >....Baku</option>
-      <option value='0' >BAHRAIN ( &#8207;&#1575;&#1604;&#1576;&#1581;&#1585;&#1610;&#1606;&#8206; )</option>
-      <option value='31' >....Manama</option>
-      <option value='0' >BANGLADESH ( &#2476;&#2494;&#2434;&#2482;&#2494;&#2470;&#2503;&#2486; )</option>
-      <option value='32' >....Cittagong</option>
-      <option value='33' >....Dhaka</option>
-      <option value='34' >....Jessore</option>
-      <option value='0' >BARBADOS</option>
-      <option value='35' >....Barbados</option>
-      <option value='0' >BELARUS ( &#1041;&#1077;&#1083;&#1072;&#1088;&#1091;&#769;&#1089;&#1100; )</option>
-      <option value='36' >....Minsk</option>
-      <option value='0' >BELGIQUE</option>
-      <option value='37' >....Antwerp</option>
-      <option value='38' >....Brussels</option>
-      <option value='39' >....Durbuy</option>
-      <option value='40' >....Liege</option>
-      <option value='0' >BOLIVIA</option>
-      <option value='41' >....Cochabamba</option>
-      <option value='42' >....La Paz</option>
-      <option value='43' >....Santa Cruz</option>
-      <option value='0' >BOSNIA AND HERZEGOWINA ( &#1041;&#1086;&#1089;&#1085;A &#1080; &#1061;&#1077;&#1088;&#1094;&#1077;&#1075;&#1086;&#1074;&#1080;&#1085;&#1072; )</option>
-      <option value='44' >....Sarajevo</option>
-      <option value='0' >BOTSWANA</option>
-      <option value='478' >....Gaborone</option>
-      <option value='0' >BRASIL</option>
-      <option value='481' >....Areado</option>
-      <option value='45' >....Belem</option>
-      <option value='46' >....Belo Horizonte</option>
-      <option value='47' >....Brasilia</option>
-      <option value='48' >....Campos</option>
-      <option value='49' >....Caruaru</option>
-      <option value='50' >....Curitiba</option>
-      <option value='51' >....Florianopolis</option>
-      <option value='52' >....Fortaleza</option>
-      <option value='53' >....Goiania</option>
-      <option value='54' >....Guarulhos</option>
-      <option value='56' >....Juiz de Foa</option>
-      <option value='57' >....Jundiaí</option>
-      <option value='58' >....Lambari</option>
-      <option value='59' >....Manaus</option>
-      <option value='495' >....Nova Gokula</option>
-      <option value='60' >....Petropolis</option>
-      <option value='61' >....Porto Alegre</option>
-      <option value='62' >....Recife</option>
-      <option value='63' >....Ribeirao Preto</option>
-      <option value='64' >....Rio de Janeiro</option>
-      <option value='65' >....Salvador</option>
-      <option value='66' >....Santos</option>
-      <option value='67' >....São Carlos</option>
-      <option value='55' >....São José do Rio Preto</option>
-      <option value='68' >....São Paulo</option>
-      <option value='511' >....Suzano</option>
-      <option value='69' >....Taubate</option>
-      <option value='70' >....Ubatuba</option>
-      <option value='71' >....Vitoria</option>
-      <option value='0' >BULGARIYA</option>
-      <option value='72' >....Plovdiv</option>
-      <option value='73' >....Sofía</option>
-      <option value='0' >CAMEROUN</option>
-      <option value='74' >....Buea</option>
-      <option value='0' >CANADA</option>
-      <option value='75' >....AL - Calgary</option>
-      <option value='76' >....AL - Edmonton</option>
-      <option value='77' >....BC - Ashcroft</option>
-      <option value='78' >....BC - Vancouver</option>
-      <option value='81' >....NF - Placentia</option>
-      <option value='79' >....ON - Ottawa</option>
-      <option value='80' >....ON - Toronto</option>
-      <option value='83' >....QC - Montreal</option>
-      <option value='82' >....QC - Québec</option>
-      <option value='84' >....SK - Regina</option>
-      <option value='85' >....VC - Victoria</option>
-      <option value='0' >CHINA ( &#20013;&#22283; )</option>
-      <option value='88' >....Beijing</option>
-      <option value='89' >....Hong Kong</option>
-      <option value='494' >....Shangai</option>
-      <option value='365' >....Taipei</option>
-      <option value='0' >CHLE</option>
-      <option value='86' >....Concepción</option>
-      <option value='518' >....Pucon</option>
-      <option value='87' >....Santiago</option>
-      <option value='0' >COLOMBIA</option>
-      <option value='457' >....Barranquilla</option>
-      <option value='90' >....Bogotá</option>
-      <option value='91' >....Cali</option>
-      <option value='524' >....Medellin</option>
-      <option value='92' >....Pereira</option>
-      <option value='0' >COOK ISLANDS</option>
-      <option value='499' >....Rarotonga</option>
-      <option value='0' >COSTA RICA</option>
-      <option value='93' >....San José</option>
-      <option value='0' >CÔTE D IVORE</option>
-      <option value='233' >....Abidjan</option>
-      <option value='0' >CROATIA (HRVARSKA)</option>
-      <option value='94' >....Osijek</option>
-      <option value='95' >....Pula</option>
-      <option value='96' >....Rijeka</option>
-      <option value='97' >....Split</option>
-      <option value='98' >....Zagreb</option>
-      <option value='0' >CUBA</option>
-      <option value='99' >....La Habana</option>
-      <option value='0' >CYPRUS (KIBRIS)</option>
-      <option value='100' >....Cyprus</option>
-      <option value='0' >CZECH REPUBLIC ( &#268;ESKÁ )</option>
-      <option value='101' >....Prague</option>
-      <option value='102' >....Zlin</option>
-      <option value='0' >DANMARK</option>
-      <option value='103' >....Brorup</option>
-      <option value='104' >....Copenhagen</option>
-      <option value='0' >ECUADOR</option>
-      <option value='106' >....Cuenca</option>
-      <option value='107' >....Guayaquil</option>
-      <option value='108' >....Quito</option>
-      <option value='0' >EL SALVADOR</option>
-      <option value='109' >....San Salvador</option>
-      <option value='0' >ESTONIA ( EESTI )</option>
-      <option value='110' >....Tallinn</option>
-      <option value='0' >FIJI</option>
-      <option value='111' >....Labasa</option>
-      <option value='112' >....Lautoka</option>
-      <option value='526' >....Sigatoga</option>
-      <option value='113' >....Suva</option>
-      <option value='0' >FINLAND ( SUOMI )</option>
-      <option value='114' >....Helsinki</option>
-      <option value='115' >....Tampere</option>
-      <option value='116' >....Turku</option>
-      <option value='0' >FRANÇAISE</option>
-      <option value='117' >....Avignon</option>
-      <option value='118' >....Bordeaux</option>
-      <option value='119' >....Brest</option>
-      <option value='120' >....Chateauroux</option>
-      <option value='121' >....Dijón</option>
-      <option value='122' >....Dole</option>
-      <option value='123' >....Lille</option>
-      <option value='124' >....Longwy</option>
-      <option value='125' >....Lyon</option>
-      <option value='126' >....Nice</option>
-      <option value='127' >....Orange</option>
-      <option value='128' >....Paris</option>
-      <option value='129' >....Poitiers</option>
-      <option value='130' >....Toulous</option>
-      <option value='131' >....Valencay</option>
-      <option value='0' >GEORGIA ( &#4321;&#4304;&#4325;&#4304;&#4320;&#4311;&#4309;&#4308;&#4314;&#4317; )</option>
-      <option value='132' >....Tbilisi</option>
-      <option value='0' >GERMANY ( DEUTSCHLAND )</option>
-      <option value='133' >....Berlin</option>
-      <option value='134' >....Bremerhaven</option>
-      <option value='135' >....Dresden</option>
-      <option value='136' >....Flensburg</option>
-      <option value='137' >....Frankfurt</option>
-      <option value='139' >....Hamburg</option>
-      <option value='140' >....Hannover</option>
-      <option value='141' >....Heidelberg</option>
-      <option value='142' >....Heilbronn</option>
-      <option value='143' >....Karlsruhe</option>
-      <option value='144' >....Kiel</option>
-      <option value='145' >....Koblenz</option>
-      <option value='146' >....Köln (Cologne)</option>
-      <option value='147' >....Leipzig</option>
-      <option value='148' >....Marburg</option>
-      <option value='149' >....München (Munich)</option>
-      <option value='150' >....Nurnberg (Nuremberg)</option>
-      <option value='151' >....Paderborn</option>
-      <option value='152' >....Passau</option>
-      <option value='153' >....Saarbrucken</option>
-      <option value='154' >....Salzwedel</option>
-      <option value='155' >....Schwerin</option>
-      <option value='466' >....Simhachalam</option>
-      <option value='156' >....Stuttgart</option>
-      <option value='157' >....Trier</option>
-      <option value='158' >....Ulm</option>
-      <option value='482' >....Ummern</option>
-      <option value='159' >....Weimar</option>
-      <option value='160' >....Wiesbaden</option>
-      <option value='0' >GHANA</option>
-      <option value='161' >....Accra</option>
-      <option value='162' >....Nkawkaw</option>
-      <option value='163' >....Takoradi</option>
-      <option value='0' >GRECE ( &#917;&#955;&#955;&#940;&#962; )</option>
-      <option value='164' >....Athens</option>
-      <option value='0' >GUATEMALA</option>
-      <option value='165' >....Guatemala</option>
-      <option value='0' >GUYANA</option>
-      <option value='166' >....Berbice</option>
-      <option value='167' >....Essequibo Coast</option>
-      <option value='168' >....Georgetown</option>
-      <option value='0' >HONDURAS</option>
-      <option value='169' >....Tegucigalpa</option>
-      <option value='0' >HUNGARY ( MAGYARORSZÁG )</option>
-      <option value='170' >....Budapest</option>
-      <option value='171' >....Debrecen</option>
-      <option value='172' >....Kaposvar</option>
-      <option value='173' >....Szolnok</option>
-      <option value='0' >ICELAND</option>
-      <option value='174' >....Reykjavik</option>
-      <option value='0' >INDIA ( &#2349;&#2366;&#2352;&#2340; )</option>
-      <option value='530' >....AP - Giridhari Kunj</option>
-      <option value='175' >....AP - Guntur</option>
-      <option value='176' >....AP - Hyderabad</option>
-      <option value='177' >....AP - Secunderabad</option>
-      <option value='178' >....AP - Tirupati</option>
-      <option value='179' >....AS - Guwahati</option>
-      <option value='180' >....AS - Silchar</option>
-      <option value='181' >....BI - Patna</option>
-      <option value='182' >....CH - Chandigarh</option>
-      <option value='183' >....GU - Ahmedabad</option>
-      <option value='473' >....GU - Anand</option>
-      <option value='184' >....GU - Dwaraka</option>
-      <option value='185' >....GU - Surat</option>
-      <option value='186' >....GU - Vadodara (Baroda)</option>
-      <option value='475' >....GU - Vallabh Vidyanagar</option>
-      <option value='497' >....HY - Faridabad</option>
-      <option value='187' >....JK - Udhampur</option>
-      <option value='188' >....KA - Bangalore</option>
-      <option value='189' >....KA - Belgaum</option>
-      <option value='190' >....KA - Mangalore</option>
-      <option value='517' >....KE - Kozhikode</option>
-      <option value='191' >....KE - Thiruvananthapuram</option>
-      <option value='192' >....KE - Trivandrum</option>
-      <option value='198' >....MA - Imphal</option>
-      <option value='199' >....MA - Moirang</option>
-      <option value='467' >....MP - Ujjain</option>
-      <option value='193' >....MR - Aurangabad</option>
-      <option value='194' >....MR - Mumbai (Bombay)</option>
-      <option value='195' >....MR - Nagpur</option>
-      <option value='196' >....MR - Pandharpur</option>
-      <option value='197' >....MR - Pune</option>
-      <option value='200' >....ND - New Delhi</option>
-      <option value='201' >....OR - Bhubaneswar</option>
-      <option value='202' >....OR - Puri</option>
-      <option value='505' >....OR - Rourkela</option>
-      <option value='480' >....PU - Amristar</option>
-      <option value='472' >....PU - Jalandhar</option>
-      <option value='471' >....PU - Ludiana</option>
-      <option value='203' >....RA - Jaipur</option>
-      <option value='205' >....TN - Chennai (Madras)</option>
-      <option value='204' >....TN - Coimbatore</option>
-      <option value='206' >....TN - Srirangam</option>
-      <option value='207' >....TR - Agartala</option>
-      <option value='208' >....UP - Allahabad</option>
-      <option value='209' >....UP - Hardwar</option>
-      <option value='210' >....UP - Lucknow</option>
-      <option value='211' >....UP - Mathura</option>
-      <option value='509' >....UP - Meerut</option>
-      <option value='212' >....UP - Vrindavan</option>
-      <option value='213' >....WB - Calcutta</option>
-      <option value='214' >....WB - Mayapur</option>
-      <option value='529' >....WB - Murishidabad</option>
-      <option value='215' >....WB - Navadwip</option>
-      <option value='216' >....WB - Siliguri</option>
-      <option value='0' >INDONESIA</option>
-      <option value='217' >....Bali</option>
-      <option value='218' >....Bogor</option>
-      <option value='219' >....Denpasar</option>
-      <option value='220' >....Jakarta</option>
-      <option value='453' >....Jogjakarta</option>
-      <option value='0' >IRAN ( &#1575;&#1740;&#1585;&#1575;&#1606; )</option>
-      <option value='221' >....Teheran</option>
-      <option value='0' >IRELAND (IRISH)</option>
-      <option value='374' >....Dublin</option>
-      <option value='383' >....Wexford</option>
-      <option value='0' >IRELAND N ( ÉIRE )</option>
-      <option value='285' >....Belfast</option>
-      <option value='286' >....Derrylin</option>
-      <option value='0' >ISRAEL ( &#1497;&#1460;&#1513;&#1456;&#1474;&#1512;&#1464;&#1488;&#1461;&#1500; )</option>
-      <option value='222' >....Telaviv</option>
-      <option value='0' >ITALIA</option>
-      <option value='223' >....Bergamo</option>
-      <option value='224' >....Bologna</option>
-      <option value='225' >....Catania</option>
-      <option value='226' >....Firenze (Florence)</option>
-      <option value='227' >....Milán</option>
-      <option value='228' >....Napoli (Naples)</option>
-      <option value='229' >....Padua</option>
-      <option value='230' >....Pisa</option>
-      <option value='231' >....Roma</option>
-      <option value='528' >....Torino</option>
-      <option value='488' >....Verona</option>
-      <option value='232' >....Vicenza</option>
-      <option value='0' >JAPAN ( &#26085;&#26412;&#22269; )</option>
-      <option value='533' >....Fukuoka</option>
-      <option value='234' >....Okinawa</option>
-      <option value='235' >....Sapporo</option>
-      <option value='236' >....Tokyo</option>
-      <option value='0' >KAZAKHSTAN ( &#1178;&#1072;&#1079;&#1072;&#1179;&#1089;&#1090;&#1072;&#1085; )</option>
-      <option value='237' >....Alma-ata</option>
-      <option value='0' >KENYA</option>
-      <option value='238' >....Kisumu</option>
-      <option value='239' >....Mombasa</option>
-      <option value='240' >....Nairobi</option>
-      <option value='0' >KUWAIT ( &#1583;&#1608;&#1604;&#1577; &#1575;&#1604;&#1603;&#1608;&#1610;&#1578; )</option>
-      <option value='474' >....Kuwait</option>
-      <option value='0' >LATVIJA</option>
-      <option value='241' >....Riga</option>
-      <option value='0' >LITHUANIA ( LIETUVA )</option>
-      <option value='242' >....Alytus</option>
-      <option value='243' >....Druskininkai</option>
-      <option value='244' >....Kaunas</option>
-      <option value='245' >....Klaipeda</option>
-      <option value='246' >....Mazheikiai</option>
-      <option value='247' >....Panevezhys</option>
-      <option value='248' >....Shyaulyai</option>
-      <option value='249' >....Utena</option>
-      <option value='250' >....Vilnius</option>
-      <option value='0' >MACEDONIA ( &#1052;&#1072;&#1082;&#1077;&#1076;&#1086;&#1085;&#1080;&#1112;&#1072; )</option>
-      <option value='506' >....Skopje</option>
-      <option value='0' >MALAYSIA</option>
-      <option value='251' >....Bukit Mertajam</option>
-      <option value='252' >....Ipoh</option>
-      <option value='253' >....Kuala Lumpur</option>
-      <option value='254' >....Perak</option>
-      <option value='0' >MAURITIUS</option>
-      <option value='255' >....Mauritius</option>
-      <option value='0' >MÉXICO</option>
-      <option value='256' >....Cancún</option>
-      <option value='523' >....Colima</option>
-      <option value='257' >....Culiacán</option>
-      <option value='507' >....Durango</option>
-      <option value='258' >....Guadalajara</option>
-      <option value='532' >....La Paz</option>
-      <option value='259' >....León</option>
-      <option value='260' >....Loreto</option>
-      <option value='261' >....Mexico City</option>
-      <option value='262' >....Monterrey</option>
-      <option value='263' >....Morelia</option>
-      <option value='483' >....Pachuca</option>
-      <option value='264' >....Saltillo</option>
-      <option value='484' >....San Luis Potosí</option>
-      <option value='265' >....Tijuana</option>
-      <option value='500' >....Torreón</option>
-      <option value='266' >....Tulancingo</option>
-      <option value='267' >....Veracruz</option>
-      <option value='268' >....Villahermosa</option>
-      <option value='0' >NEPAL</option>
-      <option value='269' >....Kathmandu</option>
-      <option value='0' >NETHERLANDS (NEDERLANDEN)</option>
-      <option value='270' >....Amsterdam</option>
-      <option value='460' >....Den Haag</option>
-      <option value='271' >....Utrecht</option>
-      <option value='0' >NEW ZEALAND ( AOTEAROA )</option>
-      <option value='272' >....Auckland</option>
-      <option value='273' >....Christchurch</option>
-      <option value='508' >....Hamilton</option>
-      <option value='274' >....Wellington</option>
-      <option value='0' >NICARAGUA</option>
-      <option value='275' >....Chinandega</option>
-      <option value='276' >....Managua</option>
-      <option value='0' >NIGERIA</option>
-      <option value='277' >....Abeokuta</option>
-      <option value='278' >....Benin City</option>
-      <option value='279' >....Enugu</option>
-      <option value='280' >....Ibadan</option>
-      <option value='281' >....Kaduna</option>
-      <option value='282' >....Lagos</option>
-      <option value='283' >....Porth Arcourt</option>
-      <option value='284' >....Warri</option>
-      <option value='0' >NORWAY ( NORGE )</option>
-      <option value='287' >....Bergen</option>
-      <option value='288' >....Oslo</option>
-      <option value='0' >PAKISTAN ( &#1662;&#1575;&#1603;&#1587;&#1578;&#1575;&#1606;&#8206; )</option>
-      <option value='492' >....Karachi</option>
-      <option value='0' >PANAMÁ</option>
-      <option value='289' >....Panamá</option>
-      <option value='0' >PAPUA NEW GUINEA ( PAPUA NIUGINI )</option>
-      <option value='290' >....Port Morseby</option>
-      <option value='0' >PARAGUAY</option>
-      <option value='291' >....Asunción</option>
-      <option value='0' >PERÚ</option>
-      <option value='292' >....Arequipa</option>
-      <option value='498' >....Chiclayo</option>
-      <option value='293' >....Cuzco</option>
-      <option value='513' >....Huancayo</option>
-      <option value='514' >....Huanuco</option>
-      <option value='476' >....Ica</option>
-      <option value='294' >....Iquitos</option>
-      <option value='295' >....Lima</option>
-      <option value='459' >....Neuquén</option>
-      <option value='296' >....Puno</option>
-      <option value='297' >....Salcabamba</option>
-      <option value='515' >....Satipo</option>
-      <option value='298' >....Tarapoto</option>
-      <option value='516' >....Trujillo</option>
-      <option value='0' >PHILIPPINES ( PILIPINAS )</option>
-      <option value='299' >....Cagayan</option>
-      <option value='300' >....Cebu</option>
-      <option value='301' >....Iloilo</option>
-      <option value='302' >....Manila</option>
-      <option value='0' >POLAND ( POLSKA )</option>
-      <option value='303' >....Gdansk</option>
-      <option value='304' >....Gorzow</option>
-      <option value='305' >....Warsaw</option>
-      <option value='306' >....Wroclaw</option>
-      <option value='0' >PORTUGAL</option>
-      <option value='307' >....Lisboa</option>
-      <option value='308' >....Oporto</option>
-      <option value='0' >REPUBLICA DOMINICANA</option>
-      <option value='105' >....Santo Domingo</option>
-      <option value='0' >ROMÂNIA</option>
-      <option value='309' >....Bucharest</option>
-      <option value='310' >....Timisoara</option>
-      <option value='0' >RUSSIA ( &#1056;&#1086;&#1089;&#1089;&#1080;&#1103; )</option>
-      <option value='311' >....Ekaterinburg</option>
-      <option value='312' >....Krasnoyarsk</option>
-      <option value='313' >....Moscow</option>
-      <option value='314' >....Novosibirsk</option>
-      <option value='315' >....St Petersburg</option>
-      <option value='316' >....Vladikavkaz</option>
-      <option value='317' >....Vladivostok</option>
-      <option value='0' >SAUDI ARABIA ( &#1575;&#1604;&#1605;&#1605;&#1604;&#1603;&#1577; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; &#1575;&#1604;&#1587;&#1593;&#1608;&#1583;&#1610;&#1577; )</option>
-      <option value='522' >....Damman ( &#1575;&#1604;&#1583;&#1605;&#1575;&#1605;&#8206; )</option>
-      <option value='521' >....Jeddah ( &#1580;&#1583;&#1617;&#1577; )</option>
-      <option value='520' >....Riyadh ( &#1604;&#1585;&#1610;&#1575;&#1590;&#8206; )</option>
-      <option value='0' >SERBIA ( &#1057;&#1088;&#1073;&#1080;&#1112;&#1072; )</option>
-      <option value='318' >....Belgrade</option>
-      <option value='319' >....Sombor</option>
-      <option value='0' >SEYCHELLES ( SESEL )</option>
-      <option value='465' >....Victoria</option>
-      <option value='0' >SIERRA LEONE</option>
-      <option value='320' >....Freetown</option>
-      <option value='0' >SINGAPORE</option>
-      <option value='321' >....Singapore</option>
-      <option value='0' >SLOVAK REPUBLIC ( SLOVENSKÁ )</option>
-      <option value='322' >....Bratislava</option>
-      <option value='479' >....Nova Ekacakra</option>
-      <option value='323' >....Trnava</option>
-      <option value='0' >SLOVENIA ( SLOVENIJA )</option>
-      <option value='324' >....Ljubljana</option>
-      <option value='0' >SOUTH AFRICA</option>
-      <option value='325' >....Cape Town</option>
-      <option value='326' >....Durban</option>
-      <option value='327' >....Johannesburg</option>
-      <option value='328' >....Port Elizabeth</option>
-      <option value='0' >SOUTH COREA ( &#45824;&#54620;&#48124;&#44397; )</option>
-      <option value='519' >....Seoul</option>
-      <option value='0' >SPAIN (ESPAÑA)</option>
-      <option value='329' >....Barcelona</option>
-      <option value='330' >....Brihuega</option>
-      <option value='331' >....Galicia</option>
-      <option value='458' >....Guadalajara</option>
-      <option value='332' >....Is. Canarias</option>
-      <option value='334' >....Madrid</option>
-      <option value='335' >....Málaga</option>
-      <option value='336' >....Santa Cruz de Tenerife</option>
-      <option value='337' >....Valencia</option>
-      <option value='0' >SRI LANKA ( &#2965;&#3009;&#2975;&#3007;&#2991;&#2992;&#2970;&#3009; )</option>
-      <option value='338' >....Colombo</option>
-      <option value='0' >SURINAME</option>
-      <option value='491' >....Nieuw Nickerie</option>
-      <option value='339' >....Paramaribo</option>
-      <option value='0' >SWEDEN ( SVERIGE )</option>
-      <option value='340' >....Avesta</option>
-      <option value='341' >....Gothenburg</option>
-      <option value='343' >....Haparanda</option>
-      <option value='344' >....Horby</option>
-      <option value='345' >....Jonkoping</option>
-      <option value='346' >....Karlstad</option>
-      <option value='347' >....Ludvika</option>
-      <option value='348' >....Lulea</option>
-      <option value='349' >....Lund</option>
-      <option value='350' >....Mälmo</option>
-      <option value='351' >....Stockholm</option>
-      <option value='352' >....Sundsvall</option>
-      <option value='353' >....Umea</option>
-      <option value='354' >....Uppsala</option>
-      <option value='355' >....Visby</option>
-      <option value='356' >....Östersund</option>
-      <option value='0' >SWITZERLAND ( SVIZRA )</option>
-      <option value='357' >....Basel</option>
-      <option value='358' >....Bern</option>
-      <option value='359' >....Düdingen</option>
-      <option value='360' >....Geneva</option>
-      <option value='361' >....Lugano</option>
-      <option value='362' >....Schaffhausen</option>
-      <option value='363' >....Zürich</option>
-      <option value='0' >SYRIA ( &#1587;&#1608;&#1585;&#1610;&#1575; )</option>
-      <option value='364' >....Al Quneitrah</option>
-      <option value='0' >THAILAND ( &#3611;&#3619;&#3632;&#3648;&#3607;&#3624;&#3652;&#3607;&#3618; )</option>
-      <option value='366' >....Bangkok</option>
-      <option value='0' >TRINIDAD AND TOBAGO</option>
-      <option value='367' >....Trinidad</option>
-      <option value='0' >TURKEY ( TÜRKIYE )</option>
-      <option value='454' >....Ankara</option>
-      <option value='455' >....Istambul</option>
-      <option value='456' >....Izhir</option>
-      <option value='0' >UGANDA</option>
-      <option value='368' >....Kampala</option>
-      <option value='0' >UKRAINE ( &#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1072; )</option>
-      <option value='385' >....Kiev</option>
-      <option value='386' >....Odessa</option>
-      <option value='0' >UNITED ARAB EMIRATES ( &#1575;&#1604;&#1573;&#1605;&#1575;&#1585;&#1575;&#1578; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; &#1575;&#1604;&#1605;&#1578;&#1581;&#1583;&#1577; )</option>
-      <option value='477' >....Abu Dhabi</option>
-      <option value='469' >....Dubai</option>
-      <option value='0' >UNITED KINGDOM</option>
-      <option value='369' >....Birmingham</option>
-      <option value='370' >....Bristol</option>
-      <option value='371' >....Cardiff</option>
-      <option value='372' >....Cleethorpes</option>
-      <option value='373' >....Coventry</option>
-      <option value='375' >....Glasgow</option>
-      <option value='501' >....Great Bricet</option>
-      <option value='376' >....Leicester</option>
-      <option value='377' >....Liverpool</option>
-      <option value='378' >....London</option>
-      <option value='379' >....Manchester</option>
-      <option value='380' >....New Castle</option>
-      <option value='381' >....Plymouth</option>
-      <option value='382' >....Romford</option>
-      <option value='384' >....Worcester</option>
-      <option value='0' >UNITED STATES</option>
-      <option value='389' >....AL - Juneau</option>
-      <option value='390' >....AZ - Phoenix</option>
-      <option value='391' >....AZ - Tucson</option>
-      <option value='503' >....CA  - Oakland</option>
-      <option value='392' >....CA - Arcata</option>
-      <option value='393' >....CA - Berkeley</option>
-      <option value='394' >....CA - Los Angeles</option>
-      <option value='395' >....CA - Palo Alto</option>
-      <option value='527' >....CA - Sacramento</option>
-      <option value='396' >....CA - San Diego</option>
-      <option value='397' >....CA - San Francisco</option>
-      <option value='398' >....CA - San Jose</option>
-      <option value='399' >....CA - San Luis Obispo</option>
-      <option value='400' >....CO - Boulder</option>
-      <option value='401' >....CO - Denver</option>
-      <option value='402' >....CT - Hartford</option>
-      <option value='403' >....DC - Washington</option>
-      <option value='404' >....FL - Gainesville</option>
-      <option value='405' >....FL - Key West</option>
-      <option value='406' >....FL - Miami</option>
-      <option value='407' >....FL - Tallahassee</option>
-      <option value='408' >....FL - Tampa</option>
-      <option value='409' >....GA - Atlanta</option>
-      <option value='410' >....HI - Hilo</option>
-      <option value='411' >....HI - Honolulu</option>
-      <option value='412' >....ID - Boise</option>
-      <option value='413' selected>....IL - Chicago</option>
-      <option value='502' >....IN - Indianapolis</option>
-      <option value='414' >....LA - New Orleans</option>
-      <option value='416' >....MA - Boston</option>
-      <option value='415' >....MD - Baltimore</option>
-      <option value='417' >....MI - Detroit</option>
-      <option value='418' >....MI - Lansing</option>
-      <option value='496' >....MN - Mineapolis</option>
-      <option value='420' >....MO - St Louis</option>
-      <option value='419' >....MS - Picayune</option>
-      <option value='424' >....NC - Chapelhill</option>
-      <option value='425' >....NC - Durham</option>
-      <option value='485' >....NC - Hillsborough</option>
-      <option value='531' >....NC - Sandy Ridge</option>
-      <option value='426' >....NC - Winston-Salem</option>
-      <option value='421' >....NJ - Morristown</option>
-      <option value='422' >....NM - Alburquerque</option>
-      <option value='423' >....NY - New York</option>
-      <option value='470' >....NY - Syracuse</option>
-      <option value='427' >....OH - Cleveland</option>
-      <option value='428' >....OH - Columbus</option>
-      <option value='429' >....OK - Oklahoma City</option>
-      <option value='431' >....OR - Eugene</option>
-      <option value='430' >....OR - Portland</option>
-      <option value='432' >....PA - Gita-nagari Farm</option>
-      <option value='433' >....PA - Harrisburg</option>
-      <option value='434' >....PA - Philadelphia</option>
-      <option value='435' >....PA - Pittsburgh</option>
-      <option value='525' >....PA - Reading</option>
-      <option value='436' >....PR - Puerto Rico</option>
-      <option value='437' >....PR - San Juan</option>
-      <option value='438' >....SC - Charleston</option>
-      <option value='388' >....Territory - Virgin Islands</option>
-      <option value='439' >....TX - Austin</option>
-      <option value='440' >....TX - Dallas</option>
-      <option value='490' >....TX - Harlingen</option>
-      <option value='441' >....TX - Houston</option>
-      <option value='442' >....TX - Waco</option>
-      <option value='443' >....UT - Provo</option>
-      <option value='444' >....WS - Seattle</option>
-      <option value='445' >....WS - Walla Walla</option>
-      <option value='446' >....WV - Moundsville</option>
-      <option value='447' >....WV - New Vrindaban</option>
-      <option value='0' >URUGUAY</option>
-      <option value='387' >....Montevideo</option>
-      <option value='0' >UZBEKISTAN ( O&#699;ZBEKISTON )</option>
-      <option value='448' >....Tashkent</option>
-      <option value='0' >VENEZUELA</option>
-      <option value='449' >....Caracas</option>
-      <option value='0' >ZAMBIA</option>
-      <option value='450' >....Kitwe-nkana</option>
-      <option value='451' >....Lusaka</option>
-      <option value='0' >ZIMBABWE</option>
-      <option value='452' >....Harare</option></select>
-		</form>
-	</td><tr><tr><td colspan=2>
-		<select name=code  onChange='return CheckSelectHoliday()' ID=code>
-      <option value=0>SEARCH FOR HOLIDAY:</option>
-      <option value='00080' >Gaura Purnima</option>
-      <option value='00082' >Nityananda Trayodasi</option>
-      <option value='00083' >Sri Krsna Janmastami</option>
-      <option value='00084' >Radhastami</option>
-      <option value='00085' >Appearance of Lord Balarama</option>
-      <option value='00087' >Rama Navami</option>
-      <option value='00088' >Nrsimha Caturdasi</option>
-      <option value='00089' >Sri Vamana Dvadasi</option>
-      <option value='00086' >Varaha Dvadasi</option>
-      <option value='' ></option>
-      <option value='00213' ><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=rathayatra','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Ratha Yatra</a> (Jagannatha Puri)</option>
-      <option value='00225' ><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=jhulanayatra','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Radha Govinda Jhulana Yatra begins</a></option>
-      <option value='00226' >Radha Govinda <a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=jhulanayatra','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Jhulana Yatra ends</a></option>
-      <option value='A908' >Damodara Masa begin</option>
-      <option value='A909' >Damodara Masa ends</option>
-      <option value='00059' >Caturmasya begins</option>
-      <option value='00058' >Caturmasya ends</option>
-      <option value='00036' >Pandava Nirjala Ekadasi</option>
-      <option value='00201' ><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=govardhanapuja','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Govardhana Puja, Go Puja, Go Krda</a></option>
-      <option value='' ></option>
-      <option value='00090' >Sri Advaita Acarya Appearance</option>
-      <option value='00091' >Srila Gaura Kisora Dasa Babaji Dissappearance</option>
-      <option value='00092' >Srila Bhaktivinoda Thakura Appearance</option>
-      <option value='00093' >Srila Bhaktivinoda Thakura Dissappearance</option>
-      <option value='00095' >Srila Bhaktisiddhanta Sarasvati Thakura Appearance</option>
-      <option value='00094' >Srila Bhaktisiddhanta Sarasvati Thakura Dissappearance</option>
-      <option value='00096' >Srila Prabhupada Appearance</option>
-      <option value='00097' >Srila Prabhupada Dissappearance</option>
-      <option value='' ></option>
-      <option value='A028' >HH BB Govinda Svami Vyasa-puja</option>
-      <option value='A003' >HH Bhaktibusana Svami Vyasa-puja</option>
-      <option value='A049' >HH Bhakti Caitanya Svami Vyasa-puja</option>
-      <option value='A016' >HH Bhakti Caru Svami Vyasa-puja</option>
-      <option value='A055' >HH Bhakti Raghava Svami Vyasa-puja</option>
-      <option value='A026' >HH Bhaktisvarupa Damodar Svami Dissappearance</option>
-      <option value='A014' >HH Bhaktitirtha Svami Dissappearance</option>
-      <option value='A039' >HH Bir Krishna dasa Gosvami Vyasa-puja</option>
-      <option value='A051' >HH Danavir Gosvami Vyasa-puja</option>
-      <option value='A047' >HH Chandramukha Svami Vyasa-puja</option>
-      <option value='A051' >HH Danavir Gosvami Vyasa-puja</option>
-      <option value='A005' >HH Devamrta Svami Vyasa-puja</option>
-      <option value='A008' >HH Dhanvantari Svami Vyasa-puja</option>
-      <option value='0035' >HH Gopal Krishna Gosvami Vyasa-puja</option>
-      <option value='0037' >HH Gour Govinda Svami Vyasa-puja</option>
-      <option value='00102' >HH Gour Govinda Svami Dissapearance</option>
-      <option value='A012' >HH Hanumatpresaka Svami Vyasa-puja</option>
-      <option value='A001' >HH Hridayananda Dasa Gosvami Vyasa-puja</option>
-      <option value='A022' >HH Indradyumna Svami Vyasa-puja</option>
-      <option value='A004' >HH Jayapataka Svami Vyasa-puja</option>
-      <option value='A033' >HH Kadamba Kanana Svami Vyasa-puja</option>
-      <option value='A059' >HH Kavicandra Svami Vyasa-puja</option>
-      <option value='A018' >HG Kratu Prabhu Vyasa-puja</option>
-      <option value='A002' >HG Krishna Ksetra Dasa Vyasa-puja</option>
-      <option value='A023' >HH Lokanath Svami Vyasa-puja</option>
-      <option value='A057' >HH Mahavisnu Gosvami Vyasa-puja</option>
-      <option value='A020' >HH Niranjana Svami Vyasa-puja</option>
-      <option value='A053' >HH Partha Sarathi Gosvami Vyasa-puja</option>
-      <option value='A041' >HH Radhanath Svami Vyasa-puja</option>
-      <option value='A030' >HH Satsvarupa dasa Gosvami Vyasa-puja</option>
-      <option value='A010' >HH Smita Krishna Svami Vyasa-puja</option>
-      <option value='A061' >HH Subhag Svami Vyasa-puja</option>
-      <option value='A006' >HH Sridhara Svami Vyasa-puja</option>
-      <option value='A007' >HH Sridhara Svami Dissappearance</option>
-      <option value='A015' >HH Tamal Krishna Gosvami Vyasa-puja</option>
-      <option value='A009' >HH Tamal Krishna Gosvami Dissappearance</option>
-      <option value='A045' >HH Vedavyasapriya Svami Vyasa-puja</option></select>
-	</td></tr></table>
+	<form>
+	<select onChange="idx = this.selectedIndex; if (idx>0) top.parent.location=this.options[this.selectedIndex].value; this.selectedIndex=0;">
+		<OPTION>SELECT CITY</OPTION>
+		<OPTION>ARGENTINA</OPTION>
+		<OPTION VALUE=/4/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bhaia</OPTION><OPTION VALUE=/5/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Buenos Aires</OPTION><OPTION VALUE=/6/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Córdoba</OPTION><OPTION VALUE=/7/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mar del Plata</OPTION><OPTION VALUE=/8/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mendoza</OPTION><OPTION VALUE=/9/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neuquén</OPTION><OPTION VALUE=/10/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rio Ceballos</OPTION><OPTION VALUE=/11/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rosario</OPTION><OPTION VALUE=/12/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;San Juan</OPTION><OPTION VALUE=/504/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;San Luis</OPTION>	<OPTION>ARMENIA</OPTION>
+	<OPTION VALUE=/3/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yerevan</OPTION>	<OPTION>AUSTRALIA</OPTION>
+	<OPTION VALUE=/13/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adelaide</OPTION><OPTION VALUE=/14/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bambra - Victoria</OPTION><OPTION VALUE=/15/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brisbane</OPTION><OPTION VALUE=/16/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cairns</OPTION><OPTION VALUE=/17/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Canberra</OPTION><OPTION VALUE=/18/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cessnocknsw</OPTION><OPTION VALUE=/493/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Darwin</OPTION><OPTION VALUE=/19/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lismore</OPTION><OPTION VALUE=/20/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Melbourne</OPTION><OPTION VALUE=/21/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Murwillumbah</OPTION><OPTION VALUE=/22/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perth</OPTION><OPTION VALUE=/23/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sydney</OPTION><OPTION VALUE=/24/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Winchelsea</OPTION>	<OPTION>AUSTRIA</OPTION>
+	<OPTION VALUE=/25/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graz</OPTION><OPTION VALUE=/26/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Klagenfurt</OPTION><OPTION VALUE=/27/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salzburg</OPTION><OPTION VALUE=/28/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;St Aegyd</OPTION><OPTION VALUE=/29/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vienna</OPTION>	<OPTION>AZERBAIJAN</OPTION>
+	<OPTION VALUE=/30/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Baku</OPTION>	<OPTION>BAHRAIN</OPTION>
+	<OPTION VALUE=/31/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manama</OPTION>	<OPTION>BANGLADESH</OPTION>
+	<OPTION VALUE=/32/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cittagong</OPTION><OPTION VALUE=/33/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dhaka</OPTION><OPTION VALUE=/34/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jessore</OPTION>	<OPTION>BARBADOS</OPTION>
+	<OPTION VALUE=/35/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barbados</OPTION>	<OPTION>BELARUS</OPTION>
+	<OPTION VALUE=/36/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minsk</OPTION>	<OPTION>BELGIUM</OPTION>
+	<OPTION VALUE=/37/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Antwerp</OPTION><OPTION VALUE=/38/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brussels (Bruxelles)</OPTION><OPTION VALUE=/39/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Durbuy</OPTION><OPTION VALUE=/40/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Liege</OPTION>	<OPTION>BOLIVIA</OPTION>
+	<OPTION VALUE=/41/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cochabamba</OPTION><OPTION VALUE=/42/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;La Paz</OPTION><OPTION VALUE=/43/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Santa Cruz</OPTION>	<OPTION>BOSNIA</OPTION>
+	<OPTION VALUE=/44/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sarajevo</OPTION>	<OPTION>BOTSWANA</OPTION>
+	<OPTION VALUE=/478/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gaborone</OPTION>	<OPTION>BRAZIL</OPTION>
+	<OPTION VALUE=/481/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Areado</OPTION><OPTION VALUE=/45/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Belem</OPTION><OPTION VALUE=/46/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Belo Horizonte</OPTION><OPTION VALUE=/541/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blumenau</OPTION><OPTION VALUE=/47/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brasilia</OPTION><OPTION VALUE=/48/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campos</OPTION><OPTION VALUE=/49/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Caruaru</OPTION><OPTION VALUE=/50/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Curitiba</OPTION><OPTION VALUE=/51/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Florianopolis</OPTION><OPTION VALUE=/52/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fortaleza</OPTION><OPTION VALUE=/53/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Goiania</OPTION><OPTION VALUE=/54/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guarulhos</OPTION><OPTION VALUE=/56/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Juiz de Foa</OPTION><OPTION VALUE=/57/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jundia</OPTION><OPTION VALUE=/58/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lambari</OPTION><OPTION VALUE=/59/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manaus</OPTION><OPTION VALUE=/495/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nova Gokula</OPTION><OPTION VALUE=/60/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Petropolis</OPTION><OPTION VALUE=/61/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Porto Alegre</OPTION><OPTION VALUE=/62/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recife</OPTION><OPTION VALUE=/63/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ribeirao Preto</OPTION><OPTION VALUE=/64/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rio de Janeiro</OPTION><OPTION VALUE=/65/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salvador</OPTION><OPTION VALUE=/66/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Santos</OPTION><OPTION VALUE=/67/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sao Carlos</OPTION><OPTION VALUE=/55/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sao Jose do Rio Preto</OPTION><OPTION VALUE=/68/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sao Paulo</OPTION><OPTION VALUE=/511/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suzano</OPTION><OPTION VALUE=/69/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Taubate</OPTION><OPTION VALUE=/70/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ubatuba</OPTION><OPTION VALUE=/71/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vitoria</OPTION>	<OPTION>BULGARIA</OPTION>
+	<OPTION VALUE=/72/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Plovdiv</OPTION><OPTION VALUE=/73/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sofia</OPTION>	<OPTION>CAMEROON</OPTION>
+	<OPTION VALUE=/74/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Buea</OPTION>	<OPTION>CANADA</OPTION>
+	<OPTION VALUE=/75/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AL - Calgary</OPTION><OPTION VALUE=/76/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AL - Edmonton</OPTION><OPTION VALUE=/77/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BC - Ashcroft</OPTION><OPTION VALUE=/78/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BC - Vancouver</OPTION><OPTION VALUE=/81/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NF - Placentia</OPTION><OPTION VALUE=/79/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ON - Ottawa</OPTION><OPTION VALUE=/80/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ON - Toronto</OPTION><OPTION VALUE=/83/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QC - Montreal</OPTION><OPTION VALUE=/82/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QC - Quebec</OPTION><OPTION VALUE=/84/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SK - Regina</OPTION><OPTION VALUE=/85/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VC - Victoria</OPTION>	<OPTION>CHILE</OPTION>
+	<OPTION VALUE=/86/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Concepcion</OPTION><OPTION VALUE=/518/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pucon</OPTION><OPTION VALUE=/87/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Santiago</OPTION>	<OPTION>CHINA</OPTION>
+	<OPTION VALUE=/88/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Beijing</OPTION><OPTION VALUE=/89/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hong Kong</OPTION><OPTION VALUE=/494/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shangai</OPTION>	<OPTION>COLOMBIA</OPTION>
+	<OPTION VALUE=/457/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barranquilla</OPTION><OPTION VALUE=/90/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bogota</OPTION><OPTION VALUE=/91/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cali</OPTION><OPTION VALUE=/1/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Los Puranas</OPTION><OPTION VALUE=/524/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medellin</OPTION><OPTION VALUE=/92/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pereira</OPTION>	<OPTION>COOK ISLANDS</OPTION>
+	<OPTION VALUE=/499/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rarotonga</OPTION>	<OPTION>COSTA RICA</OPTION>
+	<OPTION VALUE=/93/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;San Jose</OPTION>	<OPTION>CROATIA</OPTION>
+	<OPTION VALUE=/94/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Osijek</OPTION><OPTION VALUE=/95/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pula</OPTION><OPTION VALUE=/96/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rijeka</OPTION><OPTION VALUE=/97/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Split</OPTION><OPTION VALUE=/98/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zagreb</OPTION>	<OPTION>CUBA</OPTION>
+	<OPTION VALUE=/99/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;La Habana</OPTION>	<OPTION>CYPRUS</OPTION>
+	<OPTION VALUE=/100/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cyprus</OPTION>	<OPTION>CZECH REPUBLIC</OPTION>
+	<OPTION VALUE=/101/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prague</OPTION><OPTION VALUE=/102/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zlin</OPTION>	<OPTION>DENMARK</OPTION>
+	<OPTION VALUE=/103/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brorup</OPTION><OPTION VALUE=/104/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copenhagen</OPTION>	<OPTION>DOMINICAN REPUBLIC</OPTION>
+	<OPTION VALUE=/105/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Santo Domingo</OPTION>	<OPTION>ECUADOR</OPTION>
+	<OPTION VALUE=/106/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cuenca</OPTION><OPTION VALUE=/107/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guayaquil</OPTION><OPTION VALUE=/108/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quito</OPTION>	<OPTION>EL SALVADOR</OPTION>
+	<OPTION VALUE=/109/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;San Salvador</OPTION>	<OPTION>ESTONIA</OPTION>
+	<OPTION VALUE=/110/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tallinn</OPTION>	<OPTION>FIJI</OPTION>
+	<OPTION VALUE=/111/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Labasa</OPTION><OPTION VALUE=/112/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lautoka</OPTION><OPTION VALUE=/526/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sigatoga</OPTION><OPTION VALUE=/113/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suva</OPTION>	<OPTION>FINLAND</OPTION>
+	<OPTION VALUE=/117/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Avignon</OPTION><OPTION VALUE=/114/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Helsinki</OPTION><OPTION VALUE=/115/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tampere</OPTION><OPTION VALUE=/116/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Turku</OPTION>	<OPTION>FRANCE</OPTION>
+	<OPTION VALUE=/118/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bordeaux</OPTION><OPTION VALUE=/119/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brest</OPTION><OPTION VALUE=/120/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chateauroux</OPTION><OPTION VALUE=/121/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dijon</OPTION><OPTION VALUE=/122/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dole</OPTION><OPTION VALUE=/123/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lille</OPTION><OPTION VALUE=/124/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Longwy</OPTION><OPTION VALUE=/125/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lyon</OPTION><OPTION VALUE=/126/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nice</OPTION><OPTION VALUE=/127/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orange</OPTION><OPTION VALUE=/128/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paris</OPTION><OPTION VALUE=/129/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Poitiers</OPTION><OPTION VALUE=/130/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Toulous</OPTION><OPTION VALUE=/131/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valencay</OPTION>	<OPTION>GEORGIA</OPTION>
+	<OPTION VALUE=/132/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tbilisi</OPTION>	<OPTION>GERMANY</OPTION>
+	<OPTION VALUE=/133/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Berlin</OPTION><OPTION VALUE=/134/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bremerhaven</OPTION><OPTION VALUE=/135/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dresden</OPTION><OPTION VALUE=/136/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Flensburg</OPTION><OPTION VALUE=/137/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frankfurt</OPTION><OPTION VALUE=/139/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hamburg</OPTION><OPTION VALUE=/140/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hannover</OPTION><OPTION VALUE=/141/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Heidelberg</OPTION><OPTION VALUE=/142/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Heilbronn</OPTION><OPTION VALUE=/143/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Karlsruhe</OPTION><OPTION VALUE=/144/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kiel</OPTION><OPTION VALUE=/145/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Koblenz</OPTION><OPTION VALUE=/146/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Koln (Cologne)</OPTION><OPTION VALUE=/147/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leipzig</OPTION><OPTION VALUE=/148/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Marburg</OPTION><OPTION VALUE=/149/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Munchen (Munich)</OPTION><OPTION VALUE=/150/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nurnberg (Nuremberg)</OPTION><OPTION VALUE=/151/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paderborn</OPTION><OPTION VALUE=/152/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Passau</OPTION><OPTION VALUE=/153/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saarbrucken</OPTION><OPTION VALUE=/154/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salzwedel</OPTION><OPTION VALUE=/155/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schwerin</OPTION><OPTION VALUE=/466/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Simhachalam</OPTION><OPTION VALUE=/156/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stuttgart</OPTION><OPTION VALUE=/157/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trier</OPTION><OPTION VALUE=/158/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ulm</OPTION><OPTION VALUE=/482/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ummern</OPTION><OPTION VALUE=/159/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weimar</OPTION><OPTION VALUE=/160/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wiesbaden</OPTION>	<OPTION>GHANA</OPTION>
+	<OPTION VALUE=/161/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accra</OPTION><OPTION VALUE=/162/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nkawkaw</OPTION><OPTION VALUE=/163/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takoradi</OPTION>	<OPTION>GRECE</OPTION>
+	<OPTION VALUE=/164/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Athens</OPTION>	<OPTION>GUATEMALA</OPTION>
+	<OPTION VALUE=/165/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guatemala</OPTION>	<OPTION>GUYANA</OPTION>
+	<OPTION VALUE=/166/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Berbice</OPTION><OPTION VALUE=/167/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Essequibo Coast</OPTION><OPTION VALUE=/168/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Georgetown</OPTION>	<OPTION>HONDURAS</OPTION>
+	<OPTION VALUE=/169/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tegucigalpa</OPTION>	<OPTION>HUNGARY</OPTION>
+	<OPTION VALUE=/170/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Budapest</OPTION><OPTION VALUE=/171/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Debrecen</OPTION><OPTION VALUE=/172/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kaposvar</OPTION><OPTION VALUE=/173/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Szolnok</OPTION>	<OPTION>ICELAND</OPTION>
+	<OPTION VALUE=/174/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reykjavik</OPTION>	<OPTION>INDIA</OPTION>
+	<OPTION VALUE=/530/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AP - Giridhari Kunj</OPTION><OPTION VALUE=/175/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AP - Guntur</OPTION><OPTION VALUE=/176/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AP - Hyderabad</OPTION><OPTION VALUE=/177/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AP - Secunderabad</OPTION><OPTION VALUE=/178/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AP - Tirupati</OPTION><OPTION VALUE=/179/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AS - Guwahati</OPTION><OPTION VALUE=/180/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AS - Silchar</OPTION><OPTION VALUE=/181/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BI - Patna</OPTION><OPTION VALUE=/182/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CH - Chandigarh</OPTION><OPTION VALUE=/183/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GU - Ahmedabad</OPTION><OPTION VALUE=/473/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GU - Anand</OPTION><OPTION VALUE=/535/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GU - Bhavnagar</OPTION><OPTION VALUE=/184/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GU - Dwaraka</OPTION><OPTION VALUE=/185/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GU - Surat</OPTION><OPTION VALUE=/186/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GU - Vadodara (Baroda)</OPTION><OPTION VALUE=/475/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GU - Vallabh Vidyanagar</OPTION><OPTION VALUE=/497/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HY - Faridabad</OPTION><OPTION VALUE=/187/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JK - Udhampur</OPTION><OPTION VALUE=/188/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KA - Bangalore</OPTION><OPTION VALUE=/189/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KA - Belgaum</OPTION><OPTION VALUE=/190/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KA - Mangalore</OPTION><OPTION VALUE=/517/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KE - Kozhikode</OPTION><OPTION VALUE=/191/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KE - Thiruvananthapuram</OPTION><OPTION VALUE=/192/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KE - Trivandrum</OPTION><OPTION VALUE=/198/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MA - Imphal</OPTION><OPTION VALUE=/199/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MA - Moirang</OPTION><OPTION VALUE=/467/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MP - Ujjain</OPTION><OPTION VALUE=/193/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MR - Aurangabad</OPTION><OPTION VALUE=/194/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MR - Mumbai (Bombay)</OPTION><OPTION VALUE=/195/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MR - Nagpur</OPTION><OPTION VALUE=/196/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MR - Pandharpur</OPTION><OPTION VALUE=/197/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MR - Pune</OPTION><OPTION VALUE=/200/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ND - New Delhi</OPTION><OPTION VALUE=/201/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR - Bhubaneswar</OPTION><OPTION VALUE=/202/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR - Puri</OPTION><OPTION VALUE=/505/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR - Rourkela</OPTION><OPTION VALUE=/480/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PU - Amristar</OPTION><OPTION VALUE=/472/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PU - Jalandhar</OPTION><OPTION VALUE=/471/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PU - Ludiana</OPTION><OPTION VALUE=/203/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RA - Jaipur</OPTION><OPTION VALUE=/205/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TN - Chennai (Madras)</OPTION><OPTION VALUE=/204/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TN - Coimbatore</OPTION><OPTION VALUE=/206/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TN - Srirangam</OPTION><OPTION VALUE=/207/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TR - Agartala</OPTION><OPTION VALUE=/208/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UP - Allahabad</OPTION><OPTION VALUE=/534/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UP - Ghaziabad</OPTION><OPTION VALUE=/209/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UP - Hardwar</OPTION><OPTION VALUE=/210/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UP - Lucknow</OPTION><OPTION VALUE=/211/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UP - Mathura</OPTION><OPTION VALUE=/509/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UP - Meerut</OPTION><OPTION VALUE=/212/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UP - Vrindavan</OPTION><OPTION VALUE=/213/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WB - Calcutta</OPTION><OPTION VALUE=/214/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WB - Mayapur</OPTION><OPTION VALUE=/529/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WB - Murishidabad</OPTION><OPTION VALUE=/215/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WB - Navadwip</OPTION><OPTION VALUE=/216/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WB - Siliguri</OPTION>	<OPTION>INDONESIA</OPTION>
+	<OPTION VALUE=/217/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bali</OPTION><OPTION VALUE=/218/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bogor</OPTION><OPTION VALUE=/219/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Denpasar</OPTION><OPTION VALUE=/220/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jakarta</OPTION><OPTION VALUE=/453/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jogjakarta</OPTION>	<OPTION>IRAN</OPTION>
+	<OPTION VALUE=/221/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Teheran</OPTION>	<OPTION>ISRAEL</OPTION>
+	<OPTION VALUE=/222/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Telaviv</OPTION>	<OPTION>ITALY</OPTION>
+	<OPTION VALUE=/223/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bergamo</OPTION><OPTION VALUE=/224/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bologna</OPTION><OPTION VALUE=/225/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Catania</OPTION><OPTION VALUE=/226/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firenze (Florence)</OPTION><OPTION VALUE=/227/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Milan</OPTION><OPTION VALUE=/228/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Napoli (Naples)</OPTION><OPTION VALUE=/229/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Padua</OPTION><OPTION VALUE=/537/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perugia</OPTION><OPTION VALUE=/230/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pisa</OPTION><OPTION VALUE=/539/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rimini</OPTION><OPTION VALUE=/231/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roma</OPTION><OPTION VALUE=/538/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terni</OPTION><OPTION VALUE=/528/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Torino</OPTION><OPTION VALUE=/488/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Verona</OPTION><OPTION VALUE=/232/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vicenza</OPTION>	<OPTION>IVORY COAST</OPTION>
+	<OPTION VALUE=/233/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abidjan</OPTION>	<OPTION>JAPAN</OPTION>
+	<OPTION VALUE=/533/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fukuoka</OPTION><OPTION VALUE=/234/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Okinawa</OPTION><OPTION VALUE=/235/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sapporo</OPTION><OPTION VALUE=/236/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tokyo</OPTION>	<OPTION>KAZAKHSTAN</OPTION>
+	<OPTION VALUE=/237/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alma-ata</OPTION>	<OPTION>KENYA</OPTION>
+	<OPTION VALUE=/238/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kisumu</OPTION><OPTION VALUE=/239/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mombasa</OPTION><OPTION VALUE=/240/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nairobi</OPTION>	<OPTION>KUWAIT</OPTION>
+	<OPTION VALUE=/474/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kuwait</OPTION>	<OPTION>LATVIA</OPTION>
+	<OPTION VALUE=/241/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Riga</OPTION>	<OPTION>LITHUANIA</OPTION>
+	<OPTION VALUE=/242/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alytus</OPTION><OPTION VALUE=/243/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Druskininkai</OPTION><OPTION VALUE=/244/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kaunas</OPTION><OPTION VALUE=/245/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Klaipeda</OPTION><OPTION VALUE=/246/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mazheikiai</OPTION><OPTION VALUE=/247/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Panevezhys</OPTION><OPTION VALUE=/248/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shyaulyai</OPTION><OPTION VALUE=/249/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utena</OPTION><OPTION VALUE=/250/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vilnius</OPTION>	<OPTION>MACEDONIA</OPTION>
+	<OPTION VALUE=/506/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skopje</OPTION>	<OPTION>MALAYSIA</OPTION>
+	<OPTION VALUE=/251/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bukit Mertajam</OPTION><OPTION VALUE=/252/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ipoh</OPTION><OPTION VALUE=/253/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kuala Lumpur</OPTION><OPTION VALUE=/254/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perak</OPTION>	<OPTION>MAURITIUS</OPTION>
+	<OPTION VALUE=/255/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mauritius</OPTION>	<OPTION>MEXICO</OPTION>
+	<OPTION VALUE=/256/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancun</OPTION><OPTION VALUE=/523/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colima</OPTION><OPTION VALUE=/257/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Culiacan</OPTION><OPTION VALUE=/507/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Durango</OPTION><OPTION VALUE=/258/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guadalajara</OPTION><OPTION VALUE=/532/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;La Paz</OPTION><OPTION VALUE=/259/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leon</OPTION><OPTION VALUE=/260/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loreto</OPTION><OPTION VALUE=/261/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mexico City</OPTION><OPTION VALUE=/262/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Monterrey</OPTION><OPTION VALUE=/263/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Morelia</OPTION><OPTION VALUE=/483/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pachuca</OPTION><OPTION VALUE=/264/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saltillo</OPTION><OPTION VALUE=/484/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;San Luis Potosi</OPTION><OPTION VALUE=/265/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tijuana</OPTION><OPTION VALUE=/500/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Torreon</OPTION><OPTION VALUE=/266/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tulancingo</OPTION><OPTION VALUE=/267/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Veracruz</OPTION><OPTION VALUE=/268/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Villahermosa</OPTION>	<OPTION>NEPAL</OPTION>
+	<OPTION VALUE=/269/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kathmandu</OPTION>	<OPTION>NETHERLANDS</OPTION>
+	<OPTION VALUE=/270/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Amsterdam</OPTION><OPTION VALUE=/460/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Den Haag</OPTION><OPTION VALUE=/271/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utrecht</OPTION>	<OPTION>NEW ZEALAND</OPTION>
+	<OPTION VALUE=/272/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Auckland</OPTION><OPTION VALUE=/273/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Christchurch</OPTION><OPTION VALUE=/508/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hamilton</OPTION><OPTION VALUE=/274/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wellington</OPTION>	<OPTION>NICARAGUA</OPTION>
+	<OPTION VALUE=/275/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chinandega</OPTION><OPTION VALUE=/276/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Managua</OPTION>	<OPTION>NIGERIA</OPTION>
+	<OPTION VALUE=/277/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abeokuta</OPTION><OPTION VALUE=/278/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Benin City</OPTION><OPTION VALUE=/279/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enugu</OPTION><OPTION VALUE=/280/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ibadan</OPTION><OPTION VALUE=/281/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kaduna</OPTION><OPTION VALUE=/282/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lagos</OPTION><OPTION VALUE=/283/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Porth Arcourt</OPTION><OPTION VALUE=/284/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Warri</OPTION>	<OPTION>NORTHERN IRELAND</OPTION>
+	<OPTION VALUE=/285/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Belfast</OPTION><OPTION VALUE=/286/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Derrylin</OPTION>	<OPTION>NORWAY</OPTION>
+	<OPTION VALUE=/287/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bergen</OPTION><OPTION VALUE=/288/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oslo</OPTION>	<OPTION>PAKISTAN</OPTION>
+	<OPTION VALUE=/492/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Karachi</OPTION>	<OPTION>PANAMA</OPTION>
+	<OPTION VALUE=/289/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Panam</OPTION>	<OPTION>PAPUA NEW GUINEA</OPTION>
+	<OPTION VALUE=/290/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Port Morseby</OPTION>	<OPTION>PARAGUAY</OPTION>
+	<OPTION VALUE=/291/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Asunci</OPTION>	<OPTION>PERU</OPTION>
+	<OPTION VALUE=/292/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arequipa</OPTION><OPTION VALUE=/498/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chiclayo</OPTION><OPTION VALUE=/293/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cuzco</OPTION><OPTION VALUE=/513/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Huancayo</OPTION><OPTION VALUE=/514/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Huanuco</OPTION><OPTION VALUE=/476/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ica</OPTION><OPTION VALUE=/294/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Iquitos</OPTION><OPTION VALUE=/295/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lima</OPTION><OPTION VALUE=/459/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neuqu</OPTION><OPTION VALUE=/296/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Puno</OPTION><OPTION VALUE=/297/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salcabamba</OPTION><OPTION VALUE=/515/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Satipo</OPTION><OPTION VALUE=/298/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tarapoto</OPTION><OPTION VALUE=/516/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trujillo</OPTION>	<OPTION>PHILIPPINES</OPTION>
+	<OPTION VALUE=/299/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cagayan</OPTION><OPTION VALUE=/300/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cebu</OPTION><OPTION VALUE=/301/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Iloilo</OPTION><OPTION VALUE=/302/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manila</OPTION>	<OPTION>POLAND</OPTION>
+	<OPTION VALUE=/303/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gdansk</OPTION><OPTION VALUE=/304/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gorzow</OPTION><OPTION VALUE=/305/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Warsaw</OPTION><OPTION VALUE=/306/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wroclaw</OPTION>	<OPTION>PORTUGAL</OPTION>
+	<OPTION VALUE=/307/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lisboa</OPTION><OPTION VALUE=/308/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oporto</OPTION>	<OPTION>RUMANIA</OPTION>
+	<OPTION VALUE=/309/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bucharest</OPTION><OPTION VALUE=/310/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timisoara</OPTION>	<OPTION>RUSSIA</OPTION>
+	<OPTION VALUE=/311/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ekaterinburg</OPTION><OPTION VALUE=/312/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Krasnoyarsk</OPTION><OPTION VALUE=/313/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Moscow</OPTION><OPTION VALUE=/314/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Novosibirsk</OPTION><OPTION VALUE=/315/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;St Petersburg</OPTION><OPTION VALUE=/316/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vladikavkaz</OPTION><OPTION VALUE=/317/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vladivostok</OPTION>	<OPTION>SAUDI ARABIA</OPTION>
+	<OPTION VALUE=/522/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Damman</OPTION><OPTION VALUE=/521/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jeddah</OPTION><OPTION VALUE=/520/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Riyadh</OPTION>	<OPTION>SEICHELLES</OPTION>
+	<OPTION VALUE=/465/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Victoria</OPTION>	<OPTION>SENEGAL</OPTION>
+	<OPTION VALUE=/540/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dakar</OPTION>	<OPTION>SERBIA</OPTION>
+	<OPTION VALUE=/318/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Belgrade</OPTION><OPTION VALUE=/319/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sombor</OPTION>	<OPTION>SIERRA LEONE</OPTION>
+	<OPTION VALUE=/320/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Freetown</OPTION>	<OPTION>SINGAPORE</OPTION>
+	<OPTION VALUE=/321/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Singapore</OPTION>	<OPTION>SLOVAK REPUBLIC</OPTION>
+	<OPTION VALUE=/322/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bratislava</OPTION><OPTION VALUE=/479/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nova Ekacakra</OPTION><OPTION VALUE=/323/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trnava</OPTION>	<OPTION>SLOVENIA</OPTION>
+	<OPTION VALUE=/324/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ljubljana</OPTION>	<OPTION>SOUTH AFRICA</OPTION>
+	<OPTION VALUE=/325/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cape Town</OPTION><OPTION VALUE=/326/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Durban</OPTION><OPTION VALUE=/327/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Johannesburg</OPTION><OPTION VALUE=/328/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Port Elizabeth</OPTION>	<OPTION>SOUTH COREA</OPTION>
+	<OPTION VALUE=/519/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seoul</OPTION>	<OPTION>SPAIN</OPTION>
+	<OPTION VALUE=/329/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barcelona</OPTION><OPTION VALUE=/330/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Brihuega</OPTION><OPTION VALUE=/331/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Galicia</OPTION><OPTION VALUE=/458/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guadalajara</OPTION><OPTION VALUE=/332/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is. Canarias</OPTION><OPTION VALUE=/334/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Madrid</OPTION><OPTION VALUE=/335/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Málaga</OPTION><OPTION VALUE=/336/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Santa Cruz de Tenerife</OPTION><OPTION VALUE=/337/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valencia</OPTION>	<OPTION>SRI LANKA</OPTION>
+	<OPTION VALUE=/338/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colombo</OPTION>	<OPTION>SURINAM</OPTION>
+	<OPTION VALUE=/491/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nieuw Nickerie</OPTION><OPTION VALUE=/339/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paramaribo</OPTION>	<OPTION>SWEDEN</OPTION>
+	<OPTION VALUE=/340/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Avesta</OPTION><OPTION VALUE=/341/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gothenburg</OPTION><OPTION VALUE=/343/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Haparanda</OPTION><OPTION VALUE=/344/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horby</OPTION><OPTION VALUE=/345/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jonkoping</OPTION><OPTION VALUE=/346/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Karlstad</OPTION><OPTION VALUE=/347/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ludvika</OPTION><OPTION VALUE=/348/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lulea</OPTION><OPTION VALUE=/349/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lund</OPTION><OPTION VALUE=/350/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Malmö</OPTION><OPTION VALUE=/356/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Östersund</OPTION><OPTION VALUE=/351/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stockholm</OPTION><OPTION VALUE=/352/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sundsvall</OPTION><OPTION VALUE=/353/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Umea</OPTION><OPTION VALUE=/354/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uppsala</OPTION><OPTION VALUE=/355/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visby</OPTION>	<OPTION>SWITZERLAND</OPTION>
+	<OPTION VALUE=/357/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Basel</OPTION><OPTION VALUE=/358/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bern</OPTION><OPTION VALUE=/359/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dudingen</OPTION><OPTION VALUE=/360/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geneva</OPTION><OPTION VALUE=/361/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lugano</OPTION><OPTION VALUE=/362/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schaffhausen</OPTION><OPTION VALUE=/363/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zürich</OPTION>	<OPTION>SYRIA</OPTION>
+	<OPTION VALUE=/364/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Al Quneitrah</OPTION>	<OPTION>TAIWAN</OPTION>
+	<OPTION VALUE=/365/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Taipei</OPTION>	<OPTION>THAILAND</OPTION>
+	<OPTION VALUE=/366/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bangkok</OPTION>	<OPTION>TURKEY</OPTION>
+	<OPTION VALUE=/454/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ankara</OPTION><OPTION VALUE=/455/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Istambul</OPTION><OPTION VALUE=/456/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Izhir</OPTION>	<OPTION>UGANDA</OPTION>
+	<OPTION VALUE=/368/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kampala</OPTION>	<OPTION>UNITED KINGDOM</OPTION>
+	<OPTION VALUE=/369/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Birmingham</OPTION><OPTION VALUE=/370/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bristol</OPTION><OPTION VALUE=/371/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cardiff</OPTION><OPTION VALUE=/372/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cleethorpes</OPTION><OPTION VALUE=/373/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coventry</OPTION><OPTION VALUE=/374/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dublin</OPTION><OPTION VALUE=/375/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Glasgow</OPTION><OPTION VALUE=/501/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Great Bricet</OPTION><OPTION VALUE=/376/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leicester</OPTION><OPTION VALUE=/377/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Liverpool</OPTION><OPTION VALUE=/378/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;London</OPTION><OPTION VALUE=/379/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manchester</OPTION><OPTION VALUE=/380/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Castle</OPTION><OPTION VALUE=/381/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Plymouth</OPTION><OPTION VALUE=/382/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Romford</OPTION><OPTION VALUE=/383/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wexford</OPTION><OPTION VALUE=/384/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Worcester</OPTION>	<OPTION>UKRAINE</OPTION>
+	<OPTION VALUE=/385/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kiev</OPTION><OPTION VALUE=/386/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Odessa</OPTION>	<OPTION>UNITED ARAB EMIRATES</OPTION>
+	<OPTION VALUE=/477/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abu Dhabi</OPTION><OPTION VALUE=/469/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dubai</OPTION>	<OPTION>URUGUAY</OPTION>
+	<OPTION VALUE=/387/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Montevideo</OPTION>	<OPTION>UNITED STATES</OPTION>
+	<OPTION VALUE=/389/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AL - Juneau</OPTION><OPTION VALUE=/390/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AZ - Phoenix</OPTION><OPTION VALUE=/391/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AZ - Tucson</OPTION><OPTION VALUE=/503/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA  - Oakland</OPTION><OPTION VALUE=/392/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - Arcata</OPTION><OPTION VALUE=/393/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - Berkeley</OPTION><OPTION VALUE=/394/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - Los Angeles</OPTION><OPTION VALUE=/395/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - Palo Alto</OPTION><OPTION VALUE=/527/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - Sacramento</OPTION><OPTION VALUE=/396/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - San Diego</OPTION><OPTION VALUE=/397/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - San Francisco</OPTION><OPTION VALUE=/398/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - San Jose</OPTION><OPTION VALUE=/399/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - San Luis Obispo</OPTION><OPTION VALUE=/536/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CA - Walnut Creek</OPTION><OPTION VALUE=/400/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CO - Boulder</OPTION><OPTION VALUE=/401/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CO - Denver</OPTION><OPTION VALUE=/402/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CT - Hartford</OPTION><OPTION VALUE=/403/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DC - Washington</OPTION><OPTION VALUE=/404/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL - Gainesville</OPTION><OPTION VALUE=/405/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL - Key West</OPTION><OPTION VALUE=/406/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL - Miami</OPTION><OPTION VALUE=/407/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL - Tallahassee</OPTION><OPTION VALUE=/408/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL - Tampa</OPTION><OPTION VALUE=/409/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GA - Atlanta</OPTION><OPTION VALUE=/410/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HI - Hilo</OPTION><OPTION VALUE=/411/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HI - Honolulu</OPTION><OPTION VALUE=/412/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID - Boise</OPTION><OPTION VALUE=/413/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IL - Chicago</OPTION><OPTION VALUE=/502/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IN - Indianapolis</OPTION><OPTION VALUE=/414/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LA - New Orleans</OPTION><OPTION VALUE=/416/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MA - Boston</OPTION><OPTION VALUE=/415/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MD - Baltimore</OPTION><OPTION VALUE=/417/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MI - Detroit</OPTION><OPTION VALUE=/418/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MI - Lansing</OPTION><OPTION VALUE=/496/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MN - Mineapolis</OPTION><OPTION VALUE=/420/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MO - St Louis</OPTION><OPTION VALUE=/419/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MS - Picayune</OPTION><OPTION VALUE=/424/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NC - Chapelhill</OPTION><OPTION VALUE=/425/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NC - Durham</OPTION><OPTION VALUE=/485/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NC - Hillsborough</OPTION><OPTION VALUE=/531/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NC - Sandy Ridge</OPTION><OPTION VALUE=/426/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NC - Winston-Salem</OPTION><OPTION VALUE=/421/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NJ - Morristown</OPTION><OPTION VALUE=/422/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NM - Alburquerque</OPTION><OPTION VALUE=/423/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NY - New York</OPTION><OPTION VALUE=/470/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NY - Syracuse</OPTION><OPTION VALUE=/427/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OH - Cleveland</OPTION><OPTION VALUE=/428/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OH - Columbus</OPTION><OPTION VALUE=/429/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK - Oklahoma City</OPTION><OPTION VALUE=/431/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR - Eugene</OPTION><OPTION VALUE=/430/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR - Portland</OPTION><OPTION VALUE=/432/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PA - Gita-nagari Farm</OPTION><OPTION VALUE=/433/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PA - Harrisburg</OPTION><OPTION VALUE=/434/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PA - Philadelphia</OPTION><OPTION VALUE=/435/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PA - Pittsburgh</OPTION><OPTION VALUE=/525/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PA - Reading</OPTION><OPTION VALUE=/436/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR - Puerto Rico</OPTION><OPTION VALUE=/437/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR - San Juan</OPTION><OPTION VALUE=/438/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SC - Charleston</OPTION><OPTION VALUE=/388/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Territory - Virgin Islands</OPTION><OPTION VALUE=/439/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TX - Austin</OPTION><OPTION VALUE=/440/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TX - Dallas</OPTION><OPTION VALUE=/490/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TX - Harlingen</OPTION><OPTION VALUE=/441/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TX - Houston</OPTION><OPTION VALUE=/442/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TX - Waco</OPTION><OPTION VALUE=/443/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UT - Provo</OPTION><OPTION VALUE=/444/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WS - Seattle</OPTION><OPTION VALUE=/445/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WS - Walla Walla</OPTION><OPTION VALUE=/446/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WV - Moundsville</OPTION><OPTION VALUE=/447/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WV - New Vrindaban</OPTION>	<OPTION>UZBEKISTAN</OPTION>
+	<OPTION VALUE=/448/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tashkent</OPTION>	<OPTION>VENEZUELA</OPTION>
+	<OPTION VALUE=/449/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Caracas</OPTION>	<OPTION>ZAMBIA</OPTION>
+	<OPTION VALUE=/450/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kitwe-nkana</OPTION><OPTION VALUE=/451/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lusaka</OPTION>	<OPTION>ZIMBABWE</OPTION>
+	<OPTION VALUE=/452/2020/10/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Harare</OPTION>	</select>
+	</form>
+</td><td valign=top>
+	<form>
+	<select onChange="idx = this.selectedIndex; if (idx>0) top.parent.location=this.options[this.selectedIndex].value; this.selectedIndex=0;">
+		<OPTION>OTHER SITES</OPTION>
+		<OPTION VALUE=http://www.iskcon.com.mx>ISKCON Virtual Temple</OPTION>
+		<OPTION VALUE=http://www.krishnawest.com>Krishna West</OPTION>
+		<OPTION VALUE=http://www.bhaktivedantalibrary.com>Bhaktivedanta Library</OPTION>
+		<OPTION VALUE=http://www.istagosthi.com>Virtual Istagosthi</OPTION>
+	</select>
+	</form>
+</td><td width=300></td><td valign=top align=right>
+	<iframe src='//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FVaisnavaCalendar&amp;width=250&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=40&amp;appId=1374613962823729' scrolling='no' frameborder='0' style='border:none; overflow:hidden; height:40px;' allowTransparency='true'></iframe>
+</td></tr><tr><td colspan=4 valign=bottom>
+	<SCRIPT SRC="http://www.iskcon.com.mx/banner.js"></SCRIPT>
 </td><td valign=bottom>
-	<iframe src='//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FVaisnavaCalendar&amp;width=325&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=80&amp;appId=1374613962823729' scrolling='no' frameborder='0' style='border:none; overflow:hidden; height:80px;' allowTransparency='true'></iframe>
+	<script type="text/javascript" src="https://vk.com/js/api/openapi.js?162"></script>
+	<div id="vk_groups"></div>
+	<script type="text/javascript">
+		VK.Widgets.Group("vk_groups", {mode: 1, no_cover: 1, height: 200}, 185139045);
+	</script>
 </td></tr>
 </table>
-<TABLE BORDER=1 WIDTH='100%' CELLPADDING=0 ROWSPACING=0>
-  <tr>
-    <td width=1% rowspan=8></td>
-    <TD width=14% bgcolor=#6F6E6E><center><b>Sunday</TD>
-    <TD width=14% bgcolor=#6F6E6E><center><b>Monday</TD>
-    <TD width=14% bgcolor=#6F6E6E><center><b>Tuesday</TD>
-    <TD width=14% bgcolor=#6F6E6E><center><b>Wednesday</TD>
-    <TD width=14% bgcolor=#6F6E6E><center><b>Thursday</TD>
-    <TD width=14% bgcolor=#6F6E6E><center><b>Friday</TD>
-    <TD width=14% bgcolor=#6F6E6E><center><b>Saturday</TD>
-    <td width=1% rowspan=8></td>
-   </TR>
-
-    <tr>
-       <td height=80 valign=top>&nbsp;
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Sasti</td>
-          <td align=center valign=top>1</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Saptami</td>
-          <td align=center valign=top>2</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=jahnusaptami','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Jahnu Saptami</a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Astami</td>
-          <td align=center valign=top>3</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Navami</td>
-          <td align=center valign=top>4</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=sitadevi','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srimati Sita Devi (consort of Lord Sri Rama) <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=madhupandita','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srila Madhu Pandita <img src=dis.gif alt=Disppearance border=0></a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=jahnavadevi','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srimati Jahnava Devi <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Dasami</td>
-          <td align=center valign=top>5</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Suddha Ekadasi</td>
-          <td align=center valign=top>6</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#862E98 height=100% valign=top>Mohini Ekadasi</td>
-             </tr>
-        </table>
-      </td>
-   </tr>
-    <tr>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Dvadasi</td>
-          <td align=center valign=top>7</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#862E98  valign=top><font size=1>Break fast 04:39 - 09:25 <br>(Daylight saving not considered)</font></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=rukminidvadasi','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Rukmini Dvadasi</a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=FBAC2F height=100% valign=top><a href="javascript:;" onClick="window.open('https://secure745.websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=gurukks','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">HH Kadamba Kanana Svami <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Trayodasi</td>
-          <td align=center valign=top>8</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=jayanandathakura','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">HG Jayananda Thakura (ACBSP)<img src=dis.gif alt=Disppearance border=0></a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Caturdasi</td>
-          <td align=center valign=top>9</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#414AFC  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=nrsimhacaturdasi','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Nrsimha Caturdasi</a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><font size=1>(Fasting till dusk)</font></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Purnima</td>
-          <td align=center valign=top>10</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=krishnaphuladola','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Krsna Phula Dola, Salila Vihara</a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=paramesvaridasathakura','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srila Paramesvari Dasa Thakura <img src=dis.gif alt=Disppearance border=0></a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=radharamanadevaji','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srila Sri Radha-Ramana Devaji <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=madhavendrapuri','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srila Madhavendra Puri <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=srinivasaacarya','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srila Srinivasa Acarya <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=E87AFF height=100% valign=top><img src="purnima.gif" border=0></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Pratipat</td>
-          <td align=center valign=top>11</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=6F6E6E height=100% valign=top><b>Trivikrama Masa</b></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Dvitiya</td>
-          <td align=center valign=top>12</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Tritiya</td>
-          <td align=center valign=top>13</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=salagramatulasijaladana','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">End of Jala Dana</a></td>
-             </tr>
-        </table>
-      </td>
-   </tr>
-    <tr>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Caturthi</td>
-          <td align=center valign=top>14</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top>Taurus</td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Pancami</td>
-          <td align=center valign=top>15</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF  valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=ramanandaraya','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srila Ramananda Raya <img src=dis.gif alt=Disppearance border=0></a></td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=FBAC2F height=100% valign=top><a href="javascript:;" onClick="window.open('https://secure745.websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=gurubrs','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">HH Bhakti Raghava Svami <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Sasti</td>
-          <td align=center valign=top>16</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Sasti</td>
-          <td align=center valign=top>17</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Saptami</td>
-          <td align=center valign=top>18</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Astami</td>
-          <td align=center valign=top>19</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=FBAC2F height=100% valign=top><a href="javascript:;" onClick="window.open('https://secure745.websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=guruids','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">HH Indradyumna Svami <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Navami</td>
-          <td align=center valign=top>20</td>
-         </tr>
-        </table>
-      </td>
-   </tr>
-    <tr>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Dasami</td>
-          <td align=center valign=top>21</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Suddha Ekadasi</td>
-          <td align=center valign=top>22</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#862E98  valign=top>Apara Ekadasi</td>
-             </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#E87AFF height=100% valign=top><a href="javascript:;" onClick="window.open('/cgi-bin/en.cgi?nam=vrndavanadasathakura','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Srila Vrndavana Dasa Thakura <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Trayodasi</td>
-          <td align=center valign=top>23</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=#862E98 height=100% valign=top><font size=1>Break fast 04:24 - 09:20 <br>(Daylight saving not considered)</font></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Caturdasi</td>
-          <td align=center valign=top>24</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Amavasya</td>
-          <td align=center valign=top>25</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=E87AFF height=100% valign=top><img src=amavasya.gif border=0></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Pratipat</td>
-          <td align=center valign=top>26</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Dvitiya</td>
-          <td align=center valign=top>27</td>
-         </tr>
-        </table>
-      </td>
-   </tr>
-    <tr>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Caturthi</td>
-          <td align=center valign=top>28</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Pancami</td>
-          <td align=center valign=top>29</td>
-         </tr>
-             <tr>
-              <td colspan=2 align=center bgcolor=FBAC2F height=100% valign=top><a href="javascript:;" onClick="window.open('https://secure745.websitewelcome.com/~i5kc0n/vaisnavacalendar/cgi-bin/en.cgi?nam=gurusks','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">HH Smita Krishna Svami <img src=ap.gif alt=Appearance border=0></a></td>
-             </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Sasti</td>
-          <td align=center valign=top>30</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>
-        <table border=0 width=100% height=100%>
-         <tr>
-          <td align=center valign=top>Saptami</td>
-          <td align=center valign=top>31</td>
-         </tr>
-        </table>
-      </td>
-       <td height=80 valign=top>&nbsp;
-      </td>
-       <td height=80 valign=top>&nbsp;
-      </td>
-       <td height=80 valign=top>&nbsp;
-      </td>
-   </tr>
-</TABLE>
-
-<BR><center>
-<table border=0 CELLSPACING=2>
-	<tr></td><td>
-       	<img src=purnima.gif> Full moon |
-	</td><td>
-       	<img src=amavasya.gif> New moon |
-	</td><td>
-       	<img src=ap.gif height=16> Appearance |
-	</td><td>
-       	<img src=dis.gif height=16> Dissapearence |
-	</td><td width=19 bgcolor=862E98></td><td>
-		Ekadasi |
-	</td><td width=19 bgcolor=559FFB></td><td>
-		Caturmasya
+<h1><a href=../09><img src=/imagenes/previous.png title=Previous></a> October 2020 —  - Bhaia - Argentina <a href=../11><img src=/imagenes/next.png title=Next></a></h1>
+<table border=1 width=100%>
+	<tr><td width=14%>
+		<center><b>Sunday
+	</td><td width=14%>
+		<center><b>Monday
+	</td><td width=14%>
+		<center><b>Tuesday
+	</td><td width=14%>
+		<center><b>Wednesday
+	</td><td width=14%>
+		<center><b>Thursday
+	</td><td width=14%>
+		<center><b>Friday
+	</td><td width=14%>
+		<center><b>Saturday
 	</td></tr>
-</table>
+	<tr><td width=14%>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			</td><td>
+				<center><h1>
+			</td></tr><tr><td colspan=2>
+		</td></tr>
+		</table>
+	</td><td width=14%>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			</td><td>
+				<center><h1>
+			</td></tr><tr><td colspan=2>
+		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			</td><td>
+				<center><h1>
+			</td></tr><tr><td colspan=2>
+		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			</td><td>
+				<center><h1>
+			</td></tr><tr><td colspan=2>
+		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Purnima			</td><td>
+				<center><h1>1
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Pratipat			</td><td>
+				<center><h1>2
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Dvitiya			</td><td>
+				<center><h1>3
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td></tr>
 
-<br>
-<CENTER><b><a href='http://www.iskcon.com.mx/daksina/index.php?lang=en' target=_blank>Help us to preach</a> | <a href="javascript:;" onClick="window.open('/add_en.php','_blank','width=500, height=450,scrollbars=1,menubar=0,location=0,toolbar=0,personalbar=0,status=0'); return false">Add Vaisnava Calendar to your webpage</a>
-<br><br><SCRIPT SRC='http://www.iskcon.com.mx/cgi-bin/carousel.cgi?tell=js'></SCRIPT></CENTER>
+	<tr><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Tritiya			</td><td>
+				<center><h1>4
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Caturthi			</td><td>
+				<center><h1>5
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Pancami			</td><td>
+				<center><h1>6
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Sasti			</td><td>
+				<center><h1>7
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Sasti			</td><td>
+				<center><h1>8
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Saptami			</td><td>
+				<center><h1>9
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Astami			</td><td>
+				<center><h1>10
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td></tr>
+
+	<tr><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Navami			</td><td>
+				<center><h1>11
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Dasami			</td><td>
+				<center><h1>12
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Suddha Ekadasi			</td><td>
+				<center><h1>13
+			</td></tr><tr><td colspan=2>
+			<center></td></tr><tr><td colspan=2 bgcolor=A9F5A9><center>Parama Ekadasi</td></tr><tr><td colspan=2><center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Trayodasi			</td><td>
+				<center><h1>14
+			</td></tr><tr><td colspan=2>
+			<center></td></tr><tr><td colspan=2 bgcolor=A9F5A9><center>Break fast 06:24 - 10:45 (Daylight saving not considered)<br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Caturdasi			</td><td>
+				<center><h1>15
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Amavasya			</td><td>
+				<center><h1>16
+			</td></tr><tr><td colspan=2>
+			<center> </td></tr><tr><td colspan=2 bgcolor=BDBDBD><center>Padmanabha Masa continued</td></tr><tr><td colspan=2><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Pratipat			</td><td>
+				<center><h1>17
+			</td></tr><tr><td colspan=2>
+			<center>Tula Sankranti - <img src=/imagenes/zodiaco/Libra.png title=Libra height=16><br>		</td></tr>
+		</table>
+	</td></tr>
+
+	<tr><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Dvitiya			</td><td>
+				<center><h1>18
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Caturthi			</td><td>
+				<center><h1>19
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Pancami			</td><td>
+				<center><h1>20
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Sasti			</td><td>
+				<center><h1>21
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Saptami			</td><td>
+				<center><h1>22
+			</td></tr><tr><td colspan=2>
+			<center>Durga Puja<br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Astami			</td><td>
+				<center><h1>23
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Navami			</td><td>
+				<center><h1>24
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td></tr>
+
+	<tr><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Dasami			</td><td>
+				<center><h1>25
+			</td></tr><tr><td colspan=2>
+			<center>Ramacandra Vijayotsava<br>Sri Madhvacarya <img src=/imagenes/ap.gif title=Appearance height=16></td></tr><tr><td colspan=2 bgcolor=FAAC58><center>HH Bhaktisvarupa Damodar Svami <img src=/imagenes/ap.gif title=Appearance height=16></td></tr><tr><td colspan=2><center> <br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Suddha Ekadasi			</td><td>
+				<center><h1>26
+			</td></tr><tr><td colspan=2>
+			<center></td></tr><tr><td colspan=2 bgcolor=A9F5A9><center>Pasankusa Ekadasi</td></tr><tr><td colspan=2 bgcolor=FAAC58><center>HH Bir Krishna dasa Gosvami <img src=/imagenes/ap.gif height=16></td></tr><tr><td colspan=2><center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Dvadasi			</td><td>
+				<center><h1>27
+			</td></tr><tr><td colspan=2>
+			<center></td></tr><tr><td colspan=2 bgcolor=A9F5A9><center>Break fast 08:51 - 10:38 (Daylight saving not considered)<br>Srila Raghunatha Dasa Gosvami <img src=/imagenes/dis.gif title=Disappearance height=16><br>Srila Raghunatha Bhatta Gosvami <img src=/imagenes/dis.gif title=Disappearance height=16><br>Srila Krsnadasa Kaviraja Gosvami <img src=/imagenes/dis.gif title=Disappearance height=16><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Trayodasi			</td><td>
+				<center><h1>28
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Trayodasi			</td><td>
+				<center><h1>29
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Caturdasi			</td><td>
+				<center><h1>30
+			</td></tr><tr><td colspan=2>
+			<center><br>		</td></tr>
+		</table>
+	</td><td width=14% valign=top>
+		<table border=0 width=100%>
+		<tr><td width=60%>
+			<center>Purnima			</td><td>
+				<center><h1>31
+			</td></tr><tr><td colspan=2>
+			<center>Sri Krsna Saradiya Rasayatra<br>Sri Murari Gupta <img src=/imagenes/dis.gif title=Disappearance height=16><br>Laksmi Puja<br>Fourth month of Caturmasya begins<br>(Fast from urad dahl for one month.)<br></td></tr><tr><td colspan=2 bgcolor=BDBDBD><center>Damodara Masa</td></tr><tr><td colspan=2><br>		</td></tr>
+		</table>
+	</td></tr>
 
 
-</BODY>
-</HTML>
-
+	</table>
 """
 

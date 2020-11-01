@@ -1,40 +1,26 @@
 package com.sudopk.vc.location
 
+import android.util.Log
 import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.core.get
 import com.sudopk.vc.retrofit.VcService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.lang.ref.WeakReference
 
 interface LocationCallback {
-    fun onLocationsReceived(countries: List<Country>)
+  fun onLocationsReceived(countries: List<Country>)
 
-    fun onLocationRequestFailed()
-
+  fun onLocationRequestFailed()
 }
 
-class LocationRemoteRequest(val weakCallback: WeakReference<LocationCallback>) {
-    fun makeRequest(vcService: VcService) {
-        val locationsCall = vcService.locations()
-        locationsCall.enqueue(object : Callback<List<Country>> {
-            override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
-                if (response.isSuccessful && response.body() != null) {
-                    weakCallback.get?.onLocationsReceived(response.body())
-                } else {
-                    failed()
-                }
-            }
-
-            override fun onFailure(call: Call<List<Country>>, t: Throwable) {
-                t.printStackTrace()
-                failed()
-            }
-        })
+class LocationRemoteRequest(private val weakCallback: WeakReference<LocationCallback>) {
+  suspend fun makeRequest(vcService: VcService) {
+    try {
+      val countries = vcService.locations()
+      Log.i(javaClass.simpleName, "Received locations: $countries")
+      weakCallback.get?.onLocationsReceived(countries)
+    } catch (ex: Exception) {
+      Log.e(javaClass.simpleName, "Failed to get locations", ex)
+      weakCallback.get?.onLocationRequestFailed()
     }
-
-    private fun failed() {
-        weakCallback.get?.onLocationRequestFailed()
-    }
+  }
 }

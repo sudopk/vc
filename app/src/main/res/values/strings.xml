@@ -12,10 +12,6 @@
     <string name="update">Update</string>
     <string name="ignore">Ignore</string>
     <string name="old_app_recommended_update">App seems old. Recommended to update.</string>
-    <string name="new_moon">[New moon]</string>
-    <string name="full_moon">[Full moon]</string>
-    <string name="appearance_day">[Appearance]</string>
-    <string name="disappearance_day">[Disappearance]</string>
     <string name="date_and_weekday">%1$s %2$d\n%3$s</string>
     <string name="retry">Retry</string>
 </resources>
