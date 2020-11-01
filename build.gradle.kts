@@ -1,14 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+
+
 buildscript {
+  rootProject.extra["kotlinVersion"] = "1.4.10"
+  val kotlinVersion =  rootProject.extra["kotlinVersion"] as String
+
   repositories {
     google()
     jcenter()
-    maven(url = "http://dl.bintray.com/kotlin/kotlin-eap")
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:3.6.0-rc02")
-    val kotlinVersion = "1.3.61"
+    // Android gradle plugin.
+    classpath("com.android.tools.build:gradle:4.2.0-alpha15")
+    // Kotlin gradle plugin.
     classpath(kotlin("gradle-plugin", version = kotlinVersion))
     classpath(kotlin("android-extensions", version = kotlinVersion))
 
@@ -21,7 +27,7 @@ allprojects {
   repositories {
     google()
     jcenter()
-    maven(url = "http://dl.bintray.com/kotlin/kotlin-eap")
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
   }
 }
 
