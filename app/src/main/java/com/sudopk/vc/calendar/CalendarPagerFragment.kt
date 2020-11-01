@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sudopk.kandroid.appCompatActivity
@@ -14,9 +13,10 @@ import com.sudopk.vc.R
 import com.sudopk.vc.core.CalUtil
 import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.location.Location
-import kotlinx.android.synthetic.main.calendar_pager.*
-import java.util.*
-import kotlinx.coroutines.withContext
+import java.util.Calendar
+import kotlinx.android.synthetic.main.calendar_pager.tabs
+import kotlinx.android.synthetic.main.calendar_pager.toolbar
+import kotlinx.android.synthetic.main.calendar_pager.viewPager
 
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
 

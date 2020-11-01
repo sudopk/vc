@@ -64,19 +64,29 @@ class VcConfigActivity : AppCompatActivity(), TextDialogFragment.Container {
 
   private fun showTooOldAppDialog() {
     supportFragmentManager.notFoundByTag(DIALOG_TAG) {
-      val dialog = TextDialogFragment.newBlockingInstance(getString(R.string.old_app_must_update),
-        arrayOf(ButtonDescription(EXIT_BUTTON_ID, getString(R.string.exit_app)),
-          ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
+      val dialog = TextDialogFragment.newBlockingInstance(
+        getString(R.string.old_app_must_update),
+        arrayOf(
+          ButtonDescription(EXIT_BUTTON_ID, getString(R.string.exit_app)),
+          ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))
+        )
+      )
       dialog.show(supportFragmentManager, it)
     }
   }
 
   private fun showRecommendedUpdate() {
     supportFragmentManager.notFoundByTag(DIALOG_TAG) {
-      val dialog = TextDialogFragment.newBlockingInstance(getString(R.string
-        .old_app_recommended_update),
-        arrayOf(ButtonDescription(IGNORE_BUTTON_ID, getString(R.string.ignore)),
-          ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))))
+      val dialog = TextDialogFragment.newBlockingInstance(
+        getString(
+          R.string
+            .old_app_recommended_update
+        ),
+        arrayOf(
+          ButtonDescription(IGNORE_BUTTON_ID, getString(R.string.ignore)),
+          ButtonDescription(UPDATE_BUTTON_ID, getString(R.string.update))
+        )
+      )
       dialog.show(supportFragmentManager, it)
     }
   }

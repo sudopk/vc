@@ -1,7 +1,8 @@
 package com.sudopk.vc.core
 
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 object CalUtil {
   fun getCalendar(monthOffset: Int): Calendar {

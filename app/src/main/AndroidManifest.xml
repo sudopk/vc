@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sudopk.vc">
 
-  <uses-permission android:name="android.permission.INTERNET" />
-
-  <!--For usesCleartextTraffic="true":
-  We aren't passing any sensitive information and the website used for scrapping uses http.
-  Otherwise Retrofit throws:
-      java.net.UnknownServiceException: CLEARTEXT communication not supported
-  -->
   <application
       android:name=".app.VcApp"
       android:allowBackup="true"
@@ -28,4 +21,11 @@
     <activity android:name=".update.UpdateCheckActivity" />
     <activity android:name=".update.VcConfigActivity" />
   </application>
+
+  <!--For usesCleartextTraffic="true":
+  We aren't passing any sensitive information and the website used for scrapping uses http.
+  Otherwise Retrofit throws:
+      java.net.UnknownServiceException: CLEARTEXT communication not supported
+  -->
+  <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

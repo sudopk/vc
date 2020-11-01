@@ -4,8 +4,6 @@ import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.calendar.VCalendar
 import java.util.concurrent.TimeUnit
-import kotlin.time.seconds
-import kotlin.time.toJavaDuration
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.http.GET

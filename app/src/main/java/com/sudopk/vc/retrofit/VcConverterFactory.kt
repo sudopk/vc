@@ -2,7 +2,6 @@ package com.sudopk.vc.retrofit
 
 import android.util.Log
 import com.sudopk.kandroid.StrFromRes
-import com.sudopk.vc.R
 import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.calendar.DayCalendar
 import com.sudopk.vc.calendar.VCalendar

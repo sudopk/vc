@@ -7,11 +7,12 @@ interface DefaultParcelable : Parcelable {
   override fun describeContents(): Int = 0
 
   companion object {
-    fun <T> generateCreator(create: (source: Parcel) -> T): Parcelable.Creator<T> = object : Parcelable.Creator<T> {
-      override fun createFromParcel(source: Parcel): T = create(source)
+    fun <T> generateCreator(create: (source: Parcel) -> T): Parcelable.Creator<T> =
+      object : Parcelable.Creator<T> {
+        override fun createFromParcel(source: Parcel): T = create(source)
 
-      override fun newArray(size: Int): Array<out T>? = newArray(size)
-    }
+        override fun newArray(size: Int): Array<out T>? = newArray(size)
+      }
 
   }
 }
@@ -28,8 +29,10 @@ data class ExampleParcelable(val data1: String, val data2: String) : DefaultParc
   companion object {
     @JvmField
     val CREATOR = DefaultParcelable.generateCreator {
-      ExampleParcelable(it
-        .read(), it.read())
+      ExampleParcelable(
+        it
+          .read(), it.read()
+      )
     }
   }
 }

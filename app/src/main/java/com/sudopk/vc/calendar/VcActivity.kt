@@ -15,11 +15,11 @@ import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.location.Location
 import com.sudopk.vc.location.LocationContainer
 import com.sudopk.vc.location.LocationFragment
-import kotlinx.android.synthetic.main.container.*
+import kotlinx.android.synthetic.main.container.container
 
 class VcActivity : AppCompatActivity(),
-  CalendarPagerFragment.Container,
-  LocationContainer {
+                   CalendarPagerFragment.Container,
+                   LocationContainer {
   private lateinit var mCalendarStore: CalendarStore
 
   override fun onCreate(savedInstanceState: Bundle?) {

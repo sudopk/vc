@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sudopk.vc.R
 import com.sudopk.vc.core.monthAbbreviation
 import com.sudopk.vc.core.weekDayAbbreviation
+import java.util.Calendar
+import java.util.Collections
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.calendar_cell_common.*
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.calendar_cell_common.date
+import kotlinx.android.synthetic.main.calendar_cell_common.events
 
 
 private const val NOT_TODAY_VIEW_TYPE = 0
@@ -25,7 +26,7 @@ private const val TODAY_VIEW_TYPE = 1
  * @param year  Full year e.g. 2016
  */
 class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
-.Adapter<CalendarAdapter.VH>() {
+                                                           .Adapter<CalendarAdapter.VH>() {
 
   private val mVCalendar: MutableList<DayCalendar> = ArrayList()
   private var mDateToHighlight: Int = 0
@@ -48,8 +49,10 @@ class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
       cell = R.layout.calendar_cell_today
       eventLayout = R.layout.text_view
     }
-    return VH(LayoutInflater.from(parent.context)
-      .inflate(cell, parent, false), eventLayout, mMonthYear)
+    return VH(
+      LayoutInflater.from(parent.context)
+        .inflate(cell, parent, false), eventLayout, mMonthYear
+    )
   }
 
   override fun getItemViewType(position: Int): Int {
@@ -89,11 +92,17 @@ class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
 
     fun onBind(dayCalendar: DayCalendar) {
       mMonthCalendar.set(Calendar.DATE, dayCalendar.date)
-      date.text = itemView.context.getString(R.string.date_and_weekday,
+      date.text = itemView.context.getString(
+        R.string.date_and_weekday,
         mMonthCalendar.monthAbbreviation(), dayCalendar.date,
-        mMonthCalendar.weekDayAbbreviation())
-      events.setAdapter(ArrayAdapter(itemView.context,
-        mEventLayout, dayCalendar.events))
+        mMonthCalendar.weekDayAbbreviation()
+      )
+      events.setAdapter(
+        ArrayAdapter(
+          itemView.context,
+          mEventLayout, dayCalendar.events
+        )
+      )
     }
   }
 }

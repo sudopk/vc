@@ -7,7 +7,7 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.sudopk.vc.core.CalUtil
 import com.sudopk.vc.location.Location
-import java.util.*
+import java.util.Calendar
 
 
 @SuppressLint("DefaultLocale") // not end user string
@@ -25,8 +25,12 @@ class CalendarStore(context: Context, private val mGson: Gson) {
    * @param year  full year e.g. 2016
    */
   fun getCalendar(month: Int, year: Int): VCalendar {
-    val calendarString = mPreferences.getString(String.format(CALENDAR_KEY_FORMAT,
-      month, year), "")
+    val calendarString = mPreferences.getString(
+      String.format(
+        CALENDAR_KEY_FORMAT,
+        month, year
+      ), ""
+    )
     if (calendarString!!.isBlank()) {
       return emptyList()
     } else {

@@ -2,11 +2,19 @@ package com.sudopk.vc.retrofit
 
 interface VcApi {
   @Retention(AnnotationRetention.RUNTIME)
-  @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
+  @Target(
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.PROPERTY_GETTER,
+    AnnotationTarget.PROPERTY_SETTER
+  )
   annotation class Calendar
 
   @Retention(AnnotationRetention.RUNTIME)
-  @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
+  @Target(
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.PROPERTY_GETTER,
+    AnnotationTarget.PROPERTY_SETTER
+  )
   annotation class Locations
 
 }
