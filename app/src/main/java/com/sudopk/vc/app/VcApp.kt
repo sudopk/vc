@@ -8,34 +8,33 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.multidex.MultiDexApplication
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.mcxiaoke.koi.KoiConfig
 import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.calendar.CalendarStore
-import com.sudopk.vc.gson.RemoveFieldNameStrategy
+import com.sudopk.vc.di.DaggerVcComponent
+import com.sudopk.vc.di.VcComponent
+import com.sudopk.vc.di.VcModule
 import com.sudopk.vc.location.LocationStore
 import com.sudopk.vc.retrofit.VcService
+import javax.inject.Inject
 import org.jetbrains.anko.defaultSharedPreferences
 
 class VcApp : MultiDexApplication(), StrFromRes {
-  lateinit var gson: Gson
-  lateinit var locationStore: LocationStore
-  lateinit var calendarStore: CalendarStore
-  lateinit var vcService: VcService
-  private lateinit var mLifecycleCallbacks: VcActivityLifecycleCallbacks
+  @Inject lateinit var gson: Gson
+  @Inject lateinit var locationStore: LocationStore
+  @Inject lateinit var calendarStore: CalendarStore
+  @Inject lateinit var vcService: VcService
+  @Inject lateinit var lifecycleCallbacks: VcActivityLifecycleCallbacks
+
+  private lateinit var vcComponent: VcComponent
 
   override fun onCreate() {
     super.onCreate()
-    mLifecycleCallbacks = VcActivityLifecycleCallbacks()
-    registerActivityLifecycleCallbacks(mLifecycleCallbacks)
+    vcComponent = DaggerVcComponent.builder().vcModule(VcModule(this)).build()
 
-    gson = GsonBuilder()
-      .setFieldNamingStrategy(RemoveFieldNameStrategy())
-      .create()
-    vcService = VcService.newInstance(this)
+    vcComponent.inject(this)
 
-    calendarStore = CalendarStore(this, gson)
-    locationStore = LocationStore(this, gson)
+    registerActivityLifecycleCallbacks(lifecycleCallbacks)
 
     val cleanedupKeyVersionCode3 = "CleanupVersionCode3"
     val cleanedup = defaultSharedPreferences.getBoolean(cleanedupKeyVersionCode3, false)
@@ -71,7 +70,7 @@ class VcApp : MultiDexApplication(), StrFromRes {
   }
 
   fun currentResumedActivity(): AppCompatActivity? {
-    return mLifecycleCallbacks.currentResumedActivity()
+    return lifecycleCallbacks.currentResumedActivity()
   }
 
   fun versionCode(): Long {

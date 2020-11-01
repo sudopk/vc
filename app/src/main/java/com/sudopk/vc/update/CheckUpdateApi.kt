@@ -3,14 +3,15 @@ package com.sudopk.vc.update
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
 import com.sudopk.kandroid.isNotNull
-import com.sudopk.vc.globals.Globals
 import com.sudopk.vc.retrofit.VcConfigService
+import javax.inject.Inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CheckUpdateApi : ViewModel() {
+class CheckUpdateApi @Inject constructor(private val gson: Gson) : ViewModel() {
   private val vcConfig = MutableLiveData<VcConfig>()
 
   fun checkUpdate(): LiveData<VcConfig> {
@@ -22,7 +23,7 @@ class CheckUpdateApi : ViewModel() {
   }
 
   private fun checkWithServer() {
-    val configService = VcConfigService.newInstance(Globals.gson).config()
+    val configService = VcConfigService.newInstance(gson).config()
     configService.enqueue(object : Callback<VcConfig> {
       override fun onResponse(call: Call<VcConfig>, response: Response<VcConfig>) {
         if (response.isSuccessful && response.body() != null) {

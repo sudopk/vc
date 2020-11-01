@@ -4,8 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class VcActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
+@Singleton
+class VcActivityLifecycleCallbacks @Inject constructor() : Application.ActivityLifecycleCallbacks {
   private var mCurrentResumedActivity: AppCompatActivity? = null
   override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 

@@ -1,17 +1,19 @@
 package com.sudopk.vc.calendar
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.sudopk.vc.core.CalUtil
+import com.sudopk.vc.di.AppContext
 import com.sudopk.vc.location.Location
 import java.util.Calendar
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-@SuppressLint("DefaultLocale") // not end user string
-class CalendarStore(context: Context, private val mGson: Gson) {
+@Singleton
+class CalendarStore @Inject constructor(@AppContext context: Context, private val mGson: Gson) {
   private val mPreferences: SharedPreferences
 
   init {

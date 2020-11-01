@@ -6,8 +6,12 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sudopk.vc.calendar.Country
+import com.sudopk.vc.di.AppContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocationStore(context: Context, private val mGson: Gson) {
+@Singleton
+class LocationStore @Inject constructor(@AppContext context: Context, private val mGson: Gson) {
   private val mPreferences: SharedPreferences
   var locations: List<Country>
     private set
@@ -20,7 +24,7 @@ class LocationStore(context: Context, private val mGson: Gson) {
       locations = listOf()
     } else {
       locations =
-        mGson.fromJson<List<Country>>(savedLocations, object : TypeToken<List<Country>>() {}.type)
+        mGson.fromJson(savedLocations, object : TypeToken<List<Country>>() {}.type)
     }
   }
 
