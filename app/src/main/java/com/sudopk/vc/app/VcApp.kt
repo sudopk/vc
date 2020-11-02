@@ -26,7 +26,7 @@ class VcApp : MultiDexApplication(), StrFromRes {
   @Inject lateinit var vcService: VcService
   @Inject lateinit var lifecycleCallbacks: VcActivityLifecycleCallbacks
 
-  private lateinit var vcComponent: VcComponent
+  lateinit var vcComponent: VcComponent
 
   override fun onCreate() {
     super.onCreate()

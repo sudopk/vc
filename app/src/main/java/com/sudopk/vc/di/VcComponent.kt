@@ -1,11 +1,13 @@
 package com.sudopk.vc.di
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.app.VcApp
 import com.sudopk.vc.gson.RemoveFieldNameStrategy
+import com.sudopk.vc.location.LocationFragment
 import com.sudopk.vc.retrofit.VcService
 import dagger.Component
 import dagger.Module
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 @Component(modules = [VcModule::class])
 interface VcComponent {
   fun inject(vcApp: VcApp)
+  fun inject(fragment: LocationFragment)
 }
 
 @Module

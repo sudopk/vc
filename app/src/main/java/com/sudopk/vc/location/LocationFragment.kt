@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -20,17 +21,19 @@ import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.core.weak
 import com.sudopk.vc.retrofit.VcService
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.location.progressBar
 import kotlinx.android.synthetic.main.location.recyclerView
 import kotlinx.coroutines.launch
 
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
   private lateinit var mAdapter: LocationAdapter
-  private lateinit var mVcService: VcService
-  private lateinit var mLocationStore: LocationStore
-  private lateinit var mCalendarStore: CalendarStore
+  @Inject lateinit var mVcService: VcService
+  @Inject lateinit var mLocationStore: LocationStore
+  @Inject lateinit var mCalendarStore: CalendarStore
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    vcApp.vcComponent.inject(this)
     super.onCreate(savedInstanceState)
     //setHasOptionsMenu(true);
 
@@ -106,7 +109,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     if (isResumed) {
       progressBar.visibility = View.VISIBLE
 
-      if (!mLocationStore.hasLocations()) {
+      if (mLocationStore.hasLocations()) {
         onLocationResponse(mLocationStore.locations)
       } else {
         val locationRequest = LocationRemoteRequest(this.weak)
