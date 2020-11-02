@@ -1,10 +1,10 @@
 package com.sudopk.vc.calendar
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sudopk.vc.retrofit.VcService
+import java.util.logging.Level
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("CalendarApi")
@@ -45,27 +45,13 @@ class CalendarApi : ViewModel() {
           mMonthYear.year,
           "%02d".format(mMonthYear.month)
         )
-//          if (!response.isSuccessful) {
-//            Log.e("CalendarApi", "Invalid response code: " + response.code())
-//            mStatus.value = DataStatus.FAILED
-//            return
-//          }
-//          if (vCalendar == null) {
-//            Log.e("CalendarApi", "Empty body")
-//            mStatus.value = DataStatus.FAILED
-//            return
-//          }
         mCalendarStore.saveCalendar(mMonthYear, vCalendar)
         mStatus.value = DataStatus.READY
       } catch (ex: Exception) {
-        Log.e(javaClass.simpleName, "Failed to fetch calendar", ex)
+        logger.log(Level.WARNING, "Failed to fetch calendar", ex)
         mStatus.value = DataStatus.FAILED
       }
     }
-//        override fun onFailure(call: Call<VCalendar>, t: Throwable?) {
-//          Log.e("CalenderApi", t?.message!!)
-//          mStatus.value = DataStatus.FAILED
-//        }
     return mStatus
   }
 

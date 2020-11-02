@@ -25,24 +25,24 @@ class VcModule(private val vcApp: VcApp) {
 
   @Provides
   @AppContext
-  fun providesAppContext(vcApp: VcApp): Context = vcApp
+  fun provideAppContext(vcApp: VcApp): Context = vcApp
 
   @Provides
-  fun providesApp(): VcApp = vcApp
+  fun provideApp(): VcApp = vcApp
 
   @Provides
-  fun providesStrFromRes(vcApp: VcApp): StrFromRes = vcApp
+  fun provideStrFromRes(vcApp: VcApp): StrFromRes = vcApp
 
 
   @Singleton
   @Provides
-  fun providesGson(): Gson = GsonBuilder()
+  fun provideGson(): Gson = GsonBuilder()
     .setFieldNamingStrategy(RemoveFieldNameStrategy())
     .create()
 
   @Singleton
   @Provides
-  fun providesVcService(strFromRes: StrFromRes): VcService = VcService.newInstance(strFromRes)
+  fun provideVcService(strFromRes: StrFromRes): VcService = VcService.newInstance(strFromRes)
 }
 
 @Qualifier
