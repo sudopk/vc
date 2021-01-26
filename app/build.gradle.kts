@@ -1,14 +1,12 @@
 plugins {
   id("com.android.application")
   id("kotlin-android")
-  id("kotlin-android-extensions")
   id("kotlin-kapt")
 }
 
 android {
   compileSdkVersion(30)
   buildToolsVersion = "30.0.2"
-//    useAndroidX = true
 
   defaultConfig {
     applicationId = "com.sudopk.vc"
@@ -26,6 +24,10 @@ android {
     }
   }
 
+  buildFeatures {
+    viewBinding = true
+  }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -34,8 +36,6 @@ android {
     unitTests.isReturnDefaultValues = true
   }
 }
-
-androidExtensions.isExperimental = true
 
 dependencies {
   val kotlinVersion = rootProject.extra["kotlinVersion"] as String
@@ -51,10 +51,10 @@ dependencies {
   implementation("android.arch.lifecycle:common-java8:1.1.1")
 
 
-  implementation("androidx.core:core-ktx:1.5.0-alpha04")
+  implementation("androidx.core:core-ktx:1.5.0-beta01")
 
-  implementation("androidx.appcompat:appcompat:1.3.0-alpha02")
-  implementation("com.google.android.material:material:1.3.0-alpha03")
+  implementation("androidx.appcompat:appcompat:1.3.0-beta01")
+  implementation("com.google.android.material:material:1.3.0-rc01")
   implementation("androidx.preference:preference-ktx:1.1.1")
 
   implementation("com.android.support.constraint:constraint-layout:2.0.4")

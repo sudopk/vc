@@ -9,7 +9,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -20,10 +19,9 @@ import com.sudopk.vc.calendar.CalendarStore
 import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.core.weak
+import com.sudopk.vc.databinding.LocationBinding
 import com.sudopk.vc.retrofit.VcService
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.location.progressBar
-import kotlinx.android.synthetic.main.location.recyclerView
 import kotlinx.coroutines.launch
 
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
@@ -31,6 +29,9 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
   @Inject lateinit var mVcService: VcService
   @Inject lateinit var mLocationStore: LocationStore
   @Inject lateinit var mCalendarStore: CalendarStore
+
+  private var _binding: LocationBinding? = null
+  private val binding get() = _binding!!
 
   override fun onCreate(savedInstanceState: Bundle?) {
     vcApp.vcComponent.inject(this)
@@ -56,15 +57,16 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.location, container, false)
+  ): View {
+    _binding = LocationBinding.inflate(inflater, container, false)
+    return binding.root
   }
 
   override fun onStart() {
     super.onStart()
-    recyclerView.layoutManager = LinearLayoutManager(context)
+    binding.recyclerView.layoutManager = LinearLayoutManager(context)
     mAdapter = LocationAdapter(this, mCalendarStore.location)
-    recyclerView.adapter = mAdapter
+    binding.recyclerView.adapter = mAdapter
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -107,7 +109,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
 
   private fun refresh() {
     if (isResumed) {
-      progressBar.visibility = View.VISIBLE
+      binding.progressBar.visibility = View.VISIBLE
 
       if (mLocationStore.hasLocations()) {
         onLocationResponse(mLocationStore.locations)
@@ -134,7 +136,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
 
   private fun onLocationResponse(response: List<Country>) {
     if (isResumed) {
-      progressBar.visibility = View.GONE
+      binding.progressBar.visibility = View.GONE
       mAdapter.setData(response)
 
       var position = mAdapter.getPosition(mCalendarStore.location)
@@ -142,12 +144,12 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         // lets scroll to location one before the actual one, looks little better
         position--
       }
-      recyclerView.layoutManager?.scrollToPosition(position)
+      binding.recyclerView.layoutManager?.scrollToPosition(position)
     }
   }
 
   companion object {
-    val TAG = LocationFragment::class.java.name
+    val TAG: String = LocationFragment::class.java.name
 
     fun newInstance(): DialogFragment {
       return LocationFragment()

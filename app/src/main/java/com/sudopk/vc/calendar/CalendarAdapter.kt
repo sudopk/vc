@@ -4,27 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.sudopk.vc.R
 import com.sudopk.vc.core.monthAbbreviation
 import com.sudopk.vc.core.weekDayAbbreviation
+import com.sudopk.vc.databinding.CalendarCellBinding
+import com.sudopk.vc.databinding.CalendarCellCommonBinding
+import com.sudopk.vc.databinding.CalendarCellTodayBinding
 import java.util.Calendar
-import java.util.Collections
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.calendar_cell_common.date
-import kotlinx.android.synthetic.main.calendar_cell_common.events
 
 
 private const val NOT_TODAY_VIEW_TYPE = 0
 private const val TODAY_VIEW_TYPE = 1
 
 
-/**
- * @param month 1 to 12
- * *
- * @param year  Full year e.g. 2016
- */
 class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
                                                            .Adapter<CalendarAdapter.VH>() {
 
@@ -40,19 +33,20 @@ class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-    val cell: Int
-    val eventLayout: Int
+    val binding: CalendarCellCommonBinding
+    val rootView: View
     if (viewType == NOT_TODAY_VIEW_TYPE) {
-      cell = R.layout.calendar_cell
-      eventLayout = R.layout.text_view
+      val cellBinding =
+        CalendarCellBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+      binding = cellBinding.common
+      rootView = cellBinding.root
     } else {
-      cell = R.layout.calendar_cell_today
-      eventLayout = R.layout.text_view
+      val cellBinding =
+        CalendarCellTodayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+      binding = cellBinding.common
+      rootView = cellBinding.root
     }
-    return VH(
-      LayoutInflater.from(parent.context)
-        .inflate(cell, parent, false), eventLayout, mMonthYear
-    )
+    return VH(rootView, binding, mMonthYear)
   }
 
   override fun getItemViewType(position: Int): Int {
@@ -73,35 +67,31 @@ class CalendarAdapter(private val mMonthYear: MonthYear) : RecyclerView
   fun setData(calendar: VCalendar) {
     mVCalendar.clear()
     mVCalendar.addAll(calendar)
-    Collections.sort(mVCalendar)
+    mVCalendar.sort()
     notifyDataSetChanged()
   }
 
-  class VH(itemView: View, @param:LayoutRes private val mEventLayout: Int, monthYear: MonthYear) :
-    RecyclerView.ViewHolder(itemView), LayoutContainer {
-    private val mMonthCalendar: Calendar
+  class VH(
+    itemView: View,
+    private val binding: CalendarCellCommonBinding,
+    monthYear: MonthYear
+  ) : RecyclerView.ViewHolder(itemView) {
+    private val mMonthCalendar: Calendar = Calendar.getInstance()
 
     init {
-      mMonthCalendar = Calendar.getInstance()
       mMonthCalendar.set(Calendar.MONTH, monthYear.month - 1)
       mMonthCalendar.set(Calendar.YEAR, monthYear.year)
     }
 
-    override val containerView: View?
-      get() = itemView
-
     fun onBind(dayCalendar: DayCalendar) {
       mMonthCalendar.set(Calendar.DATE, dayCalendar.date)
-      date.text = itemView.context.getString(
+      binding.date.text = itemView.context.getString(
         R.string.date_and_weekday,
         mMonthCalendar.monthAbbreviation(), dayCalendar.date,
         mMonthCalendar.weekDayAbbreviation()
       )
-      events.setAdapter(
-        ArrayAdapter(
-          itemView.context,
-          mEventLayout, dayCalendar.events
-        )
+      binding.events.setAdapter(
+        ArrayAdapter(itemView.context, R.layout.text_view, dayCalendar.events)
       )
     }
   }

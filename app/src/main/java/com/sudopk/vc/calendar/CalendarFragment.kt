@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.core.vcApp
+import com.sudopk.vc.databinding.CalendarBinding
 import java.util.Calendar
-import kotlinx.android.synthetic.main.calendar.progressBar
-import kotlinx.android.synthetic.main.calendar.recyclerView
-import kotlinx.android.synthetic.main.calendar.viewAnimator
 import kotlinx.coroutines.launch
 
 
@@ -25,13 +23,16 @@ class CalendarFragment : Fragment() {
   private lateinit var mAdapter: CalendarAdapter
   private lateinit var mCalendarApi: CalendarApi
   private lateinit var mMonthYear: MonthYear
+  private var _binding: CalendarBinding? = null
+  private val binding get() = _binding!!
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.calendar, container, false)
+  ): View {
+    _binding = CalendarBinding.inflate(inflater, container, false)
+    return binding.root
   }
 
   override fun onStart() {
@@ -42,9 +43,9 @@ class CalendarFragment : Fragment() {
 
     mMonthYear = MonthYear(requireArguments().getInt(MONTH), requireArguments().getInt(YEAR))
 
-    recyclerView.layoutManager = LinearLayoutManager(context)
+    binding.recyclerView.layoutManager = LinearLayoutManager(context)
     mAdapter = CalendarAdapter(mMonthYear)
-    recyclerView.adapter = mAdapter
+    binding.recyclerView.adapter = mAdapter
 
     mCalendarApi = ViewModelProviders.of(this).get(CalendarApi::class.java)
     mCalendarApi.init(vcService, calendarStore, mMonthYear)
@@ -65,13 +66,13 @@ class CalendarFragment : Fragment() {
     return super.onOptionsItemSelected(item)
   }
 
-  fun onRefresh() {
+  private fun onRefresh() {
     mCalendarApi.removeCalendar(mMonthYear)
     fetchCalendar()
 
   }
 
-  fun fetchCalendar() {
+  private fun fetchCalendar() {
     lifecycleScope.launch {
       val calendar = mCalendarApi.fetchCalendar()
 
@@ -87,25 +88,25 @@ class CalendarFragment : Fragment() {
   }
 
   fun onFetchingCalendar() {
-    viewAnimator.displayedChild = CalendarFragment.CALENDAR_VIEW_INDEX
-    progressBar.visibility = View.VISIBLE
+    binding.viewAnimator.displayedChild = CALENDAR_VIEW_INDEX
+    binding.progressBar.visibility = View.VISIBLE
 
   }
 
-  fun onCalendarRequestFailed() {
-    progressBar.visibility = View.GONE
-    viewAnimator.displayedChild = CalendarFragment.FAILED_VIEW_INDEX
+  private fun onCalendarRequestFailed() {
+    binding.progressBar.visibility = View.GONE
+    binding.viewAnimator.displayedChild = FAILED_VIEW_INDEX
   }
 
   private fun showCalendar(vCalendar: VCalendar) {
     if (vCalendar.isNotEmpty()) {
-      progressBar.visibility = View.GONE
+      binding.progressBar.visibility = View.GONE
 
       mAdapter.setData(vCalendar)
 
       scrollRecyclerViewToCorrectDate()
     } else {
-      viewAnimator.displayedChild = CalendarFragment.NO_DATA_VIEW_INDEX
+      binding.viewAnimator.displayedChild = NO_DATA_VIEW_INDEX
     }
   }
 
@@ -121,7 +122,7 @@ class CalendarFragment : Fragment() {
       if (positionToScrollTo > 0) {
         positionToScrollTo--
       }
-      recyclerView.layoutManager
+      binding.recyclerView.layoutManager
         ?.scrollToPosition(positionToScrollTo)
 
       mAdapter.setDateToHighlight(calendar.get(Calendar.DATE))
@@ -136,11 +137,11 @@ class CalendarFragment : Fragment() {
   }
 
   companion object {
-    val CALENDAR_VIEW_INDEX = 0
-    val NO_DATA_VIEW_INDEX = 1
-    val FAILED_VIEW_INDEX = 2
-    private val MONTH = "month"
-    private val YEAR = "year"
+    const val CALENDAR_VIEW_INDEX = 0
+    const val NO_DATA_VIEW_INDEX = 1
+    const val FAILED_VIEW_INDEX = 2
+    private const val MONTH = "month"
+    private const val YEAR = "year"
 
     /**
      * @param month 1 to 12

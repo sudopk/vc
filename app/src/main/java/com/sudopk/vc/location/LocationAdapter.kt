@@ -3,13 +3,13 @@ package com.sudopk.vc.location
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.Country
-import java.util.Collections
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.location_cell.textView as textViewCell
+import com.sudopk.vc.databinding.LocationCellBinding
+import com.sudopk.vc.databinding.LocationHeaderCellBinding
 
 class LocationAdapter(
   private val mContainer: LocationContainer, private val mSelectedLocation:
@@ -21,15 +21,13 @@ class LocationAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
     if (viewType == HEADER_VIEW_TYPE) {
-      return VH(
-        LayoutInflater.from(parent.context)
-          .inflate(R.layout.location_header_cell, parent, false), mContainer
-      )
+      val binding =
+        LocationHeaderCellBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+      return VH(binding.root, binding.textView, mContainer)
     } else {
-      return VH(
-        LayoutInflater.from(parent.context)
-          .inflate(R.layout.location_cell, parent, false), mContainer
-      )
+      val binding =
+        LocationCellBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+      return VH(binding.root, binding.textView, mContainer)
     }
   }
 
@@ -55,7 +53,7 @@ class LocationAdapter(
   fun setData(data: List<Country>) {
     mCountries.clear()
     mCountries.addAll(data)
-    Collections.sort(mCountries)
+    mCountries.sort()
 
     updateCountryIndices(mCountries)
 
@@ -98,8 +96,12 @@ class LocationAdapter(
     return 0
   }
 
-  class VH internal constructor(itemView: View, container: LocationContainer) :
-    RecyclerView.ViewHolder(itemView), LayoutContainer {
+  class VH internal constructor(
+    itemView: View,
+    private val textView: AppCompatTextView,
+    container: LocationContainer
+  ) :
+    RecyclerView.ViewHolder(itemView) {
     private lateinit var mLocation: Location
 
     init {
@@ -110,25 +112,22 @@ class LocationAdapter(
       }
     }
 
-    override val containerView: View?
-      get() = itemView
-
     fun setCountry(country: Country, countryIndex: Int, selectedLocation: Location?) {
       if (itemViewType == HEADER_VIEW_TYPE) {
-        textViewCell.text = country.name
+        textView.text = country.name
       } else {
         mLocation = country.locations[adapterPosition - countryIndex - 1]
         if (mLocation == selectedLocation) {
-          textViewCell.setBackgroundColor(
+          textView.setBackgroundColor(
             ContextCompat.getColor(
-              textViewCell.context, R
+              textView.context, R
                 .color.selectedCellColor
             )
           )
         } else {
-          textViewCell.setBackgroundColor(0xffffff)
+          textView.setBackgroundColor(0xffffff)
         }
-        textViewCell.text = mLocation.name
+        textView.text = mLocation.name
       }
     }
   }

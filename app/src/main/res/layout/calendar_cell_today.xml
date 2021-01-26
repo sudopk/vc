@@ -5,5 +5,5 @@
     android:backgroundTint="@color/selectedCellColor"
     app:backgroundTint="@color/selectedCellColor">
 
-  <include layout="@layout/calendar_cell_common" />
+  <include android:id="@+id/common" layout="@layout/calendar_cell_common" />
 </androidx.cardview.widget.CardView>
