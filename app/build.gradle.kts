@@ -1,5 +1,6 @@
 plugins {
   id("com.android.application")
+  id("dagger.hilt.android.plugin")
   id("kotlin-android")
   id("kotlin-kapt")
 }
@@ -79,9 +80,11 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0")
   implementation("org.jetbrains.anko:anko-common:$ankoVersion")
 
-  val daggerVersion = "2.28.3"
-  implementation("com.google.dagger:dagger:$daggerVersion")
-  kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+//  val daggerVersion = "2.28.3"
+//  implementation("com.google.dagger:dagger:$daggerVersion")
+//  kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+  implementation("com.google.dagger:hilt-android:2.31.2-alpha")
+  kapt("com.google.dagger:hilt-android-compiler:2.31.2-alpha")
 
   //testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
   //testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

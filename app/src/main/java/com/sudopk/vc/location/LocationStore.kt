@@ -6,12 +6,15 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sudopk.vc.calendar.Country
-import com.sudopk.vc.di.AppContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocationStore @Inject constructor(@AppContext context: Context, private val mGson: Gson) {
+class LocationStore @Inject constructor(
+  @ApplicationContext context: Context,
+  private val mGson: Gson
+) {
   private val mPreferences: SharedPreferences
   var locations: List<Country>
     private set

@@ -1,40 +1,33 @@
 package com.sudopk.vc.di
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sudopk.kandroid.StrFromRes
-import com.sudopk.vc.app.VcApp
 import com.sudopk.vc.gson.RemoveFieldNameStrategy
-import com.sudopk.vc.location.LocationFragment
 import com.sudopk.vc.retrofit.VcService
-import dagger.Component
 import dagger.Module
 import dagger.Provides
-import javax.inject.Qualifier
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
-@Singleton
-@Component(modules = [VcModule::class])
-interface VcComponent {
-  fun inject(vcApp: VcApp)
-  fun inject(fragment: LocationFragment)
-}
-
 @Module
-class VcModule(private val vcApp: VcApp) {
+@InstallIn(SingletonComponent::class)
+object VcModule {
 
   @Provides
-  @AppContext
-  fun provideAppContext(vcApp: VcApp): Context = vcApp
+  @Singleton
+  fun provideStrFromRes(@ApplicationContext appContext: Context): StrFromRes = object : StrFromRes {
+    override fun getString(resId: Int): String {
+      return appContext.getString(resId)
+    }
 
-  @Provides
-  fun provideApp(): VcApp = vcApp
-
-  @Provides
-  fun provideStrFromRes(vcApp: VcApp): StrFromRes = vcApp
+    override fun getString(resId: Int, vararg formatArgs: Any): String {
+      return appContext.getString(resId, formatArgs)
+    }
+  }
 
 
   @Singleton
@@ -47,7 +40,3 @@ class VcModule(private val vcApp: VcApp) {
   @Provides
   fun provideVcService(strFromRes: StrFromRes): VcService = VcService.newInstance(strFromRes)
 }
-
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class AppContext

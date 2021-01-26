@@ -17,13 +17,14 @@ import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.CalendarStore
 import com.sudopk.vc.calendar.Country
-import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.core.weak
 import com.sudopk.vc.databinding.LocationBinding
 import com.sudopk.vc.retrofit.VcService
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
   private lateinit var mAdapter: LocationAdapter
   @Inject lateinit var mVcService: VcService
@@ -34,17 +35,10 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
   private val binding get() = _binding!!
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    vcApp.vcComponent.inject(this)
     super.onCreate(savedInstanceState)
     //setHasOptionsMenu(true);
 
-    mVcService = vcApp.vcService
-
-    mLocationStore = vcApp.locationStore
-    mCalendarStore = vcApp.calendarStore
-
     setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_AppCompat_Light_Dialog)
-
   }
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

@@ -7,32 +7,24 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.multidex.MultiDexApplication
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.mcxiaoke.koi.KoiConfig
 import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.calendar.CalendarStore
-import com.sudopk.vc.di.DaggerVcComponent
-import com.sudopk.vc.di.VcComponent
-import com.sudopk.vc.di.VcModule
 import com.sudopk.vc.location.LocationStore
 import com.sudopk.vc.retrofit.VcService
+import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 import org.jetbrains.anko.defaultSharedPreferences
 
+@HiltAndroidApp
 class VcApp : MultiDexApplication(), StrFromRes {
-  @Inject lateinit var gson: Gson
   @Inject lateinit var locationStore: LocationStore
   @Inject lateinit var calendarStore: CalendarStore
   @Inject lateinit var vcService: VcService
   @Inject lateinit var lifecycleCallbacks: VcActivityLifecycleCallbacks
 
-  lateinit var vcComponent: VcComponent
-
   override fun onCreate() {
     super.onCreate()
-    vcComponent = DaggerVcComponent.builder().vcModule(VcModule(this)).build()
-
-    vcComponent.inject(this)
 
     registerActivityLifecycleCallbacks(lifecycleCallbacks)
 

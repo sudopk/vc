@@ -44,7 +44,11 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
 
     TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
       val calendar =
-        CalUtil.getCalendar((binding.viewPager.adapter as CalendarPagerAdapter).getMonthOffset(position))
+        CalUtil.getCalendar(
+          (binding.viewPager.adapter as CalendarPagerAdapter).getMonthOffset(
+            position
+          )
+        )
       tab.text = "${calendar.get(Calendar.MONTH) + 1} / ${calendar.get(Calendar.YEAR)}"
     }.attach()
   }

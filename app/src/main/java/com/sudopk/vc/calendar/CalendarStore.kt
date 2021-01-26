@@ -5,15 +5,18 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.sudopk.vc.core.CalUtil
-import com.sudopk.vc.di.AppContext
 import com.sudopk.vc.location.Location
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class CalendarStore @Inject constructor(@AppContext context: Context, private val mGson: Gson) {
+class CalendarStore @Inject constructor(
+  @ApplicationContext context: Context,
+  private val mGson: Gson
+) {
   private val mPreferences: SharedPreferences
 
   init {

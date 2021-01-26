@@ -12,16 +12,18 @@ import com.sudopk.vc.R
 import com.sudopk.vc.components.ProgressFragment
 import com.sudopk.vc.components.ToolbarFragment
 import com.sudopk.vc.core.resumed
-import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.databinding.ContainerBinding
 import com.sudopk.vc.location.Location
 import com.sudopk.vc.location.LocationContainer
 import com.sudopk.vc.location.LocationFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class VcActivity : AppCompatActivity(),
                    CalendarPagerFragment.Container,
                    LocationContainer {
-  private lateinit var mCalendarStore: CalendarStore
+  @Inject lateinit var mCalendarStore: CalendarStore
   private lateinit var binding: ContainerBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +31,6 @@ class VcActivity : AppCompatActivity(),
 
     binding = ContainerBinding.inflate(inflater)
     setContentView(binding.root)
-
-    mCalendarStore = vcApp.calendarStore
 
     val location = mCalendarStore.location
     if (location == null) {

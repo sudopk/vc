@@ -13,13 +13,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
-import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.databinding.CalendarBinding
+import com.sudopk.vc.retrofit.VcService
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class CalendarFragment : Fragment() {
+  @Inject lateinit var calendarStore: CalendarStore
+  @Inject lateinit var vcService: VcService
+
   private lateinit var mAdapter: CalendarAdapter
   private lateinit var mCalendarApi: CalendarApi
   private lateinit var mMonthYear: MonthYear
@@ -38,9 +43,6 @@ class CalendarFragment : Fragment() {
   override fun onStart() {
     super.onStart()
     setHasOptionsMenu(true)
-    val vcService = vcApp.vcService
-    val calendarStore = vcApp.calendarStore
-
     mMonthYear = MonthYear(requireArguments().getInt(MONTH), requireArguments().getInt(YEAR))
 
     binding.recyclerView.layoutManager = LinearLayoutManager(context)
