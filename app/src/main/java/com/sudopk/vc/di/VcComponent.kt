@@ -19,7 +19,7 @@ object VcModule {
 
   @Provides
   @Singleton
-  fun provideStrFromRes(@ApplicationContext appContext: Context): StrFromRes = object : StrFromRes {
+  fun provideStrFromRes(@ApplicationContext appContext: Context) = object : StrFromRes {
     override fun getString(resId: Int): String {
       return appContext.getString(resId)
     }
@@ -28,7 +28,6 @@ object VcModule {
       return appContext.getString(resId, formatArgs)
     }
   }
-
 
   @Singleton
   @Provides

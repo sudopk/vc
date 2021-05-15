@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-  compileSdkVersion(30)
+  compileSdk = 30
   buildToolsVersion = "30.0.2"
 
   defaultConfig {
     applicationId = "com.sudopk.vc"
-    minSdkVersion(16)
-    targetSdkVersion(30)
+    minSdk = 16
+    targetSdk = 30
     versionCode = 4
     versionName = "2.1"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
@@ -52,11 +52,13 @@ dependencies {
   implementation("android.arch.lifecycle:common-java8:1.1.1")
 
 
-  implementation("androidx.core:core-ktx:1.5.0-beta01")
-
-  implementation("androidx.appcompat:appcompat:1.3.0-beta01")
-  implementation("com.google.android.material:material:1.3.0-rc01")
+  implementation("androidx.core:core-ktx:1.6.0-alpha03")
+  implementation("androidx.activity:activity-ktx:1.2.3")
+  implementation("androidx.fragment:fragment-ktx:1.3.3")
   implementation("androidx.preference:preference-ktx:1.1.1")
+
+  implementation("androidx.appcompat:appcompat:1.3.0-rc01")
+  implementation("com.google.android.material:material:1.4.0-beta01")
 
   implementation("com.android.support.constraint:constraint-layout:2.0.4")
 
@@ -73,12 +75,10 @@ dependencies {
 
   implementation("org.jsoup:jsoup:1.13.1")
 
-  implementation("com.sudopk:KAndroidCommon:1.0.5@aar")
-  implementation("com.mcxiaoke.koi:core:0.5.5@aar")
+  implementation("com.github.sudopk:KAndroid:master-SNAPSHOT")
 
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0")
-  implementation("org.jetbrains.anko:anko-common:$ankoVersion")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
 
 //  val daggerVersion = "2.28.3"
 //  implementation("com.google.dagger:dagger:$daggerVersion")

@@ -7,14 +7,12 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.multidex.MultiDexApplication
 import com.google.android.material.snackbar.Snackbar
-import com.mcxiaoke.koi.KoiConfig
 import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.calendar.CalendarStore
 import com.sudopk.vc.location.LocationStore
 import com.sudopk.vc.retrofit.VcService
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
-import org.jetbrains.anko.defaultSharedPreferences
 
 @HiltAndroidApp
 class VcApp : MultiDexApplication(), StrFromRes {
@@ -27,16 +25,6 @@ class VcApp : MultiDexApplication(), StrFromRes {
     super.onCreate()
 
     registerActivityLifecycleCallbacks(lifecycleCallbacks)
-
-    val cleanedupKeyVersionCode3 = "CleanupVersionCode3"
-    val cleanedup = defaultSharedPreferences.getBoolean(cleanedupKeyVersionCode3, false)
-    if (!cleanedup) {
-      calendarStore.cleanupAll()
-      locationStore.cleanupAll()
-      defaultSharedPreferences.edit().putBoolean(cleanedupKeyVersionCode3, true).apply()
-    }
-
-    KoiConfig.logLevel = Log.DEBUG
   }
 
   fun showBlockingNotification() {

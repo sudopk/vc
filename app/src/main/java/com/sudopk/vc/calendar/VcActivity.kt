@@ -3,7 +3,6 @@ package com.sudopk.vc.calendar
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.mcxiaoke.koi.ext.inflater
 import com.sudopk.kandroid.isNull
 import com.sudopk.kandroid.notFoundById
 import com.sudopk.kandroid.notFoundByTag
@@ -29,7 +28,7 @@ class VcActivity : AppCompatActivity(),
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    binding = ContainerBinding.inflate(inflater)
+    binding = ContainerBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
     val location = mCalendarStore.location

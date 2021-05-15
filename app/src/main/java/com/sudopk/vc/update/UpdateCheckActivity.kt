@@ -14,7 +14,6 @@ import com.sudopk.vc.R
 import com.sudopk.vc.calendar.VcActivity
 import com.sudopk.vc.components.ProgressFragment
 import com.sudopk.vc.core.vcApp
-import org.jetbrains.anko.startActivity
 
 class UpdateCheckActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,9 @@ class UpdateCheckActivity : AppCompatActivity() {
   }
 
   fun onConfig(config: VcConfig) {
-    startActivity<VcConfigActivity>(VC_CONFIG to config)
+    startActivity(Intent(this, VcConfigActivity::class.java).also {
+      it.putExtra(VC_CONFIG, config)
+    })
 
     finish()
   }
@@ -100,7 +101,7 @@ class VcConfigActivity : AppCompatActivity(), TextDialogFragment.Container {
   }
 
   fun launchVCalendar() {
-    startActivity<VcActivity>()
+    startActivity(Intent(this, VcActivity::class.java))
     finish()
   }
 
