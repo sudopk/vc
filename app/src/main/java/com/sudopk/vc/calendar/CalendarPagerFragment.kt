@@ -43,22 +43,15 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
     binding.viewPager.currentItem = pagerAdapter.itemCount / 2
 
     TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-      val calendar =
-        CalUtil.getCalendar(
-          (binding.viewPager.adapter as CalendarPagerAdapter).getMonthOffset(
-            position
-          )
-        )
+      val calendar = CalUtil.getCalendar(
+        (binding.viewPager.adapter as CalendarPagerAdapter).getMonthOffset(position)
+      )
       tab.text = "${calendar.get(Calendar.MONTH) + 1} / ${calendar.get(Calendar.YEAR)}"
     }.attach()
   }
 
   private fun updateSubtitle(location: Location?) {
-    if (location != null) {
-      binding.toolbar.subtitle = location.name
-    } else {
-      binding.toolbar.subtitle = ""
-    }
+    binding.toolbar.subtitle = location?.name ?: ""
   }
 
   override fun onChangeLocationRequest() {

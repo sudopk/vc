@@ -1,6 +1,5 @@
 package com.sudopk.vc.app
 
-import android.content.pm.PackageManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDialogFragment
@@ -28,9 +27,8 @@ class VcApp : MultiDexApplication(), StrFromRes {
   }
 
   fun showBlockingNotification() {
-    val activity = currentResumedActivity()
-    if (activity != null) {
-      val fm = activity.supportFragmentManager
+    currentResumedActivity()?.let {
+      val fm = it.supportFragmentManager
       val dialogFragment = AppCompatDialogFragment()
       dialogFragment.isCancelable = false
       dialogFragment.show(fm, null)
@@ -38,13 +36,8 @@ class VcApp : MultiDexApplication(), StrFromRes {
   }
 
   fun showSoftNotification() {
-    val activity = currentResumedActivity()
-
-    if (activity != null) {
-      val snackbar = Snackbar.make(
-        activity.window.decorView, "", Snackbar
-          .LENGTH_SHORT
-      )
+    currentResumedActivity()?.let {
+      val snackbar = Snackbar.make(it.window.decorView, "", Snackbar.LENGTH_SHORT)
       snackbar.show()
     }
   }
@@ -54,14 +47,10 @@ class VcApp : MultiDexApplication(), StrFromRes {
   }
 
   fun versionCode(): Long {
-    try {
-      val packageInfo = packageManager.getPackageInfo(packageName, 0)
-      val longVersionCode = PackageInfoCompat.getLongVersionCode(packageInfo)
-      Log.e("VersionCode", "${longVersionCode}")
-      return longVersionCode
-    } catch (e: PackageManager.NameNotFoundException) {
-      throw RuntimeException(e)
-    }
+    val packageInfo = packageManager.getPackageInfo(packageName, 0)
+    val longVersionCode = PackageInfoCompat.getLongVersionCode(packageInfo)
+    Log.e("VersionCode", longVersionCode.toString())
+    return longVersionCode
   }
 }
 

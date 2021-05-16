@@ -29,10 +29,7 @@ data class ExampleParcelable(val data1: String, val data2: String) : DefaultParc
   companion object {
     @JvmField
     val CREATOR = DefaultParcelable.generateCreator {
-      ExampleParcelable(
-        it
-          .read(), it.read()
-      )
+      ExampleParcelable(it.read(), it.read())
     }
   }
 }

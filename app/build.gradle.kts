@@ -5,13 +5,15 @@ plugins {
   id("kotlin-kapt")
 }
 
+val composeVersion = "1.0.0-beta06"
+
 android {
   compileSdk = 30
   buildToolsVersion = "30.0.2"
 
   defaultConfig {
     applicationId = "com.sudopk.vc"
-    minSdk = 16
+    minSdk = 21
     targetSdk = 30
     versionCode = 4
     versionName = "2.1"
@@ -27,12 +29,23 @@ android {
 
   buildFeatures {
     viewBinding = true
+    // Enables Jetpack Compose for this module
+    compose = true
   }
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion = composeVersion
+  }
+
   testOptions {
     unitTests.isReturnDefaultValues = true
   }
@@ -40,7 +53,6 @@ android {
 
 dependencies {
   val kotlinVersion = rootProject.extra["kotlinVersion"] as String
-  val ankoVersion = "0.10.3"
 
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
@@ -62,14 +74,35 @@ dependencies {
 
   implementation("com.android.support.constraint:constraint-layout:2.0.4")
 
+  implementation("androidx.compose.ui:ui:$composeVersion")
+  // Tooling support (Previews, etc.)
+  implementation("androidx.compose.ui:ui-tooling:$composeVersion")
+  // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+  implementation("androidx.compose.foundation:foundation:$composeVersion")
+  // Material Design
+  implementation("androidx.compose.material:material:$composeVersion")
+  // Material design icons
+  implementation("androidx.compose.material:material-icons-core:$composeVersion")
+  implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+  // Integration with activities
+  implementation("androidx.activity:activity-compose:1.3.0-alpha07")
+  // Integration with ViewModels
+  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04")
+  // Integration with observables
+  implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
+  implementation("androidx.compose.runtime:runtime-rxjava2:$composeVersion")
+  // UI Tests
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
+
 //    implementation("com.google.android.gms:play-services:9.2.0")
 
   //testCompile 'org.mockito:mockito-core:1.10.19'
   //compile 'io.reactivex.rxjava2:rxjava:2.0.0-RC2'
   //compile 'io.reactivex.rxjava2:rxandroid:2.0.0-RC1'
 
-  implementation("com.squareup.retrofit2:retrofit:2.9.0")
-  implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+  val retrofitVersion = "2.9.0"
+  implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+  implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
   implementation("com.google.code.gson:gson:2.8.6")
 
@@ -78,13 +111,14 @@ dependencies {
   implementation("com.github.sudopk:KAndroid:master-SNAPSHOT")
 
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
 
 //  val daggerVersion = "2.28.3"
 //  implementation("com.google.dagger:dagger:$daggerVersion")
 //  kapt("com.google.dagger:dagger-compiler:$daggerVersion")
-  implementation("com.google.dagger:hilt-android:2.31.2-alpha")
-  kapt("com.google.dagger:hilt-android-compiler:2.31.2-alpha")
+  val hiltVersion = "2.35.1"
+  implementation("com.google.dagger:hilt-android:$hiltVersion")
+  kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
   //testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
   //testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

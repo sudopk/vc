@@ -7,17 +7,45 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Divider
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
-import com.sudopk.vc.databinding.CalendarBinding
+import com.sudopk.vc.core.monthAbbreviation
+import com.sudopk.vc.core.weekDayAbbreviation
 import com.sudopk.vc.retrofit.VcService
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import javax.inject.Inject
+import kotlin.math.max
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -25,32 +53,26 @@ class CalendarFragment : Fragment() {
   @Inject lateinit var calendarStore: CalendarStore
   @Inject lateinit var vcService: VcService
 
-  private lateinit var mAdapter: CalendarAdapter
   private lateinit var mCalendarApi: CalendarApi
   private lateinit var mMonthYear: MonthYear
-  private var _binding: CalendarBinding? = null
-  private val binding get() = _binding!!
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    _binding = CalendarBinding.inflate(inflater, container, false)
-    return binding.root
+    return ComposeView(requireContext())
   }
 
   override fun onStart() {
     super.onStart()
     setHasOptionsMenu(true)
+
     mMonthYear = MonthYear(requireArguments().getInt(MONTH), requireArguments().getInt(YEAR))
-
-    binding.recyclerView.layoutManager = LinearLayoutManager(context)
-    mAdapter = CalendarAdapter(mMonthYear)
-    binding.recyclerView.adapter = mAdapter
-
     mCalendarApi = ViewModelProviders.of(this).get(CalendarApi::class.java)
     mCalendarApi.init(vcService, calendarStore, mMonthYear)
+
+    (view as ComposeView).setContent { Calendar(mCalendarApi) }
 
     fetchCalendar()
   }
@@ -71,92 +93,98 @@ class CalendarFragment : Fragment() {
   private fun onRefresh() {
     mCalendarApi.removeCalendar(mMonthYear)
     fetchCalendar()
-
   }
 
   private fun fetchCalendar() {
     lifecycleScope.launch {
-      val calendar = mCalendarApi.fetchCalendar()
-
-      calendar.removeObservers(this@CalendarFragment)
-      calendar.observe(this@CalendarFragment, {
-        when (it) {
-          DataStatus.READY -> showCalendar(mCalendarApi.calendar)
-          DataStatus.FAILED -> onCalendarRequestFailed()
-          else -> onFetchingCalendar()
-        }
-      })
+      mCalendarApi.fetchCalendar()
     }
   }
 
-  fun onFetchingCalendar() {
-    binding.viewAnimator.displayedChild = CALENDAR_VIEW_INDEX
-    binding.progressBar.visibility = View.VISIBLE
-
-  }
-
-  private fun onCalendarRequestFailed() {
-    binding.progressBar.visibility = View.GONE
-    binding.viewAnimator.displayedChild = FAILED_VIEW_INDEX
-  }
-
-  private fun showCalendar(vCalendar: VCalendar) {
-    if (vCalendar.isNotEmpty()) {
-      binding.progressBar.visibility = View.GONE
-
-      mAdapter.setData(vCalendar)
-
-      scrollRecyclerViewToCorrectDate()
-    } else {
-      binding.viewAnimator.displayedChild = NO_DATA_VIEW_INDEX
-    }
-  }
-
-  private fun scrollRecyclerViewToCorrectDate() {
-    val calendar = Calendar.getInstance()
-    val currentMonth = mMonthYear.month == calendar.get(Calendar.MONTH) + 1 && mMonthYear
-      .year ==
-      calendar
-        .get(Calendar.YEAR)
-    if (currentMonth) {
-      var positionToScrollTo = calendar.get(Calendar.DATE) - 1   // -1 for 0-based index
-      // scroll one before the date
-      if (positionToScrollTo > 0) {
-        positionToScrollTo--
+  @Composable
+  private fun Calendar(calendarApi: CalendarApi) {
+    val statusDelegate by calendarApi.status.observeAsState()
+    when (val status = statusDelegate!!) {
+      is DataStatus.Failed -> Box(contentAlignment = Alignment.Center) {
+        Text(
+          getString(R.string.failed_to_get_calendar_data),
+          style = MaterialTheme.typography.body1
+        )
       }
-      binding.recyclerView.layoutManager
-        ?.scrollToPosition(positionToScrollTo)
-
-      mAdapter.setDateToHighlight(calendar.get(Calendar.DATE))
-    } else {
-      mAdapter.setDateToHighlight(0)
+      is DataStatus.NotReady -> {
+        Box {
+          LinearProgressIndicator(Modifier.fillMaxWidth(), color = MaterialTheme.colors.secondary)
+        }
+      }
+      is DataStatus.Ready -> {
+        val calendar = Calendar.getInstance()
+        val currentMonth = mMonthYear.month == calendar.get(Calendar.MONTH) + 1 &&
+          mMonthYear.year == calendar.get(Calendar.YEAR)
+        val date = calendar.get(Calendar.DATE)
+        val listState = rememberLazyListState()
+        if (currentMonth) {
+          LaunchedEffect(date) {
+            listState.animateScrollToItem(max(0, date - 2))
+          }
+        }
+        LazyColumn(state = listState) {
+          items(status.vCalendar) {
+            val modifier = if (currentMonth && it.date == date) {
+              Modifier.background(Color.LightGray)
+            } else {
+              Modifier
+            }
+            Column(modifier) {
+              CalendarDay(it)
+              Divider()
+            }
+          }
+        }
+      }
     }
   }
 
+  @Composable
+  private fun CalendarDay(day: DayCalendar) {
+    Row(Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+      Box(
+        Modifier
+          .clip(CircleShape)
+          .background(MaterialTheme.colors.secondary)
+          .padding(8.dp)
+      ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+          val calendar: Calendar = Calendar.getInstance()
+          calendar.set(Calendar.MONTH, mMonthYear.month - 1)
+          calendar.set(Calendar.YEAR, mMonthYear.year)
+          calendar.set(Calendar.DATE, day.date)
+          Text("${calendar.monthAbbreviation()} ${day.date}")
+          Text(calendar.weekDayAbbreviation())
+        }
+      }
+      Spacer(Modifier.width(8.dp))
+      Column {
+        day.events.forEach { Text(it) }
+      }
+    }
+  }
 
   interface Container {
     fun onChangeLocationRequest()
   }
 
   companion object {
-    const val CALENDAR_VIEW_INDEX = 0
-    const val NO_DATA_VIEW_INDEX = 1
-    const val FAILED_VIEW_INDEX = 2
     private const val MONTH = "month"
     private const val YEAR = "year"
 
     /**
      * @param month 1 to 12
-     * *
-     * @param year  full year e.g. 2016
+     * @param year  Full year e.g. 2016
      */
     fun newInstance(month: Int, year: Int): Fragment {
-      val fragment = CalendarFragment()
-      val bundle = Bundle()
-      bundle.putInt(MONTH, month)
-      bundle.putInt(YEAR, year)
-      fragment.arguments = bundle
-      return fragment
+      return CalendarFragment().also {
+        it.arguments = bundleOf(MONTH to month, YEAR to year)
+      }
     }
   }
 }

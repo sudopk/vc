@@ -9,36 +9,27 @@ import javax.inject.Singleton
 
 @Singleton
 class VcActivityLifecycleCallbacks @Inject constructor() : Application.ActivityLifecycleCallbacks {
-  private var mCurrentResumedActivity: AppCompatActivity? = null
-  override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+  private var currentResumedActivity: AppCompatActivity? = null
 
-  }
+  override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
-  override fun onActivityStarted(activity: Activity) {
-
-  }
+  override fun onActivityStarted(activity: Activity) {}
 
   override fun onActivityResumed(activity: Activity) {
-    mCurrentResumedActivity = activity as AppCompatActivity
+    currentResumedActivity = activity as AppCompatActivity
   }
 
   override fun onActivityPaused(activity: Activity) {
-    mCurrentResumedActivity = null
+    currentResumedActivity = null
   }
 
-  override fun onActivityStopped(activity: Activity) {
+  override fun onActivityStopped(activity: Activity) {}
 
-  }
+  override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
-  override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-
-  }
-
-  override fun onActivityDestroyed(activity: Activity) {
-
-  }
+  override fun onActivityDestroyed(activity: Activity) {}
 
   fun currentResumedActivity(): AppCompatActivity? {
-    return mCurrentResumedActivity
+    return currentResumedActivity
   }
 }

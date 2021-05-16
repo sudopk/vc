@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/CardViewStyle">
-
-  <include
-      android:id="@+id/common"
-      layout="@layout/calendar_cell_common" />
-</androidx.cardview.widget.CardView>

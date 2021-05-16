@@ -1,6 +1,5 @@
 package com.sudopk.vc.calendar
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sudopk.vc.retrofit.VcService
@@ -12,18 +11,9 @@ private val logger = Logger.getLogger("CalendarApi")
 class CalendarApi : ViewModel() {
   private lateinit var mCalendarStore: CalendarStore
   private lateinit var mVcService: VcService
-  private val mStatus = MutableLiveData<DataStatus>()
-
-  val calendar: VCalendar
-    get() {
-      return when (mStatus.value) {
-        DataStatus.READY -> mCalendarStore.getCalendar(mMonthYear)
-        else -> emptyList()
-      }
-    }
-
   private lateinit var mMonthYear: MonthYear
 
+  val status = MutableLiveData<DataStatus>(DataStatus.NotReady)
 
   fun init(vcService: VcService, calendarStore: CalendarStore, monthYear: MonthYear) {
     mVcService = vcService
@@ -31,37 +21,40 @@ class CalendarApi : ViewModel() {
     mMonthYear = monthYear
   }
 
-  suspend fun fetchCalendar(): LiveData<DataStatus> {
-    mStatus.value = DataStatus.NOT_READY
-    if (mCalendarStore.hasCalendar(mMonthYear)) {
-      mStatus.value = DataStatus.READY
-    } else {
-      val location = mCalendarStore.location!!
+  suspend fun fetchCalendar() {
+    status.value = DataStatus.NotReady
 
-      logger.info("Location: $location")
-      try {
-        val vCalendar: VCalendar = mVcService.calendar(
-          location.id,
-          mMonthYear.year,
-          "%02d".format(mMonthYear.month)
-        )
-        mCalendarStore.saveCalendar(mMonthYear, vCalendar)
-        mStatus.value = DataStatus.READY
-      } catch (ex: Exception) {
-        logger.log(Level.WARNING, "Failed to fetch calendar", ex)
-        mStatus.value = DataStatus.FAILED
-      }
+    if (mCalendarStore.hasCalendar(mMonthYear)) {
+      status.value = DataStatus.Ready(mCalendarStore.getCalendar(mMonthYear))
+      return
     }
-    return mStatus
+
+    val location = mCalendarStore.location!!
+    logger.info("Location: $location")
+
+    try {
+      val vCalendar: VCalendar = mVcService.calendar(
+        location.id,
+        mMonthYear.year,
+        "%02d".format(mMonthYear.month)
+      )
+      mCalendarStore.saveCalendar(mMonthYear, vCalendar)
+
+      status.value = DataStatus.Ready(vCalendar)
+    } catch (ex: Exception) {
+      logger.log(Level.WARNING, "Failed to fetch calendar", ex)
+      status.value = DataStatus.Failed
+    }
   }
 
   fun removeCalendar(monthYear: MonthYear) {
     mCalendarStore.removeCalendar(monthYear)
-    mStatus.value = DataStatus.NOT_READY
+    status.value = DataStatus.NotReady
   }
-
 }
 
-enum class DataStatus {
-  NOT_READY, READY, FAILED
+sealed class DataStatus {
+  object NotReady : DataStatus()
+  class Ready(val vCalendar: VCalendar) : DataStatus()
+  object Failed : DataStatus()
 }
