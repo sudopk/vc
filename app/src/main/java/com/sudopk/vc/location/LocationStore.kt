@@ -2,6 +2,7 @@ package com.sudopk.vc.location
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -15,31 +16,29 @@ class LocationStore @Inject constructor(
   @ApplicationContext context: Context,
   private val mGson: Gson
 ) {
-  private val mPreferences: SharedPreferences
+  private val mPreferences: SharedPreferences =
+    PreferenceManager.getDefaultSharedPreferences(context)
   var locations: List<Country>
     private set
 
   init {
-    mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
     val savedLocations = mPreferences.getString(LOCATIONS, "")
-    if (savedLocations!!.isBlank()) {
-      locations = listOf()
+    locations = if (savedLocations!!.isBlank()) {
+      listOf()
     } else {
-      locations =
-        mGson.fromJson(savedLocations, object : TypeToken<List<Country>>() {}.type)
+      mGson.fromJson(savedLocations, object : TypeToken<List<Country>>() {}.type)
     }
   }
 
   fun saveLocations(locations: List<Country>) {
     this.locations = locations
-    mPreferences.edit()
-      .putString(LOCATIONS, mGson.toJson(locations))
-      .apply()
+    mPreferences.edit {
+      putString(LOCATIONS, mGson.toJson(locations))
+    }
   }
 
   fun hasLocations(): Boolean {
-    return !locations.isEmpty()
+    return locations.isNotEmpty()
   }
 
   fun cleanupAll() {

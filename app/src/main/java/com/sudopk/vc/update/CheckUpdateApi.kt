@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.sudopk.kandroid.isNotNull
 import com.sudopk.vc.retrofit.VcConfigService
 import javax.inject.Inject
 import retrofit2.Call
@@ -15,11 +14,11 @@ class CheckUpdateApi @Inject constructor(private val gson: Gson) : ViewModel() {
   private val vcConfig = MutableLiveData<VcConfig>()
 
   fun checkUpdate(): LiveData<VcConfig> {
-    if (vcConfig.value.isNotNull()) {
-      return vcConfig;
+    if (vcConfig.value != null) {
+      return vcConfig
     }
     checkWithServer()
-    return vcConfig;
+    return vcConfig
   }
 
   private fun checkWithServer() {

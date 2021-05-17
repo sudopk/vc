@@ -108,7 +108,7 @@ dependencies {
 
   implementation("org.jsoup:jsoup:1.13.1")
 
-  implementation("com.github.sudopk:KAndroid:master-SNAPSHOT")
+  implementation("com.github.sudopk:KAndroid:1.1.2")
 
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
@@ -123,7 +123,7 @@ dependencies {
   //testCompile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
   //testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
-  testImplementation("junit:junit:4.13.1")
+  testImplementation("junit:junit:4.13.2")
   testImplementation("com.google.truth:truth:1.1")
 
 //    androidTestImplementation("com.android.support.test:runner:1.0.2")

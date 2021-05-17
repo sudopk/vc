@@ -1,9 +1,12 @@
 package com.sudopk.vc.calendar
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.fragment.app.commit
+import androidx.fragment.app.transaction
 import com.google.android.material.snackbar.Snackbar
-import com.sudopk.kandroid.isNull
 import com.sudopk.kandroid.notFoundById
 import com.sudopk.kandroid.notFoundByTag
 import com.sudopk.kandroid.replace
@@ -40,7 +43,7 @@ class VcActivity : AppCompatActivity(),
   }
 
   private fun launchCalendarPagerFragment() {
-    supportFragmentManager.notFoundById(R.id.container, CalendarPagerFragment::class) {
+    supportFragmentManager.notFoundById<CalendarPagerFragment>(R.id.container) {
       supportFragmentManager.replace(it, CalendarPagerFragment())
     }
   }
@@ -59,14 +62,14 @@ class VcActivity : AppCompatActivity(),
   }
 
   override fun onLocationSelectCanceled() {
-    if (mCalendarStore.location.isNull()) {
+    if (mCalendarStore.location == null) {
       finish()
     }
   }
 
   override fun onLocationSelectFailed(error: String) {
     if (resumed) {
-      supportFragmentManager.notFoundById(R.id.container, ToolbarFragment::class) {
+      supportFragmentManager.notFoundById<ToolbarFragment>(R.id.container) {
         supportFragmentManager.replace(it, ToolbarFragment())
       }
 

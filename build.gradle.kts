@@ -1,6 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-
 buildscript {
   rootProject.extra["kotlinVersion"] = "1.4.32"
   val kotlinVersion = rootProject.extra["kotlinVersion"] as String

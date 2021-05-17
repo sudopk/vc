@@ -10,15 +10,34 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Divider
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.CalendarStore
 import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.core.weak
-import com.sudopk.vc.databinding.LocationBinding
 import com.sudopk.vc.retrofit.VcService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -26,13 +45,11 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationCallback {
-  private lateinit var mAdapter: LocationAdapter
   @Inject lateinit var mVcService: VcService
   @Inject lateinit var mLocationStore: LocationStore
   @Inject lateinit var mCalendarStore: CalendarStore
 
-  private var _binding: LocationBinding? = null
-  private val binding get() = _binding!!
+  private val countryData = MutableLiveData<List<Country>>(emptyList())
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,20 +64,63 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     return dialog
   }
 
+  @OptIn(ExperimentalFoundationApi::class)
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    _binding = LocationBinding.inflate(inflater, container, false)
-    return binding.root
-  }
-
-  override fun onStart() {
-    super.onStart()
-    binding.recyclerView.layoutManager = LinearLayoutManager(context)
-    mAdapter = LocationAdapter(this, mCalendarStore.location)
-    binding.recyclerView.adapter = mAdapter
+    return ComposeView(requireContext()).also {
+      it.setContent {
+        val countries by countryData.observeAsState(emptyList())
+        if (countries.isEmpty()) {
+          Box {
+            LinearProgressIndicator(Modifier.fillMaxWidth())
+          }
+        } else {
+          val listState = rememberLazyListState()
+          val coroutine = rememberCoroutineScope()
+          LazyColumn(state = listState) {
+            countries.forEach { country ->
+              stickyHeader {
+                Text(
+                  country.name,
+                  Modifier
+                    .background(MaterialTheme.colors.secondary)
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                )
+                Divider()
+              }
+              items(country.locations) { loc ->
+                var modifier =
+                  Modifier.clickable { onLocationSelected(loc) }
+                if (loc == mCalendarStore.location) {
+                  modifier = modifier.background(Color.LightGray)
+                }
+                modifier = modifier
+                  .padding(8.dp)
+                  .fillMaxWidth()
+                Text(loc.name, modifier)
+                Divider()
+              }
+            }
+          }
+          coroutine.launch {
+            var index = 0
+            countries.forEach {
+              it.locations.forEachIndexed { i, location ->
+                if (location == mCalendarStore.location) {
+                  listState.animateScrollToItem(index + i)
+                  return@launch
+                }
+              }
+              index += it.locations.size + 1
+            }
+          }
+        }
+      }
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -103,8 +163,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
 
   private fun refresh() {
     if (isResumed) {
-      binding.progressBar.visibility = View.VISIBLE
-
+      countryData.value = emptyList()
       if (mLocationStore.hasLocations()) {
         onLocationResponse(mLocationStore.locations)
       } else {
@@ -130,15 +189,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
 
   private fun onLocationResponse(response: List<Country>) {
     if (isResumed) {
-      binding.progressBar.visibility = View.GONE
-      mAdapter.setData(response)
-
-      var position = mAdapter.getPosition(mCalendarStore.location)
-      if (position > 0) {
-        // lets scroll to location one before the actual one, looks little better
-        position--
-      }
-      binding.recyclerView.layoutManager?.scrollToPosition(position)
+      countryData.value = response
     }
   }
 
@@ -149,5 +200,4 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
       return LocationFragment()
     }
   }
-
 }

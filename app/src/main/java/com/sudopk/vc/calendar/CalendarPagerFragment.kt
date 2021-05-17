@@ -64,7 +64,6 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
 private class CalendarPagerAdapter(parentFragment: Fragment) :
   FragmentStateAdapter(parentFragment) {
 
-
   override fun createFragment(position: Int): Fragment {
     val calendar = CalUtil.getCalendar(getMonthOffset(position))
     return CalendarFragment.newInstance(
@@ -73,7 +72,7 @@ private class CalendarPagerAdapter(parentFragment: Fragment) :
   }
 
   override fun getItemCount(): Int {
-    return CalendarStore.MONTHS_TO_STORE
+    return MONTHS_TO_STORE
   }
 
   fun getMonthOffset(position: Int): Int {

@@ -2,6 +2,7 @@ package com.sudopk.vc.calendar
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.sudopk.vc.core.CalUtil
@@ -12,34 +13,32 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
+val MONTHS_TO_STORE = 5
+private val CALENDAR_KEY_FORMAT = "calendar_%d_%d"
+private val LOCATION_KEY = "location"
+
 @Singleton
 class CalendarStore @Inject constructor(
   @ApplicationContext context: Context,
   private val mGson: Gson
 ) {
-  private val mPreferences: SharedPreferences
+  private val mPreferences: SharedPreferences =
+    PreferenceManager.getDefaultSharedPreferences(context)
 
   init {
-    mPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     cleanupExtra()
   }
 
   /**
    * @param month 1 to 12
-   * *
-   * @param year  full year e.g. 2016
+   * @param year  Full year e.g. 2016
    */
   fun getCalendar(month: Int, year: Int): VCalendar {
-    val calendarString = mPreferences.getString(
-      String.format(
-        CALENDAR_KEY_FORMAT,
-        month, year
-      ), ""
-    )
-    if (calendarString!!.isBlank()) {
-      return emptyList()
+    val calendarString = mPreferences.getString(CALENDAR_KEY_FORMAT.format(month, year), "")
+    return if (calendarString!!.isBlank()) {
+      emptyList()
     } else {
-      return mGson.fromJson(calendarString, VCalendarTypeToken)
+      mGson.fromJson(calendarString, VCalendarTypeToken)
     }
   }
 
@@ -49,9 +48,9 @@ class CalendarStore @Inject constructor(
    * @param year  full year e.g. 2016
    */
   fun saveCalendar(month: Int, year: Int, calendar: VCalendar) {
-    mPreferences.edit()
-      .putString(String.format(CALENDAR_KEY_FORMAT, month, year), mGson.toJson(calendar))
-      .apply()
+    mPreferences.edit {
+      putString(CALENDAR_KEY_FORMAT.format(month, year), mGson.toJson(calendar))
+    }
   }
 
   fun saveCalendar(monthYear: MonthYear, calendar: VCalendar) {
@@ -60,11 +59,10 @@ class CalendarStore @Inject constructor(
 
   /**
    * @param month 1 to 12
-   * *
-   * @param year  full year e.g. 2016
+   * @param year  Full year e.g. 2016
    */
   fun hasCalendar(month: Int, year: Int): Boolean {
-    return !mPreferences.getString(String.format(CALENDAR_KEY_FORMAT, month, year), "")!!.isBlank()
+    return mPreferences.getString(CALENDAR_KEY_FORMAT.format(month, year), "")!!.isNotBlank()
   }
 
   fun hasCalendar(monthYear: MonthYear): Boolean {
@@ -81,13 +79,12 @@ class CalendarStore @Inject constructor(
 
   /**
    * @param month 1 to 12
-   * *
-   * @param year  full year e.g. 2016
+   * @param year  Full year e.g. 2016
    */
   fun removeCalendar(month: Int, year: Int) {
-    mPreferences.edit()
-      .remove(String.format(CALENDAR_KEY_FORMAT, month, year))
-      .apply()
+    mPreferences.edit {
+      remove(CALENDAR_KEY_FORMAT.format(month, year))
+    }
   }
 
   fun cleanupExtra() {
@@ -112,16 +109,6 @@ class CalendarStore @Inject constructor(
     get() = mGson.fromJson(mPreferences.getString(LOCATION_KEY, null), Location::class.java)
     set(location) {
       cleanupAll()
-      mPreferences.edit()
-        .putString(LOCATION_KEY, mGson.toJson(location))
-        .apply()
+      mPreferences.edit { putString(LOCATION_KEY, mGson.toJson(location)) }
     }
-
-  companion object {
-    val MONTHS_TO_STORE = 5
-    private val CALENDAR_KEY_FORMAT = "calendar_%d_%d"
-    private val LOCATION_KEY = "location"
-  }
 }
-
-//inline class Month(val value:Int)
