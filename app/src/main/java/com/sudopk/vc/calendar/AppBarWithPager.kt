@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRowDefaults
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditLocation
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,6 +35,13 @@ object AppBarWithPager {
   fun AppBarWithPager(calendarStore: CalendarStore) {
     Column {
       ShowAppBar(calendarStore)
+      ShowComposePager()
+    }
+  }
+
+  @Composable
+  fun ShowScaffold(calendarStore: CalendarStore) {
+    Scaffold(topBar = { ShowAppBar(calendarStore) }) {
       ShowComposePager()
     }
   }
@@ -67,6 +76,7 @@ object AppBarWithPager {
     // Display 10 items
     val pagerState = rememberPagerState(pageCount = 10)
     val coroutine = rememberCoroutineScope()
+    LaunchedEffect(3) { pagerState.animateScrollToPage(3) }
     Column {
       ScrollableTabRow(
         // Our selected tab is our current page
