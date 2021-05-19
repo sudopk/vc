@@ -1,44 +1,45 @@
 package com.sudopk.vc.calendar
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.sudopk.vc.retrofit.VcService
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import java.util.logging.Level
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("CalendarApi")
 
-class CalendarApi : ViewModel() {
-  private lateinit var mCalendarStore: CalendarStore
-  private lateinit var mVcService: VcService
-  private lateinit var mMonthYear: MonthYear
+@AssistedFactory
+interface CalendarApiFactory {
+  fun create(monthYear: MonthYear): CalendarApi
+}
+
+class CalendarApi @AssistedInject constructor(
+  private val calendarStore: CalendarStore, private val vcService: VcService,
+  @Assisted val monthYear: MonthYear
+) {
 
   val status = MutableLiveData<DataStatus>(DataStatus.NotReady)
-
-  fun init(vcService: VcService, calendarStore: CalendarStore, monthYear: MonthYear) {
-    mVcService = vcService
-    mCalendarStore = calendarStore
-    mMonthYear = monthYear
-  }
 
   suspend fun fetchCalendar() {
     status.value = DataStatus.NotReady
 
-    if (mCalendarStore.hasCalendar(mMonthYear)) {
-      status.value = DataStatus.Ready(mCalendarStore.getCalendar(mMonthYear))
+    if (calendarStore.hasCalendar(monthYear)) {
+      status.value = DataStatus.Ready(calendarStore.getCalendar(monthYear))
       return
     }
 
-    val location = mCalendarStore.location!!
+    val location = calendarStore.location!!
     logger.info("Location: $location")
 
     try {
-      val vCalendar: VCalendar = mVcService.calendar(
+      val vCalendar: VCalendar = vcService.calendar(
         location.id,
-        mMonthYear.year,
-        "%02d".format(mMonthYear.month)
+        monthYear.year,
+        "%02d".format(monthYear.month)
       )
-      mCalendarStore.saveCalendar(mMonthYear, vCalendar)
+      calendarStore.saveCalendar(monthYear, vCalendar)
 
       status.value = DataStatus.Ready(vCalendar)
     } catch (ex: Exception) {
@@ -47,8 +48,8 @@ class CalendarApi : ViewModel() {
     }
   }
 
-  fun removeCalendar(monthYear: MonthYear) {
-    mCalendarStore.removeCalendar(monthYear)
+  fun removeCalendar() {
+    calendarStore.removeCalendar(monthYear)
     status.value = DataStatus.NotReady
   }
 }

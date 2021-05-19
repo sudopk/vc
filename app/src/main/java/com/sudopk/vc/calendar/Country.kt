@@ -11,7 +11,5 @@ data class Country(val name: String, val locations: List<Location>) : Comparable
     return other is Country && compareTo(other) == 0
   }
 
-  override fun hashCode(): Int {
-    return name.hashCode();
-  }
+  override fun hashCode(): Int = name.hashCode()
 }

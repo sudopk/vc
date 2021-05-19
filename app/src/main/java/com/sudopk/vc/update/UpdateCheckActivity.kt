@@ -44,6 +44,8 @@ private val EXIT_BUTTON_ID = "cancel"
 private val UPDATE_BUTTON_ID = "update"
 private val IGNORE_BUTTON_ID = "ignore"
 
+private val DIALOG_TAG = "dialogTag"
+
 class VcConfigActivity : AppCompatActivity(), TextDialogFragment.Container {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -60,8 +62,6 @@ class VcConfigActivity : AppCompatActivity(), TextDialogFragment.Container {
       launchVCalendar()
     }
   }
-
-  private val DIALOG_TAG = "dialogTag";
 
   private fun showTooOldAppDialog() {
     supportFragmentManager.notFoundByTag(DIALOG_TAG) {

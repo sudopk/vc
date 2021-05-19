@@ -10,7 +10,5 @@ data class DayCalendar(val date: Int, val events: List<String>) : Comparable<Day
     return other is DayCalendar && compareTo(other) == 0
   }
 
-  override fun hashCode(): Int {
-    return date;
-  }
+  override fun hashCode(): Int = date
 }

@@ -1,11 +1,7 @@
 package com.sudopk.vc.calendar
 
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.fragment.app.commit
-import androidx.fragment.app.transaction
 import com.google.android.material.snackbar.Snackbar
 import com.sudopk.kandroid.notFoundById
 import com.sudopk.kandroid.notFoundByTag
@@ -25,7 +21,7 @@ import javax.inject.Inject
 class VcActivity : AppCompatActivity(),
                    CalendarPagerFragment.Container,
                    LocationContainer {
-  @Inject lateinit var mCalendarStore: CalendarStore
+  @Inject lateinit var calendarStore: CalendarStore
   private lateinit var binding: ContainerBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +30,7 @@ class VcActivity : AppCompatActivity(),
     binding = ContainerBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    val location = mCalendarStore.location
+    val location = calendarStore.location
     if (location == null) {
       onChangeLocationRequest()
     } else {
@@ -56,13 +52,13 @@ class VcActivity : AppCompatActivity(),
   }
 
   override fun onLocationSelected(location: Location) {
-    mCalendarStore.location = location
+    calendarStore.location = location
     supportFragmentManager.replace(R.id.container, ProgressFragment())
     launchCalendarPagerFragment()
   }
 
   override fun onLocationSelectCanceled() {
-    if (mCalendarStore.location == null) {
+    if (calendarStore.location == null) {
       finish()
     }
   }

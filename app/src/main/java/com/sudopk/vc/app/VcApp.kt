@@ -7,17 +7,11 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.multidex.MultiDexApplication
 import com.google.android.material.snackbar.Snackbar
 import com.sudopk.kandroid.StrFromRes
-import com.sudopk.vc.calendar.CalendarStore
-import com.sudopk.vc.location.LocationStore
-import com.sudopk.vc.retrofit.VcService
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
 class VcApp : MultiDexApplication(), StrFromRes {
-  @Inject lateinit var locationStore: LocationStore
-  @Inject lateinit var calendarStore: CalendarStore
-  @Inject lateinit var vcService: VcService
   @Inject lateinit var lifecycleCallbacks: VcActivityLifecycleCallbacks
 
   override fun onCreate() {

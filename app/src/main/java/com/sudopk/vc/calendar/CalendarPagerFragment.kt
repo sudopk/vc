@@ -10,14 +10,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.sudopk.kandroid.appCompatActivity
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.core.CalUtil
-import com.sudopk.vc.core.vcApp
 import com.sudopk.vc.databinding.CalendarPagerBinding
 import com.sudopk.vc.location.Location
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
-
-  private lateinit var mCalendarStore: CalendarStore
+  @Inject lateinit var calendarStore: CalendarStore
 
   private var _binding: CalendarPagerBinding? = null
   private val binding get() = _binding!!
@@ -35,8 +36,7 @@ class CalendarPagerFragment : Fragment(), CalendarFragment.Container {
     super.onStart()
     appCompatActivity.setSupportActionBar(binding.toolbar)
 
-    mCalendarStore = vcApp.calendarStore
-    updateSubtitle(mCalendarStore.location)
+    updateSubtitle(calendarStore.location)
 
     val pagerAdapter = CalendarPagerAdapter(this)
     binding.viewPager.adapter = pagerAdapter

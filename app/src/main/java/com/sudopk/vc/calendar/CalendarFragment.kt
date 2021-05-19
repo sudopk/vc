@@ -35,13 +35,11 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.sudopk.kandroid.parent
 import com.sudopk.vc.R
 import com.sudopk.vc.core.monthAbbreviation
 import com.sudopk.vc.core.weekDayAbbreviation
-import com.sudopk.vc.retrofit.VcService
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import javax.inject.Inject
@@ -50,11 +48,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CalendarFragment : Fragment() {
-  @Inject lateinit var calendarStore: CalendarStore
-  @Inject lateinit var vcService: VcService
-
-  private lateinit var mCalendarApi: CalendarApi
-  private lateinit var mMonthYear: MonthYear
+  @Inject lateinit var calendarApiFactory: CalendarApiFactory
+  private lateinit var calendarApi: CalendarApi
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -68,11 +63,10 @@ class CalendarFragment : Fragment() {
     super.onStart()
     setHasOptionsMenu(true)
 
-    mMonthYear = MonthYear(requireArguments().getInt(MONTH), requireArguments().getInt(YEAR))
-    mCalendarApi = ViewModelProviders.of(this).get(CalendarApi::class.java)
-    mCalendarApi.init(vcService, calendarStore, mMonthYear)
+    val monthYear = MonthYear(requireArguments().getInt(MONTH), requireArguments().getInt(YEAR))
+    calendarApi = calendarApiFactory.create(monthYear)
 
-    (view as ComposeView).setContent { Calendar(mCalendarApi) }
+    (view as ComposeView).setContent { Calendar(calendarApi) }
 
     fetchCalendar()
   }
@@ -91,13 +85,13 @@ class CalendarFragment : Fragment() {
   }
 
   private fun onRefresh() {
-    mCalendarApi.removeCalendar(mMonthYear)
+    calendarApi.removeCalendar()
     fetchCalendar()
   }
 
   private fun fetchCalendar() {
     lifecycleScope.launch {
-      mCalendarApi.fetchCalendar()
+      calendarApi.fetchCalendar()
     }
   }
 
@@ -118,8 +112,10 @@ class CalendarFragment : Fragment() {
       }
       is DataStatus.Ready -> {
         val calendar = Calendar.getInstance()
-        val currentMonth = mMonthYear.month == calendar.get(Calendar.MONTH) + 1 &&
-          mMonthYear.year == calendar.get(Calendar.YEAR)
+        val currentMonth = calendarApi.monthYear == MonthYear(
+          calendar.get(Calendar.MONTH) + 1,
+          calendar.get(Calendar.YEAR)
+        )
         val date = calendar.get(Calendar.DATE)
         val listState = rememberLazyListState()
         if (currentMonth) {
@@ -155,8 +151,8 @@ class CalendarFragment : Fragment() {
       ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
           val calendar: Calendar = Calendar.getInstance()
-          calendar.set(Calendar.MONTH, mMonthYear.month - 1)
-          calendar.set(Calendar.YEAR, mMonthYear.year)
+          calendar.set(Calendar.MONTH, calendarApi.monthYear.month - 1)
+          calendar.set(Calendar.YEAR, calendarApi.monthYear.year)
           calendar.set(Calendar.DATE, day.date)
           Text("${calendar.monthAbbreviation()} ${day.date}")
           Text(calendar.weekDayAbbreviation())

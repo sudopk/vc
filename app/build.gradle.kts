@@ -94,6 +94,10 @@ dependencies {
   // UI Tests
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
 
+  val pagerVersion = "0.9.1"
+  implementation("com.google.accompanist:accompanist-pager:$pagerVersion")
+  implementation("com.google.accompanist:accompanist-pager-indicators:$pagerVersion")
+
 //    implementation("com.google.android.gms:play-services:9.2.0")
 
   //testCompile 'org.mockito:mockito-core:1.10.19'
