@@ -1,7 +1,6 @@
 package com.sudopk.vc.retrofit
 
 import android.util.Log
-import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.calendar.DayCalendar
 import com.sudopk.vc.calendar.VCalendar
@@ -18,7 +17,7 @@ import retrofit2.Retrofit
 
 val logger = Logger.getLogger("VcConverterFactory")
 
-class VcConverterFactory(private val strFromRes: StrFromRes) : Converter.Factory() {
+class VcConverterFactory : Converter.Factory() {
   override fun responseBodyConverter(
     type: Type,
     annotations: Array<Annotation>,
@@ -26,7 +25,7 @@ class VcConverterFactory(private val strFromRes: StrFromRes) : Converter.Factory
   ): Converter<ResponseBody, *> {
     for (annotation in annotations) {
       when (annotation.annotationClass) {
-        VcApi.Calendar::class -> return VcCalendarResponseConverter(strFromRes)
+        VcApi.Calendar::class -> return VcCalendarResponseConverter()
         VcApi.Locations::class -> return VcLocationResponseConverter()
       }
     }
@@ -34,17 +33,17 @@ class VcConverterFactory(private val strFromRes: StrFromRes) : Converter.Factory
   }
 }
 
-class VcCalendarResponseConverter(private val strFromRes: StrFromRes) :
+class VcCalendarResponseConverter :
   Converter<ResponseBody, VCalendar> {
-
-  private var mEventData: MutableList<String> = ArrayList()
-  private var mDate: Int = 0
 
   override fun convert(value: ResponseBody): VCalendar {
     Log.i(javaClass.simpleName, "Url: $value")
-    return convert(value.string())
+    // Note that there is only one instance of VcCalendarResponseConverter for different requests.
+    return CalendarParser.convert(value.string())
   }
+}
 
+private object CalendarParser {
   fun convert(htmlBody: String): VCalendar {
     val document = Jsoup.parse(htmlBody)
     Log.i(javaClass.simpleName, "Document: $document")
@@ -71,57 +70,53 @@ class VcCalendarResponseConverter(private val strFromRes: StrFromRes) :
   }
 
   private fun parseDay(day: Element): DayCalendar? {
-//    logger.info("Day: $day")
+    // logger.info("Day: $day")
     // each day is a <table>
     val events = day.getElementsByTag("tr").filter { it.text().isNotEmpty() }
     if (events.isEmpty()) {
       logger.info("Calendar cell is not a day, skipping...")
       return null
     }
-    mDate = 0
-    mEventData = ArrayList<String>(events.size)
-    var firstRow = true
-    for (event in events) {
-      parseDayEvent(event, dateEvent = firstRow)
-      firstRow = false
+    var date = 0
+    val eventData = ArrayList<String>(events.size)
+    events.forEachIndexed { index, event ->
+      val details = event.select(">td")
+      for ((col, detail) in details.withIndex()) {
+        val dateEvent = index == 0 && col == 1
+        if (dateEvent) {
+          date = parseDate(detail)
+        } else {
+          eventData += parseEvents(detail)
+        }
+      }
     }
-    if (mDate != 0 && mEventData.isNotEmpty()) {
-      return DayCalendar(mDate, mEventData)
+    if (date != 0 && eventData.isNotEmpty()) {
+      return DayCalendar(date, eventData)
     }
     return null
   }
 
-  private fun parseDayEvent(event: Element, dateEvent: Boolean) {
-    val details = event.select(">td")
-    for ((col, detail) in details.withIndex()) {
-      parseEventDetail(detail, dateEvent = dateEvent && col == 1)
-    }
+  private fun parseDate(detail: Element): Int {
+    val data = detail.text()
+    return Integer.parseInt(data)
   }
 
-
-  private fun parseEventDetail(detail: Element, dateEvent: Boolean) {
-    if (dateEvent) {
-      val data = detail.text()
-      check(mDate == 0) {
-        "Error parsing the date events. Date repeated: old- ${mDate}, new- $data"
+  private fun parseEvents(detail: Element): List<String> {
+    val centerHtml = detail.getElementsByTag("center").single().html()
+    return centerHtml.split("<br>").mapNotNull { line ->
+      if (line.isBlank()) {
+        return@mapNotNull null
       }
-      mDate = Integer.parseInt(data)
-    } else {
-      val centerHtml = detail.getElementsByTag("center").single().html()
-      for (line in centerHtml.split("<br>")) {
-        if (line.isBlank()) {
-          continue
-        }
-        val parsedLine = Jsoup.parse(line)
-        var lineText = parsedLine.text()
-        val imgText = parseImgToText(parsedLine.getElementsByTag("img"))
-        if (imgText.isNotEmpty()) {
-          lineText = "$lineText [$imgText]"
-        }
-        if (lineText.isNotBlank()) {
-          mEventData.add(lineText)
-        }
+      val parsedLine = Jsoup.parse(line)
+      var lineText = parsedLine.text()
+      val imgText = parseImgToText(parsedLine.getElementsByTag("img"))
+      if (imgText.isNotEmpty()) {
+        lineText = "$lineText [$imgText]"
       }
+      if (lineText.isBlank()) {
+        return@mapNotNull null
+      }
+      lineText
     }
   }
 
@@ -203,7 +198,6 @@ class VcLocationResponseConverter : Converter<ResponseBody, List<Country>> {
     }
     return false
   }
-
 
   private fun getCountryData(
     country: String,

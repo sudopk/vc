@@ -5,7 +5,7 @@ plugins {
   id("kotlin-kapt")
 }
 
-val composeVersion = "1.0.0-beta06"
+val composeVersion = "1.0.0-beta07"
 
 android {
   compileSdk = 30
@@ -64,15 +64,13 @@ dependencies {
   implementation("android.arch.lifecycle:common-java8:1.1.1")
 
 
-  implementation("androidx.core:core-ktx:1.6.0-alpha03")
+  implementation("androidx.core:core-ktx:1.6.0-beta01")
   implementation("androidx.activity:activity-ktx:1.2.3")
-  implementation("androidx.fragment:fragment-ktx:1.3.3")
+  implementation("androidx.fragment:fragment-ktx:1.3.4")
   implementation("androidx.preference:preference-ktx:1.1.1")
 
-  implementation("androidx.appcompat:appcompat:1.3.0-rc01")
+  implementation("androidx.appcompat:appcompat:1.4.0-alpha01")
   implementation("com.google.android.material:material:1.4.0-beta01")
-
-  implementation("com.android.support.constraint:constraint-layout:2.0.4")
 
   implementation("androidx.compose.ui:ui:$composeVersion")
   // Tooling support (Previews, etc.)
@@ -85,16 +83,16 @@ dependencies {
   implementation("androidx.compose.material:material-icons-core:$composeVersion")
   implementation("androidx.compose.material:material-icons-extended:$composeVersion")
   // Integration with activities
-  implementation("androidx.activity:activity-compose:1.3.0-alpha07")
+  implementation("androidx.activity:activity-compose:1.3.0-alpha08")
   // Integration with ViewModels
-  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha05")
   // Integration with observables
   implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
   implementation("androidx.compose.runtime:runtime-rxjava2:$composeVersion")
   // UI Tests
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
 
-  val pagerVersion = "0.9.1"
+  val pagerVersion = "0.10.0"
   implementation("com.google.accompanist:accompanist-pager:$pagerVersion")
   implementation("com.google.accompanist:accompanist-pager-indicators:$pagerVersion")
 

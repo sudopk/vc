@@ -1,50 +1,70 @@
 package com.sudopk.vc.calendar
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
-import com.sudopk.kandroid.notFoundById
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import com.sudopk.kandroid.notFoundByTag
-import com.sudopk.kandroid.replace
 import com.sudopk.vc.R
-import com.sudopk.vc.components.ProgressFragment
-import com.sudopk.vc.components.ToolbarFragment
-import com.sudopk.vc.core.resumed
-import com.sudopk.vc.databinding.ContainerBinding
+import com.sudopk.vc.core.CalUtil
 import com.sudopk.vc.location.Location
 import com.sudopk.vc.location.LocationContainer
 import com.sudopk.vc.location.LocationFragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Calendar
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class VcActivity : AppCompatActivity(),
-                   CalendarPagerFragment.Container,
                    LocationContainer {
   @Inject lateinit var calendarStore: CalendarStore
-  private lateinit var binding: ContainerBinding
+  @Inject lateinit var calendarApiFactory: CalendarApiFactory
+  private val refreshCalendar = mutableStateOf(false)
+  private val pagesData = List(MONTHS_TO_STORE) {
+    PageData(
+      CalUtil.getCalendar(it - MONTHS_TO_STORE / 2).monthYear(),
+      refreshCalendar = mutableStateOf(false)
+    )
+  }
+  private val errorState = mutableStateOf("")
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    binding = ContainerBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    checkLocationIsSelected(promptForLocation = true)
 
-    val location = calendarStore.location
-    if (location == null) {
-      onChangeLocationRequest()
-    } else {
-      launchCalendarPagerFragment()
+    setContent {
+      AppBarWithPager.ShowScaffold(
+        Calendar.getInstance(),
+        calendarStore.locationState,
+        pagesData,
+        errorState,
+        { onChangeLocationRequest() },
+        { refreshCalendar.value = true }) { calendar, pageData, currentPage ->
+        val calendarApi =
+          remember(pageData.monthYear) { calendarApiFactory.create(pageData.monthYear) }
+        val coroutine = rememberCoroutineScope()
+        LaunchedEffect(pageData.monthYear) {
+          calendarApi.fetchCalendar()
+        }
+        if (pageData.refreshCalendar.value || (currentPage && refreshCalendar.value)) {
+          coroutine.launch {
+            calendarApi.removeCalendar()
+            calendarApi.fetchCalendar()
+          }
+          refreshCalendar.value = false
+          pageData.refreshCalendar.value = false
+        }
+        AppBarWithPager.ShowCalendar(calendar, calendarApi)
+      }
     }
   }
 
-  private fun launchCalendarPagerFragment() {
-    supportFragmentManager.notFoundById<CalendarPagerFragment>(R.id.container) {
-      supportFragmentManager.replace(it, CalendarPagerFragment())
-    }
-  }
-
-  override fun onChangeLocationRequest() {
+  private fun onChangeLocationRequest() {
     supportFragmentManager.notFoundByTag(LocationFragment.TAG) {
       val fragment = LocationFragment.newInstance()
       fragment.show(supportFragmentManager, LocationFragment.TAG)
@@ -53,28 +73,24 @@ class VcActivity : AppCompatActivity(),
 
   override fun onLocationSelected(location: Location) {
     calendarStore.location = location
-    supportFragmentManager.replace(R.id.container, ProgressFragment())
-    launchCalendarPagerFragment()
+    errorState.value = ""
+    pagesData.forEach { it.refreshCalendar.value = true }
   }
 
   override fun onLocationSelectCanceled() {
+    checkLocationIsSelected(promptForLocation = false)
+  }
+
+  private fun checkLocationIsSelected(promptForLocation: Boolean) {
     if (calendarStore.location == null) {
-      finish()
+      errorState.value = getString(R.string.location_required)
+      if (promptForLocation) {
+        onChangeLocationRequest()
+      }
     }
   }
 
   override fun onLocationSelectFailed(error: String) {
-    if (resumed) {
-      supportFragmentManager.notFoundById<ToolbarFragment>(R.id.container) {
-        supportFragmentManager.replace(it, ToolbarFragment())
-      }
-
-      val snackbar = Snackbar.make(binding.container, error, Snackbar.LENGTH_INDEFINITE)
-      snackbar.setAction(R.string.retry) {
-        snackbar.dismiss()
-        onChangeLocationRequest()
-      }
-      snackbar.show()
-    }
+    errorState.value = error
   }
 }

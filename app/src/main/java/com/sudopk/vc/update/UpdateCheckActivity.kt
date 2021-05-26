@@ -3,25 +3,32 @@ package com.sudopk.vc.update
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.sudopk.kandroid.dialog.ButtonDescription
 import com.sudopk.kandroid.dialog.TextDialogFragment
 import com.sudopk.kandroid.notFoundByTag
-import com.sudopk.kandroid.replace
 import com.sudopk.vc.R
 import com.sudopk.vc.calendar.VcActivity
-import com.sudopk.vc.components.ProgressFragment
 import com.sudopk.vc.core.vcApp
 
 class UpdateCheckActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    setContentView(R.layout.container)
-
-    supportFragmentManager.replace(R.id.container, ProgressFragment())
+    setContent {
+      Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        LinearProgressIndicator(Modifier.fillMaxWidth())
+      }
+    }
 
     val api = ViewModelProviders.of(this).get(CheckUpdateApi::class.java)
     api.checkUpdate().observe(this, Observer {

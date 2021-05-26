@@ -19,7 +19,6 @@ class CalendarApi @AssistedInject constructor(
   private val calendarStore: CalendarStore, private val vcService: VcService,
   @Assisted val monthYear: MonthYear
 ) {
-
   val status = MutableLiveData<DataStatus>(DataStatus.NotReady)
 
   suspend fun fetchCalendar() {

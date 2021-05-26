@@ -36,7 +36,7 @@ interface VcService {
       return Retrofit.Builder()
         .baseUrl(URL)
         .client(okHttpClient)
-        .addConverterFactory(VcConverterFactory(strFromRes))
+        .addConverterFactory(VcConverterFactory())
         .build()
         .create(VcService::class.java)
     }

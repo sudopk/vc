@@ -2,6 +2,7 @@ package com.sudopk.vc.calendar
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
@@ -13,9 +14,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-val MONTHS_TO_STORE = 5
-private val CALENDAR_KEY_FORMAT = "calendar_%d_%d"
-private val LOCATION_KEY = "location"
+const val MONTHS_TO_STORE = 5
+private const val CALENDAR_KEY_FORMAT = "calendar_%d_%d"
+private const val LOCATION_KEY = "location"
 
 @Singleton
 class CalendarStore @Inject constructor(
@@ -105,10 +106,13 @@ class CalendarStore @Inject constructor(
     }
   }
 
+  val locationState = mutableStateOf(location)
+
   var location: Location?
     get() = mGson.fromJson(mPreferences.getString(LOCATION_KEY, null), Location::class.java)
     set(location) {
       cleanupAll()
       mPreferences.edit { putString(LOCATION_KEY, mGson.toJson(location)) }
+      locationState.value = location
     }
 }
