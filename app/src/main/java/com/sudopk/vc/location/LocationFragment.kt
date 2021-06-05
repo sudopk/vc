@@ -14,21 +14,30 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
@@ -50,6 +59,7 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
   @Inject lateinit var mCalendarStore: CalendarStore
 
   private val countryData = MutableLiveData<List<Country>>(emptyList())
+  private val filteredCountryData = MutableLiveData<List<Country>>(emptyList())
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -64,60 +74,101 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
     return dialog
   }
 
-  @OptIn(ExperimentalFoundationApi::class)
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    return ComposeView(requireContext()).also {
-      it.setContent {
-        val countries by countryData.observeAsState(emptyList())
-        if (countries.isEmpty()) {
-          Box {
-            LinearProgressIndicator(Modifier.fillMaxWidth())
+    countryData.observe(this) { filteredCountryData.value = it }
+
+    return ComposeView(requireContext()).also { view ->
+      view.setContent {
+        ShowLocations(filteredCountryData) { search ->
+          if (search.isEmpty()) {
+            filteredCountryData.value = countryData.value
+            return@ShowLocations
           }
-        } else {
-          val listState = rememberLazyListState()
-          val coroutine = rememberCoroutineScope()
-          LazyColumn(state = listState) {
-            countries.forEach { country ->
-              stickyHeader {
-                Text(
-                  country.name,
-                  Modifier
-                    .background(MaterialTheme.colors.secondary)
-                    .padding(8.dp)
-                    .fillMaxWidth()
-                )
-                Divider()
-              }
-              items(country.locations) { loc ->
-                var modifier =
-                  Modifier.clickable { onLocationSelected(loc) }
-                if (loc == mCalendarStore.location) {
-                  modifier = modifier.background(Color.LightGray)
-                }
-                modifier = modifier
-                  .padding(8.dp)
-                  .fillMaxWidth()
-                Text(loc.name, modifier)
-                Divider()
-              }
+          val filteredCountries = countryData.value!!.toMutableList()
+          val partitions =
+            filteredCountries.partition { it.name.contains(search, ignoreCase = true) }
+          val partialCountries = partitions.second.mapNotNull { country ->
+            val locations = country.locations.filter { it.name.contains(search, ignoreCase = true) }
+            if (locations.isEmpty()) null else Country(country.name, locations)
+          }
+          filteredCountryData.value = partitions.first + partialCountries
+        }
+      }
+    }
+  }
+
+  @Preview
+  @Composable
+  fun LocationsPreview() {
+    val countries = listOf(
+      Country("Country 1", listOf(Location("Location 1", "id 1"))),
+    )
+    val countryData = MutableLiveData(countries)
+    ShowLocations(countryData) {}
+  }
+
+  @Composable
+  @OptIn(ExperimentalFoundationApi::class)
+  fun ShowLocations(
+    countryData: MutableLiveData<List<Country>>,
+    onSearch: (search: String) -> Unit
+  ) {
+    val countries by countryData.observeAsState(emptyList())
+    val search = remember { mutableStateOf("") }
+    if (countries.isEmpty() && search.value.isEmpty()) {
+      Box { LinearProgressIndicator(Modifier.fillMaxWidth()) }
+      return
+    }
+
+    Column {
+      TextField(search.value, onValueChange = {
+        search.value = it
+        onSearch(it)
+      }, leadingIcon = {
+        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+      }, modifier = Modifier.fillMaxWidth())
+      val listState = rememberLazyListState()
+      val coroutine = rememberCoroutineScope()
+      LazyColumn(state = listState) {
+        countries.forEach { country ->
+          stickyHeader {
+            Text(
+              country.name,
+              Modifier
+                .background(MaterialTheme.colors.secondary)
+                .padding(8.dp)
+                .fillMaxWidth()
+            )
+            Divider()
+          }
+          items(country.locations) { loc ->
+            var modifier =
+              Modifier.clickable { onLocationSelected(loc) }
+            if (loc == mCalendarStore.location) {
+              modifier = modifier.background(Color.LightGray)
+            }
+            modifier = modifier
+              .padding(8.dp)
+              .fillMaxWidth()
+            Text(loc.name, modifier)
+            Divider()
+          }
+        }
+      }
+      coroutine.launch {
+        var index = 0
+        countries.forEach {
+          it.locations.forEachIndexed { i, location ->
+            if (location == mCalendarStore.location) {
+              listState.animateScrollToItem(index + i)
+              return@launch
             }
           }
-          coroutine.launch {
-            var index = 0
-            countries.forEach {
-              it.locations.forEachIndexed { i, location ->
-                if (location == mCalendarStore.location) {
-                  listState.animateScrollToItem(index + i)
-                  return@launch
-                }
-              }
-              index += it.locations.size + 1
-            }
-          }
+          index += it.locations.size + 1
         }
       }
     }

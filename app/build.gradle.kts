@@ -5,7 +5,7 @@ plugins {
   id("kotlin-kapt")
 }
 
-val composeVersion = "1.0.0-beta07"
+val composeVersion = "1.0.0-beta08"
 
 android {
   compileSdk = 30
@@ -64,12 +64,12 @@ dependencies {
   implementation("android.arch.lifecycle:common-java8:1.1.1")
 
 
-  implementation("androidx.core:core-ktx:1.6.0-beta01")
+  implementation("androidx.core:core-ktx:1.6.0-beta02")
   implementation("androidx.activity:activity-ktx:1.2.3")
   implementation("androidx.fragment:fragment-ktx:1.3.4")
   implementation("androidx.preference:preference-ktx:1.1.1")
 
-  implementation("androidx.appcompat:appcompat:1.4.0-alpha01")
+  implementation("androidx.appcompat:appcompat:1.4.0-alpha02")
   implementation("com.google.android.material:material:1.4.0-beta01")
 
   implementation("androidx.compose.ui:ui:$composeVersion")
@@ -83,16 +83,16 @@ dependencies {
   implementation("androidx.compose.material:material-icons-core:$composeVersion")
   implementation("androidx.compose.material:material-icons-extended:$composeVersion")
   // Integration with activities
-  implementation("androidx.activity:activity-compose:1.3.0-alpha08")
+  implementation("androidx.activity:activity-compose:1.3.0-beta01")
   // Integration with ViewModels
-  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha05")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha06")
   // Integration with observables
   implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
   implementation("androidx.compose.runtime:runtime-rxjava2:$composeVersion")
   // UI Tests
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
 
-  val pagerVersion = "0.10.0"
+  val pagerVersion = "0.11.1"
   implementation("com.google.accompanist:accompanist-pager:$pagerVersion")
   implementation("com.google.accompanist:accompanist-pager-indicators:$pagerVersion")
 
@@ -106,7 +106,7 @@ dependencies {
   implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
   implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
-  implementation("com.google.code.gson:gson:2.8.6")
+  implementation("com.google.code.gson:gson:2.8.7")
 
   implementation("org.jsoup:jsoup:1.13.1")
 
@@ -118,7 +118,7 @@ dependencies {
 //  val daggerVersion = "2.28.3"
 //  implementation("com.google.dagger:dagger:$daggerVersion")
 //  kapt("com.google.dagger:dagger-compiler:$daggerVersion")
-  val hiltVersion = "2.35.1"
+  val hiltVersion = "2.36"
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
@@ -126,7 +126,7 @@ dependencies {
   //testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
   testImplementation("junit:junit:4.13.2")
-  testImplementation("com.google.truth:truth:1.1")
+  testImplementation("com.google.truth:truth:1.1.3")
 
 //    androidTestImplementation("com.android.support.test:runner:1.0.2")
   androidTestImplementation("androidx.test.ext:junit:1.1.2")
