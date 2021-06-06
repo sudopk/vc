@@ -29,11 +29,11 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -88,9 +88,8 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
             filteredCountryData.value = countryData.value
             return@ShowLocations
           }
-          val filteredCountries = countryData.value!!.toMutableList()
           val partitions =
-            filteredCountries.partition { it.name.contains(search, ignoreCase = true) }
+            countryData.value!!.partition { it.name.contains(search, ignoreCase = true) }
           val partialCountries = partitions.second.mapNotNull { country ->
             val locations = country.locations.filter { it.name.contains(search, ignoreCase = true) }
             if (locations.isEmpty()) null else Country(country.name, locations)
@@ -132,7 +131,6 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
         Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
       }, modifier = Modifier.fillMaxWidth())
       val listState = rememberLazyListState()
-      val coroutine = rememberCoroutineScope()
       LazyColumn(state = listState) {
         countries.forEach { country ->
           stickyHeader {
@@ -159,13 +157,13 @@ class LocationFragment : AppCompatDialogFragment(), LocationContainer, LocationC
           }
         }
       }
-      coroutine.launch {
+      LaunchedEffect("location") {
         var index = 0
         countries.forEach {
           it.locations.forEachIndexed { i, location ->
             if (location == mCalendarStore.location) {
               listState.animateScrollToItem(index + i)
-              return@launch
+              return@LaunchedEffect
             }
           }
           index += it.locations.size + 1
