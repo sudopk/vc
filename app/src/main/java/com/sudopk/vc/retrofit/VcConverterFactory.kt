@@ -50,16 +50,13 @@ private object CalendarParser {
     val weeks = document.select("body > center:nth-child(4) > table:nth-child(3) > tbody > tr")
     logger.info("Calendar rows: ${weeks.size})")
     val calendar = mutableListOf<DayCalendar>()
-    for ((index, week) in weeks.withIndex()) {
-      // First row is header
-      if (index == 0) {
-        continue
-      }
+    // First row is header
+    weeks.drop(1).forEach { week ->
       val days = week.select("> td")
       check(days.size == 7) {
         "Invalid number of days in a week: ${days.size}"
       }
-      for (day in days) {
+      days.forEach { day ->
         val dayCalendar = parseDay(day)
         if (dayCalendar != null) {
           calendar.add(dayCalendar)

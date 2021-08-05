@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-  rootProject.extra["kotlinVersion"] = "1.5.10"
+  rootProject.extra["kotlinVersion"] = "1.5.21"
   val kotlinVersion = rootProject.extra["kotlinVersion"] as String
 
   repositories {
@@ -10,11 +10,11 @@ buildscript {
   }
   dependencies {
     // Android gradle plugin.
-    classpath("com.android.tools.build:gradle:7.0.0-beta02")
+    classpath("com.android.tools.build:gradle:7.0.0")
     // Kotlin gradle plugin.
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.31.2-alpha")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle.kts files

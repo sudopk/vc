@@ -5,7 +5,7 @@ plugins {
   id("kotlin-kapt")
 }
 
-val composeVersion = "1.0.0-beta08"
+val composeVersion = "1.1.0-alpha01"
 
 android {
   compileSdk = 30
@@ -64,13 +64,13 @@ dependencies {
   implementation("android.arch.lifecycle:common-java8:1.1.1")
 
 
-  implementation("androidx.core:core-ktx:1.6.0-beta02")
-  implementation("androidx.activity:activity-ktx:1.2.3")
-  implementation("androidx.fragment:fragment-ktx:1.3.4")
+  implementation("androidx.core:core-ktx:1.7.0-alpha01")
+  implementation("androidx.activity:activity-ktx:1.3.1")
+  implementation("androidx.fragment:fragment-ktx:1.3.6")
   implementation("androidx.preference:preference-ktx:1.1.1")
 
-  implementation("androidx.appcompat:appcompat:1.4.0-alpha02")
-  implementation("com.google.android.material:material:1.4.0-beta01")
+  implementation("androidx.appcompat:appcompat:1.4.0-alpha03")
+  implementation("com.google.android.material:material:1.5.0-alpha01")
 
   implementation("androidx.compose.ui:ui:$composeVersion")
   // Tooling support (Previews, etc.)
@@ -83,16 +83,16 @@ dependencies {
   implementation("androidx.compose.material:material-icons-core:$composeVersion")
   implementation("androidx.compose.material:material-icons-extended:$composeVersion")
   // Integration with activities
-  implementation("androidx.activity:activity-compose:1.3.0-beta01")
+  implementation("androidx.activity:activity-compose:1.3.1")
   // Integration with ViewModels
-  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha06")
+  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
   // Integration with observables
   implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
   implementation("androidx.compose.runtime:runtime-rxjava2:$composeVersion")
   // UI Tests
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
 
-  val pagerVersion = "0.11.1"
+  val pagerVersion = "0.16.0"
   implementation("com.google.accompanist:accompanist-pager:$pagerVersion")
   implementation("com.google.accompanist:accompanist-pager-indicators:$pagerVersion")
 
@@ -108,17 +108,17 @@ dependencies {
 
   implementation("com.google.code.gson:gson:2.8.7")
 
-  implementation("org.jsoup:jsoup:1.13.1")
+  implementation("org.jsoup:jsoup:1.14.1")
 
   implementation("com.github.sudopk:KAndroid:1.1.2")
 
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1-native-mt")
 
 //  val daggerVersion = "2.28.3"
 //  implementation("com.google.dagger:dagger:$daggerVersion")
 //  kapt("com.google.dagger:dagger-compiler:$daggerVersion")
-  val hiltVersion = "2.36"
+  val hiltVersion = "2.38.1"
   implementation("com.google.dagger:hilt-android:$hiltVersion")
   kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
@@ -129,10 +129,10 @@ dependencies {
   testImplementation("com.google.truth:truth:1.1.3")
 
 //    androidTestImplementation("com.android.support.test:runner:1.0.2")
-  androidTestImplementation("androidx.test.ext:junit:1.1.2")
+  androidTestImplementation("androidx.test.ext:junit:1.1.3")
 //    androidTestImplementation("com.android.support.test.espresso:espresso-core:3.2.0")
 
-  androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+  androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
 
 
