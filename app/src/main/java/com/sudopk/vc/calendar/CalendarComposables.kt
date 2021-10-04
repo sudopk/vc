@@ -112,7 +112,7 @@ object AppBarWithPager {
     pageContent: @Composable (calendar: Calendar, pageData: PageData, currentPage: Boolean) -> Unit
   ) {
     // Display 10 items
-    val pagerState = rememberPagerState(pageCount = pagesData.size)
+    val pagerState = rememberPagerState()
     val coroutine = rememberCoroutineScope()
     LaunchedEffect(pagesData.size) {
       pagesData.forEachIndexed { index, pageData ->
@@ -142,7 +142,7 @@ object AppBarWithPager {
         }
       }
 
-      HorizontalPager(state = pagerState) {
+      HorizontalPager(state = pagerState, count = pagesData.size) {
         pageContent(calendar, pagesData[it], it == pagerState.currentPage)
       }
     }

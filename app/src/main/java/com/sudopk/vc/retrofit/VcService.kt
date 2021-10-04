@@ -1,6 +1,5 @@
 package com.sudopk.vc.retrofit
 
-import com.sudopk.kandroid.StrFromRes
 import com.sudopk.vc.calendar.Country
 import com.sudopk.vc.calendar.VCalendar
 import java.util.concurrent.TimeUnit
@@ -28,7 +27,7 @@ interface VcService {
   companion object {
     val URL = "https://www.vaisnavacalendar.com"
 
-    fun newInstance(strFromRes: StrFromRes): VcService {
+    fun newInstance(): VcService {
       val okHttpClient = OkHttpClient.Builder()
         .readTimeout(60, TimeUnit.SECONDS)
         .build()

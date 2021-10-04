@@ -17,8 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object VcModule {
 
-  @Provides
-  @Singleton
+  @[Singleton Provides]
   fun provideStrFromRes(@ApplicationContext appContext: Context) = object : StrFromRes {
     override fun getString(resId: Int): String = appContext.getString(resId)
 
@@ -27,13 +26,11 @@ object VcModule {
     }
   }
 
-  @Singleton
-  @Provides
+  @[Singleton Provides]
   fun provideGson(): Gson = GsonBuilder()
     .setFieldNamingStrategy(RemoveFieldNameStrategy())
     .create()
 
-  @Singleton
-  @Provides
-  fun provideVcService(strFromRes: StrFromRes): VcService = VcService.newInstance(strFromRes)
+  @[Singleton Provides]
+  fun provideVcService(): VcService = VcService.newInstance()
 }

@@ -43,7 +43,7 @@ class VcCalendarResponseConverter :
   }
 }
 
-private object CalendarParser {
+object CalendarParser {
   fun convert(htmlBody: String): VCalendar {
     val document = Jsoup.parse(htmlBody)
     Log.i(javaClass.simpleName, "Document: $document")

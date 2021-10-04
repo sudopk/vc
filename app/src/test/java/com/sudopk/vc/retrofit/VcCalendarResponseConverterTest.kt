@@ -80,9 +80,7 @@ private val EXPECTED_DAYS = listOf(
 class VcCalendarResponseConverterTest {
   @Test
   fun convert() {
-    val converter = VcCalendarResponseConverter(MockStrFromRes())
-
-    val vCalendar = converter.convert(VC_HTML)
+    val vCalendar = CalendarParser.convert(VC_HTML)
 
     assertThat(vCalendar.size).isEqualTo(31)
 
