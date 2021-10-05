@@ -112,14 +112,13 @@ object AppBarWithPager {
     pageContent: @Composable (calendar: Calendar, pageData: PageData, currentPage: Boolean) -> Unit
   ) {
     // Display 10 items
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = pagesData.size)
     val coroutine = rememberCoroutineScope()
-    LaunchedEffect(pagesData.size) {
-      pagesData.forEachIndexed { index, pageData ->
-        val currentMonth = calendar.monthYear() == pageData.monthYear
-        if (currentMonth) {
-          pagerState.animateScrollToPage(index)
-        }
+    // LaunchedEffect doesn't seem to work correctly in version 0.19.0
+    LaunchedEffect(key1 = pagesData.size) {
+      val index = pagesData.indexOfFirst { calendar.monthYear() == it.monthYear }
+      if(index != -1) {
+        pagerState.animateScrollToPage(index)
       }
     }
     Column {
@@ -142,7 +141,7 @@ object AppBarWithPager {
         }
       }
 
-      HorizontalPager(state = pagerState, count = pagesData.size) {
+      HorizontalPager(state = pagerState) {
         pageContent(calendar, pagesData[it], it == pagerState.currentPage)
       }
     }

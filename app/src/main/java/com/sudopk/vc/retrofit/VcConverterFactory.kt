@@ -87,7 +87,7 @@ object CalendarParser {
         }
       }
     }
-    if (date != 0 && eventData.isNotEmpty()) {
+    if (date != 0) {
       return DayCalendar(date, eventData)
     }
     return null
@@ -99,7 +99,11 @@ object CalendarParser {
   }
 
   private fun parseEvents(detail: Element): List<String> {
-    val centerHtml = detail.getElementsByTag("center").single().html()
+    val centerTag = detail.getElementsByTag("center")
+    if (centerTag.size == 0) {
+      return emptyList()
+    }
+    val centerHtml = centerTag.single().html()
     return centerHtml.split("<br>").mapNotNull { line ->
       if (line.isBlank()) {
         return@mapNotNull null
