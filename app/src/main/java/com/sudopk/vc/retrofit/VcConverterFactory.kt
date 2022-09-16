@@ -14,6 +14,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import retrofit2.Converter
 import retrofit2.Retrofit
+import kotlin.collections.filter as ktFilter
 
 val logger = Logger.getLogger("VcConverterFactory")
 
@@ -69,7 +70,7 @@ object CalendarParser {
   private fun parseDay(day: Element): DayCalendar? {
     // logger.info("Day: $day")
     // each day is a <table>
-    val events = day.getElementsByTag("tr").filter { it.text().isNotEmpty() }
+    val events = day.getElementsByTag("tr").ktFilter { it.text().isNotEmpty() }
     if (events.isEmpty()) {
       logger.info("Calendar cell is not a day, skipping...")
       return null

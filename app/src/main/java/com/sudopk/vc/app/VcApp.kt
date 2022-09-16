@@ -1,5 +1,8 @@
 package com.sudopk.vc.app
 
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PackageInfoFlags
+import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDialogFragment
@@ -41,7 +44,11 @@ class VcApp : MultiDexApplication(), StrFromRes {
   }
 
   fun versionCode(): Long {
-    val packageInfo = packageManager.getPackageInfo(packageName, 0)
+    val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      packageManager.getPackageInfo(packageName, PackageInfoFlags.of(0))
+    } else {
+      packageManager.getPackageInfo(packageName, 0)
+    }
     val longVersionCode = PackageInfoCompat.getLongVersionCode(packageInfo)
     Log.e("VersionCode", longVersionCode.toString())
     return longVersionCode

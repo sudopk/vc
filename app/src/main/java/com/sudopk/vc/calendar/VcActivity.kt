@@ -52,9 +52,11 @@ class VcActivity : AppCompatActivity(),
           calendarApi.fetchCalendar()
         }
         if (pageData.refreshCalendar.value || (currentPage && refreshCalendar.value)) {
-          coroutine.launch {
-            calendarApi.removeCalendar()
-            calendarApi.fetchCalendar()
+          LaunchedEffect(true) {
+            coroutine.launch {
+              calendarApi.removeCalendar()
+              calendarApi.fetchCalendar()
+            }
           }
           refreshCalendar.value = false
           pageData.refreshCalendar.value = false

@@ -69,7 +69,7 @@ object AppBarWithPager {
       if (error.isBlank()) {
         ShowComposePager(calendar, pagesData, pageContent)
       } else {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
           Text(error, style = MaterialTheme.typography.body1)
         }
       }
@@ -151,7 +151,7 @@ object AppBarWithPager {
   fun ShowCalendar(calendar: Calendar, calendarApi: CalendarApi) {
     val statusDelegate by calendarApi.status.observeAsState()
     when (val status = statusDelegate) {
-      is DataStatus.Failed -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+      null, is DataStatus.Failed -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
           stringResource(R.string.failed_to_get_calendar_data),
           style = MaterialTheme.typography.body1
